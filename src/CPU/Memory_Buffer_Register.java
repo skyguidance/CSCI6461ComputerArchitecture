@@ -1,31 +1,31 @@
 package CPU;
 
-public class Memory_Buffer_Register {
+import java.util.logging.Logger;
 
-	
-String MBR;
-	
-	public Memory_Buffer_Register(String a) {
-		MBR=a;
-	}
-	public void set(String a) {
-		if(a.length()==16) {
-		 MBR=a;
-		}
-		if(a.length()<16) {
-			//TODO Efficiency
-			MBR="0".repeat(12-a.length())+a;
-		}
-		else {
-			System.out.println("INVALID PC SET UP");
-		}
-	}
-	public String get() {
-		return MBR;
-	}
-	public void increment() {
-		int a=Integer.parseInt(MBR);
-		a++;
-		set(Integer.toBinaryString(a));
-	}
+public class Memory_Buffer_Register {
+    String MBR;
+    final Logger logging = Logger.getLogger("CPU.Memory_Buffer_Register");
+
+    public Memory_Buffer_Register(String value) {
+        this.MBR = value;
+    }
+
+    public void set(String value) {
+        if (value.length() == 16) {
+            this.MBR = value;
+            logging.info("MBR=>" + value + "(" + Integer.valueOf(value, 2).toString() + ")");
+            return;
+        } else if (value.length() < 16) {
+            this.MBR = String.format("%016d", Integer.valueOf(value));
+            logging.info("MBR=>" + value + "(" + Integer.valueOf(value, 2).toString() + ")");
+            return;
+        } else {
+            logging.severe("INVALID: MBR=>" + value + "(" + Long.valueOf(value, 2).toString() + ")");
+            return;
+        }
+    }
+
+    public String get() {
+        return this.MBR;
+    }
 }
