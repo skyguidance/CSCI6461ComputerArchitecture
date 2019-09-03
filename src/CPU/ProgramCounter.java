@@ -8,4 +8,7 @@ public class ProgramCounter extends Register{
         super(value,12,"PC");
     }
 
+    public void incrementOne() {
+        value++;
+    }
 }

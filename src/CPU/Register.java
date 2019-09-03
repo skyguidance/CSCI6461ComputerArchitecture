@@ -17,9 +17,7 @@ public class Register {
 		String format="%0numberd".replace("number", Stringlength);
 		return String.format(format,Integer.valueOf(a));//
 	}
-	public void incrementOne() {
-		value++;
-	}
+
 	public int getValue() {
 		return value;
 	}
@@ -29,7 +27,7 @@ public class Register {
 			logging.info(name+"=>" + value + "(" + value + ")");
 		}
 		else {
-			logging.info("INVALID "+name+"=>"+value+"(" + value+")" );
+			logging.info("INVALID "+name+"=>"+Value+"(" + Value+")" );
 		}
 	}
 		
