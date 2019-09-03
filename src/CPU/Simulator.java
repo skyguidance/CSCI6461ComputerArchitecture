@@ -17,19 +17,19 @@ ProgramCounter PC;
 		CC2 = new Condition_Code(false);
 		CC3 = new Condition_Code(false);
 		CC4 = new Condition_Code(false);
-		R0 = new General_Purpose_Registers("0000000000000000");
-		R1 = new General_Purpose_Registers("0000000000000000");
-		R2 = new General_Purpose_Registers("0000000000000000");
-		R3 = new General_Purpose_Registers("0000000000000000");
-		IR = new Instruction_Register("0000000000000000");
-		IX0 = new IX_Register("0000000000000000");
-		IX1 = new IX_Register("0000000000000000");
-		IX2 = new IX_Register("0000000000000000");
-		MFR = new Machine_Fault_Register(); //TODO: Build Constructor.
-		MAR = new Memory_Address_Register("0000000000000000");
-		MBR = new Memory_Buffer_Register("0000000000000000");
+		R0 = new General_Purpose_Registers(0);
+		R1 = new General_Purpose_Registers(0);
+		R2 = new General_Purpose_Registers(0);
+		R3 = new General_Purpose_Registers(0);
+		IR = new Instruction_Register(0);
+		IX0 = new IX_Register(0);
+		IX1 = new IX_Register(0);
+		IX2 = new IX_Register(0);
+		MFR = new Machine_Fault_Register(0); //TODO: Build Constructor.
+		MAR = new Memory_Address_Register(0);
+		MBR = new Memory_Buffer_Register(0);
 		DataMemory = new Memory();
-		PC = new ProgramCounter("000000000000");
+		PC = new ProgramCounter(0);
 	}
 }
 
