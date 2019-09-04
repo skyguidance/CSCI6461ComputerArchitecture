@@ -16,9 +16,17 @@ class ALU {
         logging.info("ALU=>"+Opcode+"|"+GPR+"|"+IX+"|"+EA+"|Executing...");
         switch (Opcode){
             case 1:
+                output = EA;
+                break;
             case 2:
+                output = EA;
+                break;
             case 3:
+                output = EA;
+                break;
             case 41:
+                output = EA;
+                break;
             case 42:
                 output = EA;
                 break;

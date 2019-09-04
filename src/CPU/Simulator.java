@@ -26,6 +26,7 @@ public class Simulator {
     public Simulator() {
        initialize();
     }
+
     public void initialize(){
 		CC1 = new Condition_Code(false);
 		CC2 = new Condition_Code(false);
@@ -98,7 +99,6 @@ public class Simulator {
         ALUresult = ALU.execute(opcode, R, IX, EA);
         // DM(Data Memory) and WB(Write Back) Process.
         PostALUOperation();
-        PC.incrementOne();
     }
 
 
@@ -142,11 +142,13 @@ public class Simulator {
                         logging.severe("R is not in 0 to 3  ");
                         break;
                 }
+                PC.incrementOne();
                 break;
             }
             case 2:{
                 // Store the GPR to MEM[EA].(Trigger DMWriteEnable.)
                 DataMemory.set(EA,R);
+                PC.incrementOne();
                 break;
             }
             case 3:{
@@ -168,6 +170,7 @@ public class Simulator {
                         logging.severe("R is not in 0 to 3  ");
                         break;
                 }
+                PC.incrementOne();
                 break;
             }
             case 41:{
@@ -189,11 +192,13 @@ public class Simulator {
                         logging.severe("IX is trying to index 3 but not exist");
                         break;
                 }
+                PC.incrementOne();
                 break;
             }
             case 42:{
                 // Store the IX to MEM[EA].
                 DataMemory.set(EA,IX);
+                PC.incrementOne();
                 break;
             }
             default:
