@@ -88,9 +88,11 @@ public class Simulator {
                 break;
         }
         // ALU Process
+        CalculateEA();
         ALUresult = ALU.execute(opcode, R, IX, EA);
         // DM(Data Memory) and WB(Write Back) Process.
         PostALUOperation();
+        PC.incrementOne();
     }
 
     public void CalculateEA() {
