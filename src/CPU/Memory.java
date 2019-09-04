@@ -23,6 +23,12 @@ public class Memory {
         }
     }
 
+    public void set(int address, int value){
+        String addressString = ToBinaryString(address);
+        String valueString = ToBinaryString(value);
+        set(addressString,valueString);
+    }
+
     public int get(int address) {
 
         if (memory.containsKey(address)) {
@@ -31,5 +37,12 @@ public class Memory {
             logging.severe("INVALID:MEM[" + address + "(" + address + ")" + "],NO DATA IN THIS ADDRESS!");
             return -1;
         }
+    }
+
+    private String ToBinaryString(int value) {
+        String a=Integer.toBinaryString(value);// Change to BinaryString
+        String Stringlength=""+16;
+        String format="%0numberd".replace("number", Stringlength);
+        return String.format(format,Integer.valueOf(a));//
     }
 }
