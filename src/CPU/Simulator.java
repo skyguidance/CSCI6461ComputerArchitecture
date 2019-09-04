@@ -20,29 +20,33 @@ public class Simulator {
     int R;
     int EA;
     int ALUresult;
+    int Address;
     final Logger logging = Logger.getLogger("CPU.Simulator");
 
     public Simulator() {
-        CC1 = new Condition_Code(false);
-        CC2 = new Condition_Code(false);
-        CC3 = new Condition_Code(false);
-        CC4 = new Condition_Code(false);
-        R0 = new General_Purpose_Registers(0);
-        R1 = new General_Purpose_Registers(0);
-        R2 = new General_Purpose_Registers(0);
-        R3 = new General_Purpose_Registers(0);
-        IR = new Instruction_Register(0);
-        IX1 = new IX_Register(0);
-        IX2 = new IX_Register(0);
-        IX3 = new IX_Register(0);
-        MFR = new Machine_Fault_Register(0); //TODO: Build Constructor.
-        MAR = new Memory_Address_Register(0);
-        MBR = new Memory_Buffer_Register(0);
-        DataMemory = new Memory();
-        ALU = new ALU();
-        PC = new ProgramCounter(0);
-        CU = new ControlUnit(IR.ToBinaryString());//16 0's
+       initialize();
     }
+    public void initialize(){
+		CC1 = new Condition_Code(false);
+		CC2 = new Condition_Code(false);
+		CC3 = new Condition_Code(false);
+		CC4 = new Condition_Code(false);
+		R0 = new General_Purpose_Registers(0);
+		R1 = new General_Purpose_Registers(0);
+		R2 = new General_Purpose_Registers(0);
+		R3 = new General_Purpose_Registers(0);
+		IR = new Instruction_Register(0);
+		IX1 = new IX_Register(0);
+		IX2 = new IX_Register(0);
+		IX3 = new IX_Register(0);
+		MFR = new Machine_Fault_Register(0); //TODO: Build Constructor.
+		MAR = new Memory_Address_Register(0);
+		MBR = new Memory_Buffer_Register(0);
+		DataMemory = new Memory();
+		ALU = new ALU();
+		PC = new ProgramCounter(0);
+		CU = new ControlUnit(IR.ToBinaryString());//16 0's
+	}
 
     public void operator() {
         // MAR <- PC
@@ -87,6 +91,8 @@ public class Simulator {
                 logging.severe("R is not in 0 to 3  ");
                 break;
         }
+        Address=CU.getAddress();
+
         // ALU Process
         CalculateEA();
         ALUresult = ALU.execute(opcode, R, IX, EA);
@@ -95,18 +101,20 @@ public class Simulator {
         PC.incrementOne();
     }
 
-    public void CalculateEA() {
+
+	public void CalculateEA() {
+
         if (CU.getI() == 0) {
             if (CU.getIX() == 0) {
-                EA = CU.getAddress();
+                EA = Address;
             } else {
-                EA = CU.getAddress() + IX;
+                EA = Address + IX;
             }
         } else if (CU.getI() == 1) {
             if (CU.getI() == 0) {
-                EA = DataMemory.get(CU.getAddress());
+                EA = DataMemory.get(Address);
             } else {
-                EA = DataMemory.get(CU.getAddress() + IX);
+                EA = DataMemory.get(Address + IX);
             }
         } else {
             logging.severe("I has trouble");
@@ -115,7 +123,7 @@ public class Simulator {
 
     public void PostALUOperation() {
         switch (opcode) {
-            case 01: {
+            case 1: {
                 // Write the MEM[EA] data into the specific GPR.(Trigger GPRWriteEnable.)
                 switch (CU.getR()) {
                     case 0:
@@ -136,12 +144,12 @@ public class Simulator {
                 }
                 break;
             }
-            case 02:{
+            case 2:{
                 // Store the GPR to MEM[EA].(Trigger DMWriteEnable.)
                 DataMemory.set(EA,R);
                 break;
             }
-            case 03:{
+            case 3:{
                 // Write the EA address value into the specific GPR.
                 switch (CU.getR()) {
                     case 0:
@@ -191,7 +199,6 @@ public class Simulator {
             default:
                 break;
         }
-        return;
     }
 }
 
