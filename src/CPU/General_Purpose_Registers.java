@@ -1,6 +1,6 @@
 package CPU;
 
-import java.util.logging.Logger;
+
 
 public class General_Purpose_Registers extends Register {
 

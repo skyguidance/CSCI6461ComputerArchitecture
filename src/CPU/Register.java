@@ -1,10 +1,9 @@
 package CPU;
 import java.util.logging.Logger;
 public class Register {
-	int value;
-	int length;
-	String name;
-	final Logger logging=Logger.getLogger("CPU.Register");;
+	private int value,length;
+	private  String name;
+	final Logger logging=Logger.getLogger("CPU.Register");
 
 	public Register(int value,int length,String name) {
 		this.length=length;

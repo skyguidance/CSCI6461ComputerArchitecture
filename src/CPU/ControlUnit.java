@@ -1,11 +1,9 @@
 package CPU;
 
 public class ControlUnit {
-    int opcode;
-    int R;
-    int IX;
-    int I;
-    int address;
+
+    private int opcode,I,R,IX,address;
+
 
     public ControlUnit(String BinaryString){
         opcode=Integer.valueOf(BinaryString.substring(0,5),2);
@@ -15,7 +13,8 @@ public class ControlUnit {
         address=Integer.valueOf(BinaryString.substring(11,15),2);
 
     }
-    public void setInstruction(int IR){
+
+    public void decodeInstruction(int IR){
         String BinaryString=Integer.toBinaryString(IR);
         opcode=Integer.valueOf(BinaryString.substring(0,5),2);
         R=Integer.valueOf(BinaryString.substring(6,7),2);
@@ -24,7 +23,7 @@ public class ControlUnit {
         address=Integer.valueOf(BinaryString.substring(11,15),2);
     }
 
-    public int getOpcode(){
+    int getOpcode(){
         return opcode;
     }
 
