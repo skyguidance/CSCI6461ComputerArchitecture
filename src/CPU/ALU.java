@@ -29,7 +29,7 @@ public class ALU {
         componets.CU.decodeInstruction(componets.IR.getValue());
         // ALU Process
         executeInstruction(CalculateEA());
-        componets.PC.incrementOne();
+
     }
 
 
@@ -85,5 +85,7 @@ public class ALU {
             default:
                 break;
         }
+        componets.PC.incrementOne();
+
     }
 }
