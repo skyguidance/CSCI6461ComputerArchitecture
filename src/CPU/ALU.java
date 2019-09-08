@@ -20,13 +20,13 @@ public class ALU {
     }
     public void operator() {
         // MAR <- PC
-        componets.MAR.setValue(componets.PC.getValue());
+        componets.getMAR().setValue(componets.getPC().getValue());
         // MBR <- MEM[MAR]
-        componets.MBR.setValue(DataMemory.get(componets.MAR.getValue()));
+        componets.getMBR().setValue(DataMemory.get(componets.getMAR().getValue()));
         // IR <- MBR
-        componets.IR.setValue(componets.MAR.getValue());
+        componets.getIR().setValue(componets.getMAR().getValue());
         // CTRL-DECODE
-        componets.CU.decodeInstruction(componets.IR.getValue());
+        componets.getCU().decodeInstruction(componets.getIR().getValue());
         // ALU Process
         executeInstruction(CalculateEA());
 
@@ -35,19 +35,19 @@ public class ALU {
 
 
     private int CalculateEA() {
-        int Address=componets.CU.getAddress();
+        int Address=componets.getCU().getAddress();
 
-        if (componets.CU.getI() == 0) {
-            if (componets.CU.getIX() == 0) {
+        if (componets.getCU().getI() == 0) {
+            if (componets.getCU().getIX() == 0) {
                 return Address;
             } else {
-                return Address + componets.CU.getIX();
+                return Address + componets.getCU().getIX();
             }
-        } else if (componets.CU.getI() == 1) {
-            if (componets.CU.getIX() == 0) {
+        } else if (componets.getCU().getI() == 1) {
+            if (componets.getCU().getIX() == 0) {
                return DataMemory.get(Address);
             } else {
-               return DataMemory.get(Address + componets.CU.getIX());
+               return DataMemory.get(Address + componets.getCU().getIX());
             }
         } else {
 
@@ -57,7 +57,7 @@ public class ALU {
     }
 
     private void executeInstruction(int EA) {
-        switch (componets.CU.getOpcode()) {
+        switch (componets.getCU().getOpcode()) {
             case 1: {
                 componets.getGPRRegister().setValue(DataMemory.get(EA));
             }
@@ -67,8 +67,8 @@ public class ALU {
                 break;
             }
             case 3:{
-                // Write the EA address value into the specific GPR.
-                componets.getGPRRegister().setValue(EA);
+                // Write the EA address value into the specific Address_Register.
+                componets.getAddressRegister().setValue(EA);
                 break;
             }
             case 41:{
@@ -85,7 +85,7 @@ public class ALU {
             default:
                 break;
         }
-        componets.PC.incrementOne();
+        componets.getPC().incrementOne();
 
     }
 }

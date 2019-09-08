@@ -9,6 +9,7 @@ public class ProgramCounter extends Register{
     }
 
     public void incrementOne() {
-        value++;
+        int value=getValue()+1;
+        this.setValue(value);
     }
 }

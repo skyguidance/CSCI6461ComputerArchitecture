@@ -4,18 +4,19 @@ package CPU;
 import java.util.logging.Logger;
 
 public class Componets {
-    public Condition_Code CC1, CC2, CC3, CC4;
-    public General_Purpose_Registers R0, R1, R2, R3;
-    public Instruction_Register IR;
-    public IX_Register IX3, IX1, IX2;
-    public Machine_Fault_Register MFR;
-    public Memory_Address_Register MAR;
-    public Memory_Buffer_Register MBR;
+    private Condition_Code CC1, CC2, CC3, CC4;
+    private General_Purpose_Registers R0, R1, R2, R3;
+    private Instruction_Register IR;
+    private IX_Register IX3, IX1, IX2;
+    private Machine_Fault_Register MFR;
+    private Memory_Address_Register MAR;
+    private Memory_Buffer_Register MBR;
+    private Address_Register EA;
     final Logger logging= Logger.getLogger("CPU.RegistersCollection");
 
     //Memory DataMemory;
-    public ProgramCounter PC;
-    public ControlUnit CU;
+    private ProgramCounter PC;
+    private ControlUnit CU;
     public Componets(){
         initialize();
     }
@@ -35,6 +36,7 @@ public class Componets {
         MFR = new Machine_Fault_Register(0); //TODO: Build Constructor.
         MAR = new Memory_Address_Register(0);
         MBR = new Memory_Buffer_Register(0);
+        EA=new Address_Register(0);
        // DataMemory = new Memory();
         PC = new ProgramCounter(0);
         CU = new ControlUnit(IR.ToBinaryString());//16 0's
@@ -57,5 +59,10 @@ public class Componets {
         }
 
     }
-
+    public Register getAddressRegister(){return EA;}
+    public Register getMAR(){return MAR;}
+    public Register getMBR(){return MBR;}
+    public Register getIR(){return IR;}
+    public ControlUnit getCU(){return CU;}
+    public ProgramCounter getPC(){return PC;}
 }
