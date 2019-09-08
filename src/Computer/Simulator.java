@@ -23,6 +23,10 @@ public class Simulator {
         ALU=new ALU(componets,DataMemory);
 	}
 
+	public void bootLoader(){
+
+    }
+
 
 
 
