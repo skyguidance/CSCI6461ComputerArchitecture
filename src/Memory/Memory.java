@@ -23,6 +23,11 @@ public class Memory {
         }
     }
 
+    public void set(int address, String Value) {
+        String addressString = ToBinaryString(address);
+        set(addressString,Value);
+    }
+
     public void set(int address, int value){
         String addressString = ToBinaryString(address);
         String valueString = ToBinaryString(value);

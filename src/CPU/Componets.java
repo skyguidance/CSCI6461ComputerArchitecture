@@ -12,11 +12,12 @@ public class Componets {
     public Memory_Address_Register MAR;
     public Memory_Buffer_Register MBR;
     public Address_Register EA;
+    public ProgramCounter PC;
+    private ControlUnit CU;
+
+
     final Logger logging= Logger.getLogger("CPU.RegistersCollection");
 
-    //Memory DataMemory;
-    private ProgramCounter PC;
-    private ControlUnit CU;
     public Componets(){
         initialize();
     }

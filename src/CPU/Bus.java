@@ -22,7 +22,7 @@ public class Bus {
         // MBR <- MEM[MAR]
         componets.getMBR().setValue(DataMemory.get(componets.getMAR().getValue()));
         // IR <- MBR
-        componets.getIR().setValue(componets.getMAR().getValue());
+        componets.getIR().setValue(componets.getMBR().getValue());
         // CTRL-DECODE
         componets.getCU().decodeInstruction(componets.getIR().getValue());
         // ALU Process

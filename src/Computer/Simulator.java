@@ -36,6 +36,22 @@ public class Simulator {
         Simulator simulator = new Simulator();
         simulator.DataMemory.set(31,666);
         simulator.DataMemory.set(666,123);
+
+
+        //TESTING AUTORUN...
+        System.out.println("Testing Autotest...");
+        simulator.DataMemory.set(2000,"0000011100111111");
+        simulator.DataMemory.set(2001,"0000011000111111");
+        simulator.DataMemory.set(2002,"0000010100111111");
+        simulator.DataMemory.set(2003,"0000010000111111");
+        simulator.componets.PC.setValue(2000);
+        int i=0;
+        for (i=0;i<4;i++){
+            simulator.BUS.tik();
+        }
+
+
+
         //LDR
         simulator.BUS.evaulateInstruction(Integer.valueOf("0000011100111111", 2));
         simulator.BUS.evaulateInstruction(Integer.valueOf("0000011000111111", 2));
