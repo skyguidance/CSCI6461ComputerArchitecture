@@ -48,7 +48,11 @@ public class Simulator {
         simulator.BUS.evaulateInstruction(Integer.valueOf("0000111100011111", 2));
         simulator.BUS.evaulateInstruction(Integer.valueOf("0000111000111111", 2));
         //LDX
-        simulator.BUS.evaulateInstruction(Integer.valueOf("1010010001011111", 2));
+        simulator.DataMemory.set(30,789);
+        simulator.BUS.evaulateInstruction(Integer.valueOf("1010010001011110", 2));
+        //STX
+        simulator.componets.IX1.setValue(987);
+        simulator.BUS.evaulateInstruction(Integer.valueOf("1010100001011110", 2));
         //NOP
         simulator.BUS.evaulateInstruction(Integer.valueOf("0000000000000000", 2));
     }
