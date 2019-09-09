@@ -14,7 +14,7 @@ public class Register {
 		String a=Integer.toBinaryString(value);// Change to BinaryString
 		String Stringlength=""+length;
 		String format="%0numberd".replace("number", Stringlength);
-		return String.format(format,Integer.valueOf(a));//
+		return String.format(format,Long.valueOf(a));//
 	}
 
 	public int getValue() {

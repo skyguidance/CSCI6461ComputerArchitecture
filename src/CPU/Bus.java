@@ -14,16 +14,30 @@ public class Bus {
         this.DataMemory = DataMemory;
     }
 
-    public void operator() {
-        // MAR <- PC
+
+    public void tik() {
+        // MAR <- PC,PC++;
         componets.getMAR().setValue(componets.getPC().getValue());
-        //        // MBR <- MEM[MAR]
-        //        componets.getMBR().setValue(DataMemory.get(componets.getMAR().getValue()));
-        //        // IR <- MBR
+        componets.getPC().incrementOne();
+        // MBR <- MEM[MAR]
+        componets.getMBR().setValue(DataMemory.get(componets.getMAR().getValue()));
+        // IR <- MBR
         componets.getIR().setValue(componets.getMAR().getValue());
         // CTRL-DECODE
         componets.getCU().decodeInstruction(componets.getIR().getValue());
         // ALU Process
+        executeInstruction(CalculateEA());
+    }
+
+
+    public void evaulateInstruction(int Instr){
+        /***
+         * This fuction is to set the specific Instr right to IR and do the rest.
+         * Just for DEBUG only.
+         * This fuction will by-pass PC.
+         */
+        componets.getIR().setValue(Instr);
+        componets.getCU().decodeInstruction(componets.getIR().getValue());
         executeInstruction(CalculateEA());
     }
 
@@ -50,13 +64,14 @@ public class Bus {
     }
 
     /**
-     * DataMemory, WriteBack;
+     * ALU, DataMemory, WriteBack;
      *
      * @param EA
      */
     private void executeInstruction(int EA) {
         switch (componets.getCU().getOpcode()) {
             case 1: {
+                //Load the MEM[EA] to specific GPR.
                 componets.getGPRRegister().setValue(DataMemory.get(EA));
                 break;
             }
@@ -83,6 +98,6 @@ public class Bus {
             default:
                 break;
         }
-        componets.getPC().incrementOne();
     }
+
 }

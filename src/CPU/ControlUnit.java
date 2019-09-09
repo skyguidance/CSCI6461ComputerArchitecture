@@ -6,21 +6,21 @@ public class ControlUnit {
 
 
     public ControlUnit(String BinaryString){
-        opcode=Integer.valueOf(BinaryString.substring(0,5),2);
-        R=Integer.valueOf(BinaryString.substring(6,7),2);
-        IX=Integer.valueOf(BinaryString.substring(8,9),2);
-        I=Integer.valueOf(BinaryString.substring(10),2);
-        address=Integer.valueOf(BinaryString.substring(11,15),2);
+        opcode=Integer.valueOf(BinaryString.substring(0,6),2);
+        R=Integer.valueOf(BinaryString.substring(6,8),2);
+        IX=Integer.valueOf(BinaryString.substring(8,10),2);
+        I=Integer.valueOf(BinaryString.substring(10,11),2);
+        address=Integer.valueOf(BinaryString.substring(11,16),2);
 
     }
 
     public void decodeInstruction(int IR){
-        String BinaryString=Integer.toBinaryString(IR);
-        opcode=Integer.valueOf(BinaryString.substring(0,5),2);
-        R=Integer.valueOf(BinaryString.substring(6,7),2);
-        IX=Integer.valueOf(BinaryString.substring(8,9),2);
-        I=Integer.valueOf(BinaryString.substring(10),2);
-        address=Integer.valueOf(BinaryString.substring(11,15),2);
+        String BinaryString=ToBinaryString(IR);
+        opcode=Integer.valueOf(BinaryString.substring(0,6),2);
+        R=Integer.valueOf(BinaryString.substring(6,8),2);
+        IX=Integer.valueOf(BinaryString.substring(8,10),2);
+        I=Integer.valueOf(BinaryString.substring(10,11),2);
+        address=Integer.valueOf(BinaryString.substring(11,16),2);
     }
 
     int getOpcode(){
@@ -41,6 +41,13 @@ public class ControlUnit {
 
     public int getI() {
         return I;
+    }
+
+    private String ToBinaryString(int value) {
+        String a=Integer.toBinaryString(value);// Change to BinaryString
+        String Stringlength=""+16;
+        String format="%0numberd".replace("number", Stringlength);
+        return String.format(format,Long.valueOf(a));//
     }
 
 }
