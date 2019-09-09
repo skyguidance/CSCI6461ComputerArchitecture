@@ -34,6 +34,11 @@ public class Memory {
         set(addressString,valueString);
     }
 
+    public int get(String address){
+        int IntAddress = Integer.valueOf(address,2);
+        return get(IntAddress);
+    }
+
     public int get(int address) {
 
         if (memory.containsKey(address)) {
@@ -44,7 +49,7 @@ public class Memory {
         }
     }
 
-    private String ToBinaryString(int value) {
+    public String ToBinaryString(int value) {
         String a=Integer.toBinaryString(value);// Change to BinaryString
         String Stringlength=""+16;
         String format="%0numberd".replace("number", Stringlength);

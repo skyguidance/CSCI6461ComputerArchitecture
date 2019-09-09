@@ -38,16 +38,16 @@ public class Componets {
         MAR = new Memory_Address_Register(0);
         MBR = new Memory_Buffer_Register(0);
         EA=new Address_Register(0);
-       // DataMemory = new Memory();
+        // DataMemory = new Memory();
         PC = new ProgramCounter(0);
         CU = new ControlUnit(IR.ToBinaryString());//16 0's
     }
     public Register getGPRRegister(){
         int index=CU.getR();
-       if(index==0){return R0;}
+        if(index==0){return R0;}
         if(index==1){return R1;}
         if(index==2){return R2;}
-       else{ return R3;}
+        else{ return R3;}
     }
     public Register getIXRegister(){
         int index=CU.getIX();

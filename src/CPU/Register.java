@@ -10,12 +10,14 @@ public class Register {
 		this.name=name;
 		setValue(value);
 	}
+
 	public String ToBinaryString() {
 		String a=Integer.toBinaryString(value);// Change to BinaryString
 		String Stringlength=""+length;
 		String format="%0numberd".replace("number", Stringlength);
 		return String.format(format,Long.valueOf(a));//
 	}
+
 
 	public int getValue() {
 		return value;
@@ -28,6 +30,11 @@ public class Register {
 		else {
 			logging.info("INVALID "+name+"=>"+Value+"(" + Value+")" );
 		}
+	}
+
+	public void setValue(String Value) {
+		int IntValue = Integer.valueOf(Value, 2);
+		setValue(IntValue);
 	}
 		
 }

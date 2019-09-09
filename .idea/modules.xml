@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ComputerArchitecture.iml" filepath="$PROJECT_DIR$/ComputerArchitecture.iml" />
+      <module fileurl="file://$PROJECT_DIR$/CSCI6461ComputerArchitecture.iml" filepath="$PROJECT_DIR$/CSCI6461ComputerArchitecture.iml" />
     </modules>
   </component>
 </project>
