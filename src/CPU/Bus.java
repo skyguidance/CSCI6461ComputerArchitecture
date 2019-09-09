@@ -49,13 +49,13 @@ public class Bus {
             if (componets.getCU().getIX() == 0) {
                 return Address;
             } else {
-                return Address + componets.getCU().getIX();
+                return Address + componets.getIXRegister().getValue();
             }
         } else if (componets.getCU().getI() == 1) {
             if (componets.getCU().getIX() == 0) {
                 return DataMemory.get(Address);
             } else {
-                return DataMemory.get(Address + componets.getCU().getIX());
+                return DataMemory.get(Address + componets.getIXRegister().getValue());
             }
         } else {
             logging.severe("I has trouble");

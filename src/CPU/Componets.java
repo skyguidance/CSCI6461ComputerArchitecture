@@ -4,14 +4,14 @@ package CPU;
 import java.util.logging.Logger;
 
 public class Componets {
-    private Condition_Code CC1, CC2, CC3, CC4;
-    private General_Purpose_Registers R0, R1, R2, R3;
-    private Instruction_Register IR;
-    private IX_Register IX3, IX1, IX2;
-    private Machine_Fault_Register MFR;
-    private Memory_Address_Register MAR;
-    private Memory_Buffer_Register MBR;
-    private Address_Register EA;
+    public Condition_Code CC1, CC2, CC3, CC4;
+    public General_Purpose_Registers R0, R1, R2, R3;
+    public Instruction_Register IR;
+    public IX_Register IX3, IX1, IX2;
+    public Machine_Fault_Register MFR;
+    public Memory_Address_Register MAR;
+    public Memory_Buffer_Register MBR;
+    public Address_Register EA;
     final Logger logging= Logger.getLogger("CPU.RegistersCollection");
 
     //Memory DataMemory;
