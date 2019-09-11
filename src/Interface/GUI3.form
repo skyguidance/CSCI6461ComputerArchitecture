@@ -269,7 +269,9 @@
               <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
               <gridbag weightx="0.0" weighty="0.0"/>
             </constraints>
-            <properties/>
+            <properties>
+              <background color="-1"/>
+            </properties>
             <border type="none"/>
             <children>
               <grid id="6a41c" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -277,7 +279,9 @@
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
-                <properties/>
+                <properties>
+                  <background color="-1"/>
+                </properties>
                 <border type="none"/>
                 <children>
                   <component id="cf16f" class="javax.swing.JRadioButton" binding="CC1Button">
@@ -285,6 +289,7 @@
                       <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
+                      <background color="-1"/>
                       <enabled value="false"/>
                       <selected value="false"/>
                       <text value="1"/>
@@ -295,6 +300,7 @@
                       <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
+                      <background color="-1"/>
                       <enabled value="false"/>
                       <text value="2"/>
                     </properties>
@@ -306,7 +312,9 @@
                 <constraints>
                   <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
-                <properties/>
+                <properties>
+                  <background color="-1"/>
+                </properties>
                 <border type="none"/>
                 <children>
                   <component id="1a81a" class="javax.swing.JRadioButton" binding="CC3Button">
@@ -314,6 +322,7 @@
                       <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
+                      <background color="-1"/>
                       <enabled value="false"/>
                       <text value="3"/>
                     </properties>
@@ -323,6 +332,7 @@
                       <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
+                      <background color="-1"/>
                       <enabled value="false"/>
                       <text value="4"/>
                     </properties>
@@ -437,7 +447,10 @@
             <children>
               <component id="9a286" class="javax.swing.JTextField" binding="Console">
                 <constraints border-constraint="Center"/>
-                <properties/>
+                <properties>
+                  <editable value="true"/>
+                  <enabled value="true"/>
+                </properties>
               </component>
               <component id="2ac14" class="javax.swing.JLabel">
                 <constraints border-constraint="North"/>
