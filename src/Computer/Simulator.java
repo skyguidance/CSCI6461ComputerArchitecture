@@ -35,7 +35,7 @@ public class Simulator {
         ALU = new ALU(componets, DataMemory);
         BUS = new Bus(componets, DataMemory);
     }
-
+// user should have right to chose where their file come from
     public void bootLoader() {
         String txtPath = "C:\\Users\\QiTianYi\\Desktop\\UserProgram.txt";
         loadUserProgramFromTxt(txtPath);

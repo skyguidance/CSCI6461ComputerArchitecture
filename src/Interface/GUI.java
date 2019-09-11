@@ -11,7 +11,7 @@ import java.io.PrintStream;
 import java.io.OutputStream;
 
 
-public class GUI3 extends JFrame {
+public class GUI extends JFrame {
     private JButton IPLButton;
     private JPanel panelMain;
     private JButton SINGLESTEPButton;
@@ -56,10 +56,11 @@ public class GUI3 extends JFrame {
     private Simulator simulator;
     private String IOString;
 
-    public GUI3() {
+    public GUI() {
 
         simulator = new Simulator();
         IOString = "";
+
         PCInput.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -245,7 +246,7 @@ public class GUI3 extends JFrame {
 
     public static void main(String args[]) {
         JFrame jFrame = new JFrame("CSCI6461 Computer Simulator");
-        GUI3 gui = new GUI3();
+        GUI gui = new GUI();
         jFrame.setContentPane(gui.panelMain);
         jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jFrame.pack();
@@ -278,6 +279,7 @@ public class GUI3 extends JFrame {
 
     private void updateTextArea(final String text) {
         SwingUtilities.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 Console.append(text);
             }

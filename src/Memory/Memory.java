@@ -4,6 +4,7 @@ package Memory;
 import java.util.HashMap;
 import java.util.logging.Logger;
 
+@SuppressWarnings({"ALL", "AlibabaLowerCamelCaseVariableNaming"})
 public class Memory {
     HashMap<Integer, Integer> memory;
     final Logger logging = Logger.getLogger("CPU.Memory");
@@ -24,6 +25,7 @@ public class Memory {
         }
     }
 
+    @SuppressWarnings("AlibabaLowerCamelCaseVariableNaming")
     public void set(int address, String Value) {
         String addressString = ToBinaryString(address);
         set(addressString,Value);
@@ -35,6 +37,7 @@ public class Memory {
         set(addressString,valueString);
     }
 
+    @SuppressWarnings("AlibabaLowerCamelCaseVariableNaming")
     public int get(String address){
         int IntAddress = Integer.valueOf(address,2);
         return get(IntAddress);
@@ -51,6 +54,7 @@ public class Memory {
         }
     }
 
+    @SuppressWarnings("AlibabaLowerCamelCaseVariableNaming")
     public String ToBinaryString(int value) {
         String a=Integer.toBinaryString(value);// Change to BinaryString
         String Stringlength=""+16;

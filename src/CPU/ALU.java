@@ -9,13 +9,13 @@ public class ALU {
     private final Logger logging = Logger.getLogger("SimulatorLOG");
     //int opcode;
     private Componets componets;
-   private Memory DataMemory;
+   private Memory dataMemory;
 
-    public ALU(Componets componets,Memory DataMemory){
+    public ALU(Componets componets,Memory dataMemory){
         output = -1;
        // Simulator sim=new Simulator();
         this.componets=componets;
-        this.DataMemory=DataMemory;
+        this.dataMemory=dataMemory;
     }
 
 
