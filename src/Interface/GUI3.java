@@ -6,9 +6,6 @@ import Computer.Simulator;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.InputMethodEvent;
-import java.awt.event.InputMethodListener;
-import java.io.Flushable;
 
 
 public class GUI3 extends JFrame {
@@ -19,7 +16,6 @@ public class GUI3 extends JFrame {
     private JTextField PCInput;
     private JTextField IRInput;
     private JTextField MARInput;
-    private JTextField CCInput;
     private JTextField R1Input;
     private JTextField R0Input;
     private JTextField R2Input;
@@ -49,6 +45,10 @@ public class GUI3 extends JFrame {
     private JLabel Address;
     private JLabel Value;
     private JTextField Console;
+    private JRadioButton CC1Button;
+    private JRadioButton CC2Button;
+    private JRadioButton CC3Button;
+    private JRadioButton CC4Button;
     private Simulator simulator;
     private String IOString;
 
@@ -246,7 +246,6 @@ public class GUI3 extends JFrame {
         jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jFrame.pack();
         jFrame.setVisible(true);
-
         // Simulator simulator = new Simulator();
 
 
@@ -266,8 +265,14 @@ public class GUI3 extends JFrame {
         IX2Input.setText(data.IX2.ToBinaryString());
         IX3Input.setText(data.IX3.ToBinaryString());
         Console.setText(IOString);
+        CC1Button.setSelected(data.CC1.get());
+        CC2Button.setSelected(data.CC2.get());
+        CC3Button.setSelected(data.CC3.get());
+        CC4Button.setSelected(data.CC4.get());
     }
 
 
-
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
+    }
 }
