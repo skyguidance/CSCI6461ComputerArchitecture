@@ -238,7 +238,7 @@ public class GUI3 extends JFrame {
     }
 
     public static void main(String args[]) {
-        JFrame jFrame = new JFrame("Computer");
+        JFrame jFrame = new JFrame("CSCI6461 Computer Simulator");
         GUI3 gui = new GUI3();
         jFrame.setContentPane(gui.panelMain);
         jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -254,11 +254,15 @@ public class GUI3 extends JFrame {
         PCInput.setText(data.PC.ToBinaryString());
         IRInput.setText(data.IR.ToBinaryString());
         MARInput.setText(data.MAR.ToBinaryString());
+        MBRInput.setText(data.MBR.ToBinaryString());
+        MFRInput.setText(data.MFR.ToBinaryString());
+        R0Input.setText(data.R0.ToBinaryString());
+        R1Input.setText(data.R1.ToBinaryString());
+        R2Input.setText(data.R2.ToBinaryString());
+        R3Input.setText(data.R3.ToBinaryString());
         IX1Input.setText(data.IX1.ToBinaryString());
         IX2Input.setText(data.IX2.ToBinaryString());
         IX3Input.setText(data.IX3.ToBinaryString());
-        MBRInput.setText(data.MBR.ToBinaryString());
-        MFRInput.setText(data.MFR.ToBinaryString());
         Console.setText(IOString);
     }
 

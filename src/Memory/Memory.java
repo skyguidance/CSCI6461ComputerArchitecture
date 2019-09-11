@@ -45,7 +45,7 @@ public class Memory {
             return memory.get(address);
         } else {
             logging.severe("INVALID:MEM[" + address + "(" + address + ")" + "],NO DATA IN THIS ADDRESS!");
-            return -1;
+            return 0;
         }
     }
 
