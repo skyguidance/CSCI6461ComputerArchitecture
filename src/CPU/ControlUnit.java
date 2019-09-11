@@ -1,9 +1,11 @@
 package CPU;
 
+import java.util.logging.Logger;
+
 public class ControlUnit {
 
     private int opcode,I,R,IX,address;
-
+    final Logger logging = Logger.getLogger("CPU.ControlUnit");
 
     public ControlUnit(String BinaryString){
         opcode=Integer.valueOf(BinaryString.substring(0,6),2);
@@ -21,6 +23,7 @@ public class ControlUnit {
         IX=Integer.valueOf(BinaryString.substring(8,10),2);
         I=Integer.valueOf(BinaryString.substring(10,11),2);
         address=Integer.valueOf(BinaryString.substring(11,16),2);
+        logging.info("CTRL DECODE:OPCODE=>"+opcode+"\tGPR=>"+R+"\tIX=>"+IX+"\tI=>"+I+"\tAddress=>"+address);
     }
 
     int getOpcode(){

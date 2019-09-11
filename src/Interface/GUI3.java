@@ -219,6 +219,8 @@ public class GUI3 extends JFrame {
                     simulator = new Simulator();
                     IOString = "";
                     flushData(simulator.componets);
+                    DMValueInput.setText("0000000000000000");
+                    DMAddressInput.setText("000000000000");
                 }
 
             }

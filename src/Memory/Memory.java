@@ -44,7 +44,7 @@ public class Memory {
         if (memory.containsKey(address)) {
             return memory.get(address);
         } else {
-            logging.severe("INVALID:MEM[" + address + "(" + address + ")" + "],NO DATA IN THIS ADDRESS!");
+            logging.severe("INVALID:MEM[" + ToBinaryString(address) + "(" + address + ")" + "],NO DATA IN THIS ADDRESS!");
             return 0;
         }
     }

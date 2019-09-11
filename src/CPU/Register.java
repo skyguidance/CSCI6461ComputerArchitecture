@@ -25,10 +25,10 @@ public class Register {
 	public void setValue(int Value) {
 		if(Math.pow(2,length)>Value&&Value>=0) {
 			this.value=Value;
-			logging.info(name+"=>" + value + "(" + value + ")");
+			logging.info(name+"=>" + ToBinaryString() + "(" + value + ")");
 		}
 		else {
-			logging.info("INVALID "+name+"=>"+Value+"(" + Value+")" );
+			logging.info("INVALID "+name+"=>"+ToBinaryString()+"(" + Value+")" );
 		}
 	}
 
