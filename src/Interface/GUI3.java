@@ -6,6 +6,9 @@ import Computer.Simulator;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.io.OutputStream;
 
 
 public class GUI3 extends JFrame {
@@ -44,11 +47,12 @@ public class GUI3 extends JFrame {
     private JButton DMwriteButton;
     private JLabel Address;
     private JLabel Value;
-    private JTextField Console;
     private JRadioButton CC1Button;
     private JRadioButton CC2Button;
     private JRadioButton CC3Button;
     private JRadioButton CC4Button;
+    private JTextArea Console;
+    private JPanel IOOutputPanel;
     private Simulator simulator;
     private String IOString;
 
@@ -252,6 +256,7 @@ public class GUI3 extends JFrame {
     }
 
     public void flushData(Componets data) {
+        redirectSystemStreams();
         PCInput.setText(data.PC.ToBinaryString());
         IRInput.setText(data.IR.ToBinaryString());
         MARInput.setText(data.MAR.ToBinaryString());
@@ -264,15 +269,42 @@ public class GUI3 extends JFrame {
         IX1Input.setText(data.IX1.ToBinaryString());
         IX2Input.setText(data.IX2.ToBinaryString());
         IX3Input.setText(data.IX3.ToBinaryString());
-        Console.setText(IOString);
+        //Console.setText(IOString);
         CC1Button.setSelected(data.CC1.get());
         CC2Button.setSelected(data.CC2.get());
         CC3Button.setSelected(data.CC3.get());
         CC4Button.setSelected(data.CC4.get());
     }
 
-
-    private void createUIComponents() {
-        // TODO: place custom component creation code here
+    private void updateTextArea(final String text) {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                Console.append(text);
+            }
+        });
     }
+
+    private void redirectSystemStreams() {
+        OutputStream out = new OutputStream() {
+            @Override
+            public void write(int b) throws IOException {
+                updateTextArea(String.valueOf((char) b));
+            }
+
+            @Override
+            public void write(byte[] b, int off, int len) throws IOException {
+                updateTextArea(new String(b, off, len));
+            }
+
+            @Override
+            public void write(byte[] b) throws IOException {
+                write(b, 0, b.length);
+            }
+        };
+
+        System.setOut(new PrintStream(out, true));
+        //DEBUG ONLY:Redirect the Error to IO.
+        System.setErr(new PrintStream(out, true));
+    }
+
 }

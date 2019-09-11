@@ -13,7 +13,7 @@ public class Condition_Code {
 	public void set(boolean value) {
 		this.cc = value;
 		logging.info("CC=>" + value);
-
+		System.out.println("CC=>" + value);
 	}
 
 	public boolean get() {

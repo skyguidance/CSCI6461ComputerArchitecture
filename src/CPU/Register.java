@@ -26,9 +26,11 @@ public class Register {
 		if(Math.pow(2,length)>Value&&Value>=0) {
 			this.value=Value;
 			logging.info(name+"=>" + ToBinaryString() + "(" + value + ")");
+			System.out.println(name+"=>" + ToBinaryString() + "(" + value + ")");
 		}
 		else {
 			logging.info("INVALID "+name+"=>"+ToBinaryString()+"(" + Value+")" );
+			System.out.println("INVALID "+name+"=>"+ToBinaryString()+"(" + Value+")" );
 		}
 	}
 

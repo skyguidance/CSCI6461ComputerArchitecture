@@ -24,6 +24,7 @@ public class ControlUnit {
         I=Integer.valueOf(BinaryString.substring(10,11),2);
         address=Integer.valueOf(BinaryString.substring(11,16),2);
         logging.info("CTRL DECODE:OPCODE=>"+opcode+"\tGPR=>"+R+"\tIX=>"+IX+"\tI=>"+I+"\tAddress=>"+address);
+        System.out.println("CTRL DECODE:OPCODE=>"+opcode+"\tGPR=>"+R+"\tIX=>"+IX+"\tI=>"+I+"\tAddress=>"+address);
     }
 
     int getOpcode(){

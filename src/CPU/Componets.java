@@ -56,6 +56,7 @@ public class Componets {
         if(index==3){return IX3;}
         else {
             logging.severe("outPut 0 return a invalid IX0 Register");
+            System.out.println("outPut 0 return a invalid IX0 Register");
             return new Register(0,0,"");
         }
 

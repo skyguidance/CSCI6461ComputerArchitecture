@@ -59,6 +59,7 @@ public class Bus {
             }
         } else {
             logging.severe("I has trouble");
+            System.out.println("I has trouble");
             return -1;
         }
     }

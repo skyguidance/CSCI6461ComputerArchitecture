@@ -440,18 +440,11 @@
               </component>
             </children>
           </grid>
-          <grid id="3d618" layout-manager="BorderLayout" hgap="0" vgap="0">
+          <grid id="3d618" binding="IOOutputPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
             <constraints border-constraint="Center"/>
             <properties/>
             <border type="none"/>
             <children>
-              <component id="9a286" class="javax.swing.JTextField" binding="Console">
-                <constraints border-constraint="Center"/>
-                <properties>
-                  <editable value="true"/>
-                  <enabled value="true"/>
-                </properties>
-              </component>
               <component id="2ac14" class="javax.swing.JLabel">
                 <constraints border-constraint="North"/>
                 <properties>
@@ -459,6 +452,19 @@
                   <verticalTextPosition value="0"/>
                 </properties>
               </component>
+              <scrollpane id="7fbf3">
+                <constraints border-constraint="Center"/>
+                <properties>
+                  <verticalScrollBarPolicy value="20"/>
+                </properties>
+                <border type="none"/>
+                <children>
+                  <component id="d5201" class="javax.swing.JTextArea" binding="Console">
+                    <constraints/>
+                    <properties/>
+                  </component>
+                </children>
+              </scrollpane>
             </children>
           </grid>
         </children>
