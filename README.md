@@ -8,3 +8,19 @@ This is our 6461 Simple Computer Simulator
 
 > git pull
 ## :construction: Project Work In Progress for P1 :construction:
+
+#### Detail about "LOAD MEM" Button
+
+LOAD MEM expected a CSV file which contains formatted MEM data. It should have 2 field, which is 
+
+
+<Memory Location(Binary String)>,<Data(Binary String)>.
+
+
+Here is an example:
+
+
+>000000000001,0000011100011111<br>000000000010,0000011100011111<br>000000000011,0000011100011111<br>000000000100,0000011100011111
+
+
+The example above load data "0000011100011111" to memory location 01,10,11,100.
