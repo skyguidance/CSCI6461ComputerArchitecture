@@ -58,11 +58,78 @@ public class GUI extends JFrame {
     private Simulator simulator;
     private String IOString;
 
+
+    private void SetInputLimiter(){
+        //PCInput
+        LimitedDocument PCInputLimiter = new LimitedDocument(12);
+        PCInputLimiter.setAllowChar("01");
+        PCInput.setDocument(PCInputLimiter);
+        //IRInput
+        LimitedDocument IRInputLimiter = new LimitedDocument(16);
+        IRInputLimiter.setAllowChar("01");
+        IRInput.setDocument(IRInputLimiter);
+        //MARInput
+        LimitedDocument MARInputLimiter = new LimitedDocument(16);
+        MARInputLimiter.setAllowChar("01");
+        MARInput.setDocument(MARInputLimiter);
+        //MBRInput
+        LimitedDocument MBRInputLimiter = new LimitedDocument(16);
+        MBRInputLimiter.setAllowChar("01");
+        MBRInput.setDocument(MBRInputLimiter);
+        //MFRInput
+        LimitedDocument MFRInputLimiter = new LimitedDocument(16);
+        MFRInputLimiter.setAllowChar("01");
+        MFRInput.setDocument(MFRInputLimiter);
+        //R0Input
+        LimitedDocument R0InputLimiter = new LimitedDocument(16);
+        R0InputLimiter.setAllowChar("01");
+        R0Input.setDocument(R0InputLimiter);
+        //R1Input
+        LimitedDocument R1InputLimiter = new LimitedDocument(16);
+        R1InputLimiter.setAllowChar("01");
+        R1Input.setDocument(R1InputLimiter);
+        //R2Input
+        LimitedDocument R2InputLimiter = new LimitedDocument(16);
+        R2InputLimiter.setAllowChar("01");
+        R2Input.setDocument(R2InputLimiter);
+        //R3Input
+        LimitedDocument R3InputLimiter = new LimitedDocument(16);
+        R3InputLimiter.setAllowChar("01");
+        R3Input.setDocument(R3InputLimiter);
+        //IX1Input
+        LimitedDocument IX1InputLimiter = new LimitedDocument(16);
+        IX1InputLimiter.setAllowChar("01");
+        IX1Input.setDocument(IX1InputLimiter);
+        //IX2Input
+        LimitedDocument IX2InputLimiter = new LimitedDocument(16);
+        IX2InputLimiter.setAllowChar("01");
+        IX2Input.setDocument(IX2InputLimiter);
+        //IX3Input
+        LimitedDocument IX3InputLimiter = new LimitedDocument(16);
+        IX3InputLimiter.setAllowChar("01");
+        IX3Input.setDocument(IX3InputLimiter);
+        //DMValueInput
+        LimitedDocument DMValueInputLimiter = new LimitedDocument(16);
+        DMValueInputLimiter.setAllowChar("01");
+        DMValueInput.setDocument(DMValueInputLimiter);
+        //DM-Address
+        LimitedDocument DMAddLimiter = new LimitedDocument(12);
+        DMAddLimiter.setAllowChar("01");
+        DMAddressInput.setDocument(DMAddLimiter);
+        //Flush GUI
+        flushData(simulator.componets);
+        DMValueInput.setText("0000000000000000");
+        DMAddressInput.setText("000000000000");
+    }
+
     public GUI() {
-        simulator = new Simulator();
-        redirectSystemStreams();
         //Load MEM FileChooser..
         JFileChooser MEMFileChooser = new JFileChooser();
+
+
+        simulator = new Simulator();
+        SetInputLimiter();
+        redirectSystemStreams();
 
         IOString = "";
 
@@ -261,6 +328,8 @@ public class GUI extends JFrame {
             }
         }));
 
+
+
     }
 
     public static void main(String args[]) {
@@ -326,8 +395,9 @@ public class GUI extends JFrame {
         };
 
         System.setOut(new PrintStream(out, true));
-        //DEBUG ONLY:Redirect the Error to IO.
+        //DEBUG ONLY:Redirect the Error to GUI-IO.
         System.setErr(new PrintStream(out, true));
     }
 
 }
+
