@@ -11,7 +11,7 @@ This is our 6461 Simple Computer Simulator
 
 #### Detail about "LOAD MEM" Button
 
-LOAD MEM expected a CSV file which contains formatted MEM data. It should have 2 field, which is 
+LOAD MEM expects a CSV file which contains formatted MEM data. It should have 2 fields, which are 
 
 
 <Memory Location(Binary String)>,<Data(Binary String)>.
