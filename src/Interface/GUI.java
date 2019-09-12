@@ -6,9 +6,10 @@ import Computer.Simulator;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.io.OutputStream;
+import java.io.PrintStream;
 
 
 public class GUI extends JFrame {
@@ -53,12 +54,16 @@ public class GUI extends JFrame {
     private JRadioButton CC4Button;
     private JTextArea Console;
     private JPanel IOOutputPanel;
+    private JButton LoadMEMButton;
     private Simulator simulator;
     private String IOString;
 
     public GUI() {
-
         simulator = new Simulator();
+        redirectSystemStreams();
+        //Load MEM FileChooser..
+        JFileChooser MEMFileChooser = new JFileChooser();
+
         IOString = "";
 
         PCInput.addActionListener(new ActionListener() {
@@ -242,6 +247,20 @@ public class GUI extends JFrame {
             }
         });
 
+        LoadMEMButton.addActionListener((new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == LoadMEMButton){
+                    int select = MEMFileChooser.showOpenDialog(null);
+                    if(select == MEMFileChooser.APPROVE_OPTION){
+                        File MEMFile = MEMFileChooser.getSelectedFile();
+                        System.out.println("[MEMLOAD]MAPPING MEM FROM FILE:"+MEMFile.getName());
+                        simulator.loadMEMfromFile(MEMFile);
+                    }
+                }
+            }
+        }));
+
     }
 
     public static void main(String args[]) {
@@ -252,6 +271,8 @@ public class GUI extends JFrame {
         jFrame.pack();
         jFrame.setVisible(true);
         // Simulator simulator = new Simulator();
+
+
 
 
     }

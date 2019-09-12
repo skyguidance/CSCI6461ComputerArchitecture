@@ -15,7 +15,7 @@ public class Memory {
 
     public void set(String address, String value) {
         int addressInt = Integer.valueOf(address, 2);
-        if (addressInt < 4096 && value.length() <= 16) {
+        if (addressInt < 2048 && value.length() <= 16) {
             memory.put(addressInt, Integer.valueOf(value,2));
             logging.info("MEM[" + address + "(" + addressInt + ")" + "]=>" + value + "(" + Integer.valueOf(value, 2).toString() + ")");
             System.out.println("MEM[" + address + "(" + addressInt + ")" + "]=>" + value + "(" + Integer.valueOf(value, 2).toString() + ")");
@@ -61,4 +61,11 @@ public class Memory {
         String format="%0numberd".replace("number", Stringlength);
         return String.format(format,Long.valueOf(a));//
     }
+
+    public void PrintHashMap(){
+        for (Integer key : memory.keySet()) {
+            System.out.println("DUMP:MEM[" + ToBinaryString(key) + "(" + key + ")" + "]=>" + ToBinaryString(memory.get(key)) + "(" + memory.get(key) + ")");
+        }
+    }
+
 }

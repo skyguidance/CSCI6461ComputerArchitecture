@@ -70,6 +70,25 @@ public class Simulator {
         }
     }
 
+    public void loadMEMfromFile(File file){
+        try {
+            int i = 0;
+            InputStreamReader reader = new InputStreamReader(
+                    new FileInputStream(file));
+            BufferedReader br = new BufferedReader(reader);
+            String line = null;
+            while((line = br.readLine()) != null){
+                String[] buff = line.split(",");
+                //buff[0]=address;buff[1]=data;
+                DataMemory.set(buff[0],buff[1]);
+                i++;
+            }
+            System.out.println("[MEMLOAD]SET "+i+" MEMORY DATA TOTAL.");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void RunUserProgram(){
         for(int i=0;i<UserProgramLength;i++){
             BUS.tik();
