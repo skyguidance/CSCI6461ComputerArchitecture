@@ -39,7 +39,7 @@ public class Componets {
         MBR = new Memory_Buffer_Register(0);
         EA=new Address_Register(0);
         // DataMemory = new Memory();
-        PC = new ProgramCounter(0);
+        PC = new ProgramCounter(6);
         CU = new ControlUnit(IR.ToBinaryString());//16 0's
     }
     public Register getGPRRegister(){

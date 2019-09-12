@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="CSCI6461ComputerArchitecture:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/CSCI6461ComputerArchitecture_jar</output-path>
+    <root id="archive" name="CSCI6461ComputerArchitecture.jar">
+      <element id="module-output" name="CSCI6461ComputerArchitecture" />
+    </root>
+  </artifact>
+</component>
