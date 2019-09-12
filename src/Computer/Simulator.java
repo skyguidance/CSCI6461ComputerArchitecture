@@ -80,7 +80,7 @@ public class Simulator {
             while((line = br.readLine()) != null){
                 String[] buff = line.split(",");
                 //buff[0]=address;buff[1]=data;
-                DataMemory.set(buff[0],buff[1]);
+                DataMemory.UserSet(buff[0],buff[1]);
                 i++;
             }
             System.out.println("[MEMLOAD]SET "+i+" MEMORY DATA TOTAL.");

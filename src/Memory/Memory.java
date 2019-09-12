@@ -25,6 +25,20 @@ public class Memory {
         }
     }
 
+    public void UserSet(String address, String value){
+        // This set function protect the reserved memory area.
+        int addressInt = Integer.valueOf(address, 2);
+        if (addressInt < 2048 && addressInt >5 && value.length() <= 16) {
+            memory.put(addressInt, Integer.valueOf(value,2));
+            logging.info("MEM[" + address + "(" + addressInt + ")" + "]=>" + value + "(" + Integer.valueOf(value, 2).toString() + ")");
+            System.out.println("MEM[" + address + "(" + addressInt + ")" + "]=>" + value + "(" + Integer.valueOf(value, 2).toString() + ")");
+        } else {
+            logging.severe("INVALID:MEM[" + address + "(" + addressInt + ")" + "]=>" + value + "(" + Long.valueOf(value, 2).toString() + ")");
+            System.out.println("INVALID:MEM[" + address + "(" + addressInt + ")" + "]=>" + value + "(" + Long.valueOf(value, 2).toString() + ")");
+        }
+    }
+
+
     @SuppressWarnings("AlibabaLowerCamelCaseVariableNaming")
     public void set(int address, String Value) {
         String addressString = ToBinaryString(address);

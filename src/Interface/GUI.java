@@ -214,7 +214,7 @@ public class GUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == DMwriteButton) {
-                    simulator.DataMemory.set(DMAddressInput.getText(),DMValueInput.getText());
+                    simulator.DataMemory.UserSet(DMAddressInput.getText(),DMValueInput.getText());
                     IOString = IOString+"\n"+ "MEM["+DMAddressInput.getText()+"]=>"+DMValueInput.getText();
                     flushData(simulator.componets);
                 }
