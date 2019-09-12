@@ -8,12 +8,16 @@ public class Bus {
     private final Logger logging = Logger.getLogger("Bus");
     private Componets componets;
     private Memory dataMemory;
+    private boolean isHalt = false;
 
     public Bus(Componets componets, Memory dataMemory) {
         this.componets = componets;
         this.dataMemory = dataMemory;
     }
 
+    public boolean getHaltStatus(){
+        return isHalt;
+    }
 
     public void tik() {
         // MAR <- PC,PC++;
@@ -27,6 +31,15 @@ public class Bus {
         componets.getCU().decodeInstruction(componets.getIR().getValue());
         // ALU Process
         executeInstruction(calculateEA());
+    }
+
+    public void run(){
+        while(true){
+            tik();
+            if (isHalt){
+                break;
+            }
+        }
     }
 
 
@@ -71,6 +84,11 @@ public class Bus {
      */
     private void executeInstruction(int ea) {
         switch (componets.getCU().getOpcode()) {
+            case 0: {
+                isHalt = true;
+                System.out.println("BUS:HALT");
+                break;
+            }
             case 1: {
                 //Load the MEM[EA] to specific GPR.
                 componets.getGPRRegister().setValue(dataMemory.get(ea));

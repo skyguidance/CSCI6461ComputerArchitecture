@@ -303,6 +303,19 @@ public class GUI extends JFrame {
             }
         });
 
+
+        RUNButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == RUNButton) {
+                    simulator.BUS.run();
+                    flushData(simulator.componets);
+                }
+
+            }
+        });
+
+
         SINGLESTEPButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

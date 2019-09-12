@@ -432,6 +432,7 @@
                   <gridbag weightx="0.0" weighty="0.0"/>
                 </constraints>
                 <properties>
+                  <selected value="false"/>
                   <text value="Read"/>
                 </properties>
               </component>

@@ -22,6 +22,7 @@ public class Simulator {
     private ArrayList UserProgram = new ArrayList();
     public Integer UserProgramLength;
 
+
     final Logger logging = Logger.getLogger("CPU.Simulator");
 
     public Simulator() {
@@ -35,69 +36,71 @@ public class Simulator {
         ALU = new ALU(componets, DataMemory);
         BUS = new Bus(componets, DataMemory);
     }
-// user should have right to chose where their file come from
-    public void bootLoader() {
-        String txtPath = "C:\\Users\\QiTianYi\\Desktop\\UserProgram.txt";
-        loadUserProgramFromTxt(txtPath);
-        System.out.println("DEBUG: WE SET THE USER PROGRAM LOCATION TO 40(FIRST INSTR).");
-        int i= 0;
-        for(i=0;i<UserProgram.size();i++){
-            DataMemory.set(40+i, (String) UserProgram.get(i));
-        }
-        componets.getPC().setValue(40);
-        UserProgramLength = i;
-        System.out.println("DEBUG: THE LENGTH OF THE USER RROGRAM:"+UserProgramLength);
 
-    }
 
-    private void loadUserProgramFromTxt(String txtPath){
-        try {
-            int i = 0;
-            File file = new File(txtPath);
-            InputStreamReader reader = new InputStreamReader(
-                    new FileInputStream(file));
-            BufferedReader br = new BufferedReader(reader);
-            String line = null;
-            while((line = br.readLine()) != null){
-                if (line.length()>16){
-                    line = line.substring(0,16);
-                }
-                UserProgram.add(line);
-                i++;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void loadMEMfromFile(File file){
+    public void loadMEMfromFile(File file) {
         try {
             int i = 0;
             InputStreamReader reader = new InputStreamReader(
                     new FileInputStream(file));
             BufferedReader br = new BufferedReader(reader);
             String line = null;
-            while((line = br.readLine()) != null){
+            while ((line = br.readLine()) != null) {
                 String[] buff = line.split(",");
                 //buff[0]=address;buff[1]=data;
-                DataMemory.UserSet(buff[0],buff[1]);
+                DataMemory.UserSet(buff[0], buff[1]);
                 i++;
             }
-            System.out.println("[MEMLOAD]SET "+i+" MEMORY DATA TOTAL.");
+            System.out.println("[MEMLOAD]SET " + i + " MEMORY DATA TOTAL.");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+}
 
-    public void RunUserProgram(){
-        for(int i=0;i<UserProgramLength;i++){
-            BUS.tik();
-        }
-    }
-
-    public void SingleStepUserProgram(){
-        BUS.tik();
-    }
+    //// user should have right to chose where their file come from
+//    public void bootLoader() {
+//        String txtPath = "C:\\Users\\QiTianYi\\Desktop\\UserProgram.txt";
+//        loadUserProgramFromTxt(txtPath);
+//        System.out.println("DEBUG: WE SET THE USER PROGRAM LOCATION TO 40(FIRST INSTR).");
+//        int i= 0;
+//        for(i=0;i<UserProgram.size();i++){
+//            DataMemory.set(40+i, (String) UserProgram.get(i));
+//        }
+//        componets.getPC().setValue(40);
+//        UserProgramLength = i;
+//        System.out.println("DEBUG: THE LENGTH OF THE USER RROGRAM:"+UserProgramLength);
+//
+//    }
+//
+//    private void loadUserProgramFromTxt(String txtPath){
+//        try {
+//            int i = 0;
+//            File file = new File(txtPath);
+//            InputStreamReader reader = new InputStreamReader(
+//                    new FileInputStream(file));
+//            BufferedReader br = new BufferedReader(reader);
+//            String line = null;
+//            while((line = br.readLine()) != null){
+//                if (line.length()>16){
+//                    line = line.substring(0,16);
+//                }
+//                UserProgram.add(line);
+//                i++;
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+//    public void RunUserProgram(){
+//        for(int i=0;i<UserProgramLength;i++){
+//            BUS.tik();
+//        }
+//    }
+//
+//    public void SingleStepUserProgram(){
+//        BUS.tik();
+//    }
 
 /*
     //DEBUG Use only...
@@ -144,10 +147,10 @@ public class Simulator {
     }
 
 */
-
-    public static void main(String[] args) {
-        Simulator simulator = new Simulator();
-        simulator.bootLoader();
-    }
-}
+//
+//    public static void main(String[] args) {
+//        Simulator simulator = new Simulator();
+//        simulator.bootLoader();
+//    }
+//}
 
