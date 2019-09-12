@@ -19,6 +19,10 @@ public class Bus {
         return isHalt;
     }
 
+    public void setHalt(){
+        isHalt = true;
+    }
+
     public void tik() {
         // MAR <- PC,PC++;
         componets.getMAR().setValue(componets.getPC().getValue());

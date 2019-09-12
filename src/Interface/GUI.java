@@ -55,6 +55,7 @@ public class GUI extends JFrame {
     private JTextArea Console;
     private JPanel IOOutputPanel;
     private JButton LoadMEMButton;
+    private JButton HALTButton;
     private Simulator simulator;
     private String IOString;
 
@@ -309,6 +310,17 @@ public class GUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == RUNButton) {
                     simulator.BUS.run();
+                    flushData(simulator.componets);
+                }
+
+            }
+        });
+
+        HALTButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == HALTButton) {
+                    simulator.BUS.setHalt();
                     flushData(simulator.componets);
                 }
 

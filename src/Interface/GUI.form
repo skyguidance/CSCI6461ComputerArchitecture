@@ -360,6 +360,12 @@
               <text value="RUN"/>
             </properties>
           </component>
+          <component id="9742e" class="javax.swing.JButton" binding="HALTButton" default-binding="true">
+            <constraints/>
+            <properties>
+              <text value="HALT"/>
+            </properties>
+          </component>
           <component id="7fa2a" class="javax.swing.JButton" binding="SINGLESTEPButton">
             <constraints/>
             <properties>
