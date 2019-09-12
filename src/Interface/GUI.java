@@ -56,9 +56,74 @@ public class GUI extends JFrame {
     private JPanel IOOutputPanel;
     private JButton LoadMEMButton;
     private JButton HALTButton;
+    private JCheckBox ToDECcheckbox;
+    private JCheckBox EXPANDMEMCheckbox;
     private Simulator simulator;
     private String IOString;
 
+
+    private void SetInputLimiterDEC(){
+        //PCInput
+        LimitedDocument PCInputLimiter = new LimitedDocument(4);
+        PCInputLimiter.setAllowChar("1234567890");
+        PCInput.setDocument(PCInputLimiter);
+        //IRInput
+        LimitedDocument IRInputLimiter = new LimitedDocument(5);
+        IRInputLimiter.setAllowChar("1234567890");
+        IRInput.setDocument(IRInputLimiter);
+        //MARInput
+        LimitedDocument MARInputLimiter = new LimitedDocument(5);
+        MARInputLimiter.setAllowChar("1234567890");
+        MARInput.setDocument(MARInputLimiter);
+        //MBRInput
+        LimitedDocument MBRInputLimiter = new LimitedDocument(5);
+        MBRInputLimiter.setAllowChar("1234567890");
+        MBRInput.setDocument(MBRInputLimiter);
+        //MFRInput
+        LimitedDocument MFRInputLimiter = new LimitedDocument(5);
+        MFRInputLimiter.setAllowChar("1234567890");
+        MFRInput.setDocument(MFRInputLimiter);
+        //R0Input
+        LimitedDocument R0InputLimiter = new LimitedDocument(5);
+        R0InputLimiter.setAllowChar("1234567890");
+        R0Input.setDocument(R0InputLimiter);
+        //R1Input
+        LimitedDocument R1InputLimiter = new LimitedDocument(5);
+        R1InputLimiter.setAllowChar("1234567890");
+        R1Input.setDocument(R1InputLimiter);
+        //R2Input
+        LimitedDocument R2InputLimiter = new LimitedDocument(5);
+        R2InputLimiter.setAllowChar("1234567890");
+        R2Input.setDocument(R2InputLimiter);
+        //R3Input
+        LimitedDocument R3InputLimiter = new LimitedDocument(5);
+        R3InputLimiter.setAllowChar("1234567890");
+        R3Input.setDocument(R3InputLimiter);
+        //IX1Input
+        LimitedDocument IX1InputLimiter = new LimitedDocument(5);
+        IX1InputLimiter.setAllowChar("1234567890");
+        IX1Input.setDocument(IX1InputLimiter);
+        //IX2Input
+        LimitedDocument IX2InputLimiter = new LimitedDocument(5);
+        IX2InputLimiter.setAllowChar("1234567890");
+        IX2Input.setDocument(IX2InputLimiter);
+        //IX3Input
+        LimitedDocument IX3InputLimiter = new LimitedDocument(5);
+        IX3InputLimiter.setAllowChar("1234567890");
+        IX3Input.setDocument(IX3InputLimiter);
+        //DMValueInput
+        LimitedDocument DMValueInputLimiter = new LimitedDocument(5);
+        DMValueInputLimiter.setAllowChar("1234567890");
+        DMValueInput.setDocument(DMValueInputLimiter);
+        //DM-Address
+        LimitedDocument DMAddLimiter = new LimitedDocument(5);
+        DMAddLimiter.setAllowChar("1234567890");
+        DMAddressInput.setDocument(DMAddLimiter);
+        //Flush GUI
+        flushDataDEC(simulator.componets);
+        DMValueInput.setText("0000000000000000");
+        DMAddressInput.setText("000000000000");
+    }
 
     private void SetInputLimiter(){
         //PCInput
@@ -149,9 +214,9 @@ public class GUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == IRInput) {
-                    simulator.componets.IR.setValue(IRInput.getText());
-                    IOString = IOString+"\n"+ "IR=>"+IRInput.getText();
-                    flushData(simulator.componets);
+                        simulator.componets.IR.setValue(IRInput.getText());
+                        IOString = IOString+"\n"+ "IR=>"+IRInput.getText();
+                        flushData(simulator.componets);
                 }
             }
         });
@@ -353,6 +418,38 @@ public class GUI extends JFrame {
             }
         }));
 
+        ToDECcheckbox.addActionListener((new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == ToDECcheckbox){
+                    if (ToDECcheckbox.isSelected()){
+                        // DEC
+                        SetInputLimiterDEC();
+                        flushDataDEC(simulator.componets);
+
+                    }
+                    else{
+                        // BIN
+                        SetInputLimiter();
+                        flushData(simulator.componets);
+                    }
+                }
+            }
+        }));
+
+        EXPANDMEMCheckbox.addActionListener((new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == EXPANDMEMCheckbox){
+                    if(EXPANDMEMCheckbox.isSelected()){
+                        simulator.DataMemory.expandMEM();
+                    }
+                    else{
+                        simulator.DataMemory.shrinkMEM();
+                    }
+                }
+            }
+        }));
 
 
     }
@@ -391,6 +488,41 @@ public class GUI extends JFrame {
         CC3Button.setSelected(data.CC3.get());
         CC4Button.setSelected(data.CC4.get());
     }
+
+    public void flushDataDEC(Componets data) {
+        redirectSystemStreams();
+        PCInput.setText(""+data.PC.getValue());
+        IRInput.setText(""+data.IR.getValue());
+        MARInput.setText(""+data.MAR.getValue());
+        MBRInput.setText(""+data.MBR.getValue());
+        MFRInput.setText(""+data.MFR.getValue());
+        R0Input.setText(""+data.R0.getValue());
+        R1Input.setText(""+data.R1.getValue());
+        R2Input.setText(""+data.R2.getValue());
+        R3Input.setText(""+data.R3.getValue());
+        IX1Input.setText(""+data.IX1.getValue());
+        IX2Input.setText(""+data.IX2.getValue());
+        IX3Input.setText(""+data.IX3.getValue());
+        if (DMAddressInput.getText().equals("")){
+            DMAddressInput.setText("0");
+        }
+        else{
+            DMAddressInput.setText(""+Integer.valueOf(DMAddressInput.getText(),2));
+        }
+        if (DMValueInput.getText().equals("")){
+            DMValueInput.setText("0");
+        }
+        else{
+            DMValueInput.setText(""+Integer.valueOf(DMValueInput.getText(),2));
+        }
+
+        //Console.setText(IOString);
+        CC1Button.setSelected(data.CC1.get());
+        CC2Button.setSelected(data.CC2.get());
+        CC3Button.setSelected(data.CC3.get());
+        CC4Button.setSelected(data.CC4.get());
+    }
+
 
     private void updateTextArea(final String text) {
         SwingUtilities.invokeLater(new Runnable() {

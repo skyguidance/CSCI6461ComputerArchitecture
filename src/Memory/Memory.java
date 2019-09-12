@@ -4,18 +4,28 @@ package Memory;
 import java.util.HashMap;
 import java.util.logging.Logger;
 
-@SuppressWarnings({"ALL", "AlibabaLowerCamelCaseVariableNaming"})
+
 public class Memory {
     HashMap<Integer, Integer> memory;
+    private int DMADDRESSMAX = 2048;
+
     final Logger logging = Logger.getLogger("CPU.Memory");
 
     public Memory() {
         memory = new HashMap<>();
     }
 
+    public void expandMEM(){
+        DMADDRESSMAX = 4096;
+    }
+
+    public void shrinkMEM(){
+        DMADDRESSMAX = 2048;
+    }
+
     public void set(String address, String value) {
         int addressInt = Integer.valueOf(address, 2);
-        if (addressInt < 2048 && value.length() <= 16) {
+        if (addressInt < DMADDRESSMAX && value.length() <= 16) {
             memory.put(addressInt, Integer.valueOf(value,2));
             logging.info("MEM[" + address + "(" + addressInt + ")" + "]=>" + value + "(" + Integer.valueOf(value, 2).toString() + ")");
             System.out.println("MEM[" + address + "(" + addressInt + ")" + "]=>" + value + "(" + Integer.valueOf(value, 2).toString() + ")");
@@ -28,7 +38,7 @@ public class Memory {
     public void UserSet(String address, String value){
         // This set function protect the reserved memory area.
         int addressInt = Integer.valueOf(address, 2);
-        if (addressInt < 2048 && addressInt >5 && value.length() <= 16) {
+        if (addressInt < DMADDRESSMAX && addressInt >5 && value.length() <= 16) {
             memory.put(addressInt, Integer.valueOf(value,2));
             logging.info("MEM[" + address + "(" + addressInt + ")" + "]=>" + value + "(" + Integer.valueOf(value, 2).toString() + ")");
             System.out.println("MEM[" + address + "(" + addressInt + ")" + "]=>" + value + "(" + Integer.valueOf(value, 2).toString() + ")");
@@ -39,7 +49,7 @@ public class Memory {
     }
 
 
-    @SuppressWarnings("AlibabaLowerCamelCaseVariableNaming")
+
     public void set(int address, String Value) {
         String addressString = ToBinaryString(address);
         set(addressString,Value);
@@ -51,7 +61,7 @@ public class Memory {
         set(addressString,valueString);
     }
 
-    @SuppressWarnings("AlibabaLowerCamelCaseVariableNaming")
+
     public int get(String address){
         int IntAddress = Integer.valueOf(address,2);
         return get(IntAddress);
@@ -68,7 +78,7 @@ public class Memory {
         }
     }
 
-    @SuppressWarnings("AlibabaLowerCamelCaseVariableNaming")
+
     public String ToBinaryString(int value) {
         String a=Integer.toBinaryString(value);// Change to BinaryString
         String Stringlength=""+16;
