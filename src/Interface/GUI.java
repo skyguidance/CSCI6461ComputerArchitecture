@@ -58,11 +58,12 @@ public class GUI extends JFrame {
     private JButton HALTButton;
     private JCheckBox ToDECcheckbox;
     private JCheckBox EXPANDMEMCheckbox;
+    private JCheckBox GodViewButton;
     private Simulator simulator;
     private String IOString;
 
 
-    private void SetInputLimiterDEC(){
+    private void SetInputLimiterDEC() {
         //PCInput
         LimitedDocument PCInputLimiter = new LimitedDocument(4);
         PCInputLimiter.setAllowChar("1234567890");
@@ -125,7 +126,7 @@ public class GUI extends JFrame {
         DMAddressInput.setText("000000000000");
     }
 
-    private void SetInputLimiter(){
+    private void SetInputLimiter() {
         //PCInput
         LimitedDocument PCInputLimiter = new LimitedDocument(12);
         PCInputLimiter.setAllowChar("01");
@@ -204,7 +205,7 @@ public class GUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == PCInput) {
                     simulator.componets.PC.setValue(PCInput.getText());
-                    IOString = IOString+"\n"+ "PC=>"+PCInput.getText();
+                    IOString = IOString + "\n" + "PC=>" + PCInput.getText();
                     flushData(simulator.componets);
                 }
             }
@@ -214,9 +215,9 @@ public class GUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == IRInput) {
-                        simulator.componets.IR.setValue(IRInput.getText());
-                        IOString = IOString+"\n"+ "IR=>"+IRInput.getText();
-                        flushData(simulator.componets);
+                    simulator.componets.IR.setValue(IRInput.getText());
+                    IOString = IOString + "\n" + "IR=>" + IRInput.getText();
+                    flushData(simulator.componets);
                 }
             }
         });
@@ -226,7 +227,7 @@ public class GUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == MARInput) {
                     simulator.componets.MAR.setValue(MARInput.getText());
-                    IOString = IOString+"\n"+ "MAR=>"+MARInput.getText();
+                    IOString = IOString + "\n" + "MAR=>" + MARInput.getText();
                     flushData(simulator.componets);
                 }
             }
@@ -237,7 +238,7 @@ public class GUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == MBRInput) {
                     simulator.componets.MBR.setValue(MBRInput.getText());
-                    IOString = IOString+"\n"+ "MBR=>"+MBRInput.getText();
+                    IOString = IOString + "\n" + "MBR=>" + MBRInput.getText();
                     flushData(simulator.componets);
                 }
             }
@@ -248,7 +249,7 @@ public class GUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == MFRInput) {
                     simulator.componets.MFR.setValue(MFRInput.getText());
-                    IOString = IOString+"\n"+ "MFR=>"+MFRInput.getText();
+                    IOString = IOString + "\n" + "MFR=>" + MFRInput.getText();
                     flushData(simulator.componets);
                 }
             }
@@ -259,7 +260,7 @@ public class GUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == R0Input) {
                     simulator.componets.R0.setValue(R0Input.getText());
-                    IOString = IOString+"\n"+ "R0=>"+R0Input.getText();
+                    IOString = IOString + "\n" + "R0=>" + R0Input.getText();
                     flushData(simulator.componets);
                 }
             }
@@ -270,7 +271,7 @@ public class GUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == R1Input) {
                     simulator.componets.R1.setValue(R1Input.getText());
-                    IOString = IOString+"\n"+ "R1=>"+R1Input.getText();
+                    IOString = IOString + "\n" + "R1=>" + R1Input.getText();
                     flushData(simulator.componets);
                 }
             }
@@ -281,7 +282,7 @@ public class GUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == R2Input) {
                     simulator.componets.R2.setValue(R2Input.getText());
-                    IOString = IOString+"\n"+ "R2=>"+R2Input.getText();
+                    IOString = IOString + "\n" + "R2=>" + R2Input.getText();
                     flushData(simulator.componets);
                 }
             }
@@ -292,7 +293,7 @@ public class GUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == R3Input) {
                     simulator.componets.R3.setValue(R3Input.getText());
-                    IOString = IOString+"\n"+ "R3=>"+R3Input.getText();
+                    IOString = IOString + "\n" + "R3=>" + R3Input.getText();
                     flushData(simulator.componets);
                 }
             }
@@ -303,7 +304,7 @@ public class GUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == IX1Input) {
                     simulator.componets.IX1.setValue(IX1Input.getText());
-                    IOString = IOString+"\n"+ "IX1=>"+IX1Input.getText();
+                    IOString = IOString + "\n" + "IX1=>" + IX1Input.getText();
                     flushData(simulator.componets);
                 }
             }
@@ -314,7 +315,7 @@ public class GUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == IX2Input) {
                     simulator.componets.IX2.setValue(IX2Input.getText());
-                    IOString = IOString+"\n"+ "IX2=>"+IX2Input.getText();
+                    IOString = IOString + "\n" + "IX2=>" + IX2Input.getText();
                     flushData(simulator.componets);
                 }
             }
@@ -325,7 +326,7 @@ public class GUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == IX3Input) {
                     simulator.componets.IX3.setValue(IX3Input.getText());
-                    IOString = IOString+"\n"+ "IX3=>"+IX3Input.getText();
+                    IOString = IOString + "\n" + "IX3=>" + IX3Input.getText();
                     flushData(simulator.componets);
                 }
             }
@@ -347,8 +348,8 @@ public class GUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == DMwriteButton) {
-                    simulator.DataMemory.UserSet(DMAddressInput.getText(),DMValueInput.getText());
-                    IOString = IOString+"\n"+ "MEM["+DMAddressInput.getText()+"]=>"+DMValueInput.getText();
+                    simulator.DataMemory.UserSet(DMAddressInput.getText(), DMValueInput.getText());
+                    IOString = IOString + "\n" + "MEM[" + DMAddressInput.getText() + "]=>" + DMValueInput.getText();
                     flushData(simulator.componets);
                 }
 
@@ -407,11 +408,11 @@ public class GUI extends JFrame {
         LoadMEMButton.addActionListener((new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (e.getSource() == LoadMEMButton){
+                if (e.getSource() == LoadMEMButton) {
                     int select = MEMFileChooser.showOpenDialog(null);
-                    if(select == MEMFileChooser.APPROVE_OPTION){
+                    if (select == MEMFileChooser.APPROVE_OPTION) {
                         File MEMFile = MEMFileChooser.getSelectedFile();
-                        System.out.println("[MEMLOAD]MAPPING MEM FROM FILE:"+MEMFile.getName());
+                        System.out.println("[MEMLOAD]MAPPING MEM FROM FILE:" + MEMFile.getName());
                         simulator.loadMEMfromFile(MEMFile);
                     }
                 }
@@ -421,14 +422,13 @@ public class GUI extends JFrame {
         ToDECcheckbox.addActionListener((new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (e.getSource() == ToDECcheckbox){
-                    if (ToDECcheckbox.isSelected()){
+                if (e.getSource() == ToDECcheckbox) {
+                    if (ToDECcheckbox.isSelected()) {
                         // DEC
                         SetInputLimiterDEC();
                         flushDataDEC(simulator.componets);
 
-                    }
-                    else{
+                    } else {
                         // BIN
                         SetInputLimiter();
                         flushData(simulator.componets);
@@ -437,14 +437,38 @@ public class GUI extends JFrame {
             }
         }));
 
+        GodViewButton.addActionListener((new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == GodViewButton) {
+                    if (GodViewButton.isSelected()) {
+                        IRInput.setEditable(true);
+                        CC1Button.setEnabled(true);
+                        CC2Button.setEnabled(true);
+                        CC3Button.setEnabled(true);
+                        CC4Button.setEnabled(true);
+                        MFRInput.setEditable(true);
+                        System.out.println("GOD VIEW:DUMPING CURRENT MEM INFO...");
+                        simulator.DataMemory.PrintHashMap();
+                    } else {
+                        IRInput.setEditable(false);
+                        CC1Button.setEnabled(false);
+                        CC2Button.setEnabled(false);
+                        CC3Button.setEnabled(false);
+                        CC4Button.setEnabled(false);
+                        MFRInput.setEditable(false);
+                    }
+                }
+            }
+        }));
+
         EXPANDMEMCheckbox.addActionListener((new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (e.getSource() == EXPANDMEMCheckbox){
-                    if(EXPANDMEMCheckbox.isSelected()){
+                if (e.getSource() == EXPANDMEMCheckbox) {
+                    if (EXPANDMEMCheckbox.isSelected()) {
                         simulator.DataMemory.expandMEM();
-                    }
-                    else{
+                    } else {
                         simulator.DataMemory.shrinkMEM();
                     }
                 }
@@ -462,8 +486,6 @@ public class GUI extends JFrame {
         jFrame.pack();
         jFrame.setVisible(true);
         // Simulator simulator = new Simulator();
-
-
 
 
     }
@@ -491,29 +513,27 @@ public class GUI extends JFrame {
 
     public void flushDataDEC(Componets data) {
         redirectSystemStreams();
-        PCInput.setText(""+data.PC.getValue());
-        IRInput.setText(""+data.IR.getValue());
-        MARInput.setText(""+data.MAR.getValue());
-        MBRInput.setText(""+data.MBR.getValue());
-        MFRInput.setText(""+data.MFR.getValue());
-        R0Input.setText(""+data.R0.getValue());
-        R1Input.setText(""+data.R1.getValue());
-        R2Input.setText(""+data.R2.getValue());
-        R3Input.setText(""+data.R3.getValue());
-        IX1Input.setText(""+data.IX1.getValue());
-        IX2Input.setText(""+data.IX2.getValue());
-        IX3Input.setText(""+data.IX3.getValue());
-        if (DMAddressInput.getText().equals("")){
+        PCInput.setText("" + data.PC.getValue());
+        IRInput.setText("" + data.IR.getValue());
+        MARInput.setText("" + data.MAR.getValue());
+        MBRInput.setText("" + data.MBR.getValue());
+        MFRInput.setText("" + data.MFR.getValue());
+        R0Input.setText("" + data.R0.getValue());
+        R1Input.setText("" + data.R1.getValue());
+        R2Input.setText("" + data.R2.getValue());
+        R3Input.setText("" + data.R3.getValue());
+        IX1Input.setText("" + data.IX1.getValue());
+        IX2Input.setText("" + data.IX2.getValue());
+        IX3Input.setText("" + data.IX3.getValue());
+        if (DMAddressInput.getText().equals("")) {
             DMAddressInput.setText("0");
+        } else {
+            DMAddressInput.setText("" + Integer.valueOf(DMAddressInput.getText(), 2));
         }
-        else{
-            DMAddressInput.setText(""+Integer.valueOf(DMAddressInput.getText(),2));
-        }
-        if (DMValueInput.getText().equals("")){
+        if (DMValueInput.getText().equals("")) {
             DMValueInput.setText("0");
-        }
-        else{
-            DMValueInput.setText(""+Integer.valueOf(DMValueInput.getText(),2));
+        } else {
+            DMValueInput.setText("" + Integer.valueOf(DMValueInput.getText(), 2));
         }
 
         //Console.setText(IOString);
@@ -555,6 +575,5 @@ public class GUI extends JFrame {
         //DEBUG ONLY:Redirect the Error to GUI-IO.
         System.setErr(new PrintStream(out, true));
     }
-
 }
 

@@ -42,6 +42,8 @@
               <gridbag weightx="0.0" weighty="0.0"/>
             </constraints>
             <properties>
+              <editable value="false"/>
+              <enabled value="true"/>
               <text value="0000000000000000"/>
             </properties>
           </component>
@@ -242,6 +244,7 @@
               <gridbag weightx="0.0" weighty="0.0"/>
             </constraints>
             <properties>
+              <editable value="false"/>
               <text value="0000000000000000"/>
             </properties>
           </component>
@@ -381,7 +384,13 @@
           <component id="eaac9" class="javax.swing.JCheckBox" binding="ToDECcheckbox">
             <constraints/>
             <properties>
-              <text value="SHOW AS DEC"/>
+              <text value="Show as Decimal"/>
+            </properties>
+          </component>
+          <component id="9ccc2" class="javax.swing.JCheckBox" binding="GodViewButton">
+            <constraints/>
+            <properties>
+              <text value="GodView"/>
             </properties>
           </component>
         </children>
@@ -476,7 +485,7 @@
               <component id="2ac14" class="javax.swing.JLabel">
                 <constraints border-constraint="North"/>
                 <properties>
-                  <text value="I/O display panel"/>
+                  <text value="Console Display"/>
                   <verticalTextPosition value="0"/>
                 </properties>
               </component>
