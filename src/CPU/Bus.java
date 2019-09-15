@@ -47,12 +47,7 @@ public class Bus {
             }
         }
     }
-    public void run(String instruction){
-        String line = null;
-        while ((line = reader.readLine()) != null) {
-            // do something with every line, one at a time
-        }
-    }
+
 
     /***
      * This fuction is to set the specific Instr right to IR and do the rest.
