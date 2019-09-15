@@ -36,7 +36,9 @@ public class Bus {
         // ALU Process
         executeInstruction(calculateEA());
     }
-
+/*/
+ this is an infinate loop ? problem
+ */
     public void run(){
         while(true){
             tik();
@@ -45,22 +47,30 @@ public class Bus {
             }
         }
     }
+    public void run(String instruction){
+        String line = null;
+        while ((line = reader.readLine()) != null) {
+            // do something with every line, one at a time
+        }
+    }
 
-
+    /***
+     * This fuction is to set the specific Instr right to IR and do the rest.
+     * Just for DEBUG only.
+     * This fuction will by-pass PC.
+     */
     public void evaulateInstruction(int instruction){
-        /***
-         * This fuction is to set the specific Instr right to IR and do the rest.
-         * Just for DEBUG only.
-         * This fuction will by-pass PC.
-         */
+
         componets.getIR().setValue(instruction);
         componets.getCU().decodeInstruction(componets.getIR().getValue());
         executeInstruction(calculateEA());
     }
+/*
+this function is to calculate effective address
 
-
+ */
     private int calculateEA() {
-        int address = componets.getCU().getAddress();
+        int address = componets.getCU().getAddress();// get decode addrss
 
         if (componets.getCU().getI() == 0) {
             if (componets.getCU().getIX() == 0) {
@@ -84,7 +94,7 @@ public class Bus {
     /**
      * ALU, DataMemory, WriteBack;
      *
-     * @param EA
+     *
      */
     private void executeInstruction(int ea) {
         switch (componets.getCU().getOpcode()) {
@@ -100,7 +110,7 @@ public class Bus {
             }
             case 2: {
                 // Store the GPR to MEM[EA].(Trigger DMWriteEnable.)
-                dataMemory.set(ea, componets.getGPRRegister().getValue());
+                dataMemory.set(ea, componets.getGPRRegister().getValue(),true);
                 break;
             }
             case 3: {
@@ -115,7 +125,7 @@ public class Bus {
             }
             case 42: {
                 // Store the IX to MEM[EA].
-                dataMemory.set(ea, componets.getIXRegister().getValue());
+                dataMemory.set(ea, componets.getIXRegister().getValue(),true);
                 break;
             }
             default:

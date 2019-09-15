@@ -2,7 +2,9 @@ package CPU;
 
 
 import java.util.logging.Logger;
-
+/*
+this class is a collection of all Registers in CPU we initialized
+ */
 public class Componets {
     public Condition_Code CC1, CC2, CC3, CC4;
     public General_Purpose_Registers R0, R1, R2, R3;
@@ -42,6 +44,9 @@ public class Componets {
         PC = new ProgramCounter(6);
         CU = new ControlUnit(IR.ToBinaryString());//16 0's
     }
+    /*
+    find the GPR we are working on right now
+     */
     public Register getGPRRegister(){
         int index=CU.getR();
         if(index==0){return R0;}
@@ -49,6 +54,9 @@ public class Componets {
         if(index==2){return R2;}
         else{ return R3;}
     }
+    /*
+   find the IX we are working on right now
+    */
     public Register getIXRegister(){
         int index=CU.getIX();
         if(index==1){return IX1;}

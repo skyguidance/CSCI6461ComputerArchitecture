@@ -3,6 +3,9 @@ package CPU;
 import java.util.logging.Logger;
 
 public class ControlUnit {
+    /*
+    this is place we decode our instructions and store the result temporary
+     */
 
     private int opcode,I,R,IX,address;
     final Logger logging = Logger.getLogger("CPU.ControlUnit");
