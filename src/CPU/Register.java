@@ -1,5 +1,9 @@
 package CPU;
 import java.util.logging.Logger;
+
+/*
+  all register are extended from this class
+ */
 public class Register {
 	private int value,length;
 	private  String name;
@@ -10,13 +14,16 @@ public class Register {
 		this.name=name;
 		setValue(value);
 	}
-
+/*
+ convert value to binary string
+ */
 	public String ToBinaryString() {
 		String a=Integer.toBinaryString(value);// Change to BinaryString
 		String Stringlength=""+length;
 		String format="%0numberd".replace("number", Stringlength);
 		return String.format(format,Long.valueOf(a));//
 	}
+
 
 
 	public int getValue() {

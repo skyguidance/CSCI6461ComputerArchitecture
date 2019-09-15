@@ -1,7 +1,9 @@
 package CPU;
 
 import java.util.logging.Logger;
-
+/*
+PC register
+ */
 
 public class ProgramCounter extends Register{
     public ProgramCounter(int value) {
