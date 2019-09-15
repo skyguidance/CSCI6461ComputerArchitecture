@@ -1,10 +1,6 @@
 package Memory;
 
 
-import CPU.Instruction_Register;
-import com.sun.tools.javac.comp.Todo;
-
-import javax.swing.plaf.multi.MultiSeparatorUI;
 import java.util.HashMap;
 import java.util.logging.Logger;
 
@@ -18,67 +14,71 @@ public class Memory {
     public Memory() {
         memory = new HashMap<>();
     }
-/*
- size of mem
- */
-    public void expandMEM(){
+
+    /*
+     size of mem
+     */
+    public void expandMEM() {
         DMADDRESSMAX = 4096;
     }
-/*
-size of mem
- */
-    public void shrinkMEM(){
+
+    /*
+    size of mem
+     */
+    public void shrinkMEM() {
         DMADDRESSMAX = 2048;
     }
 
     /*
        set up address and value of memory
      */
-   // TODO make sure if user edit on same address with different value
+    // TODO make sure if user edit on same address with different value
     public void set(String address, String value) {
         int addressInt = Integer.valueOf(address, 2);
         if (addressInt < DMADDRESSMAX && value.length() <= 16) {
-            memory.put(addressInt, Integer.valueOf(value,2));
+            memory.put(addressInt, Integer.valueOf(value, 2));
             logging.info("MEM[" + address + "(" + addressInt + ")" + "]=>" + value + "(" + Integer.valueOf(value, 2).toString() + ")");
+            System.out.println("MEM[" + address + "(" + addressInt + ")" + "]=>" + value + "(" + Integer.valueOf(value, 2).toString() + ")");
         } else {
             logging.severe("INVALID:MEM[" + address + "(" + addressInt + ")" + "]=>" + value + "(" + Long.valueOf(value, 2).toString() + ")");
+            System.out.println("INVALID:MEM[" + address + "(" + addressInt + ")" + "]=>" + value + "(" + Long.valueOf(value, 2).toString() + ")");
         }
     }
 
-    public void UserSet(String address, String value,boolean DecOrBinary ){
+    public void set(int address, int value, boolean UserOrNot) {
+        if (UserOrNot && address > 5 && address < DMADDRESSMAX && value <= 65536) {
+            memory.put(address, value);
+            logging.info("MEM[" + ToBinaryString(address) + "(" + address + ")" + "]=>" + ToBinaryString(value) + "(" + value + ")");
+            System.out.println("MEM[" + ToBinaryString(address) + "(" + address + ")" + "]=>" + ToBinaryString(value) + "(" + value + ")");
+        } else if (!UserOrNot && address < DMADDRESSMAX && value <= 65536) {
+            memory.put(address, value);
+            logging.info("MEM[" + ToBinaryString(address) + "(" + address + ")" + "]=>" + ToBinaryString(value) + "(" + value + ")");
+            System.out.println("MEM[" + ToBinaryString(address) + "(" + address + ")" + "]=>" + ToBinaryString(value) + "(" + value + ")");
+
+        } else {
+            logging.severe("INVALID:MEM[" + ToBinaryString(address) + "(" + address + ")" + "]=>" + ToBinaryString(value) + "(" + value + ")");
+            System.out.println("INVALID:MEM[" + ToBinaryString(address) + "(" + address + ")" + "]=>" + ToBinaryString(value) + "(" + value + ")");
+
+        }
+    }
+
+    public void UserSet(String address, String value, boolean DecOrBinary) {
         // This set function protect the reserved memory area.
-        int addressInt ;
+        int addressInt;
         int valueInt;
-        if(DecOrBinary){
-       addressInt = Integer.valueOf(address, 2);
-       valueInt= Integer.valueOf(value, 2);
-        }else {
-            addressInt=Integer.valueOf(address);
-            valueInt= Integer.valueOf(value);
+        if (DecOrBinary) {
+            addressInt = Integer.valueOf(address, 2);
+            valueInt = Integer.valueOf(value, 2);
+        } else {
+            addressInt = Integer.valueOf(address);
+            valueInt = Integer.valueOf(value);
         }
-        set(addressInt,valueInt,true);
+        set(addressInt, valueInt, true);
     }
 
-        public void set(int address,int value,boolean UserOrNot ){
-        if(UserOrNot&& address>5&& address<DMADDRESSMAX&& value<=65536){
-            memory.put(address, value);
-            logging.info("MEM[" + address + "(" + address + ")" + "]=>" + value + "(" + value + ")");
-        }
-    else if (!UserOrNot&&address < DMADDRESSMAX  && value <= 6553){
-            memory.put(address, value);
-            logging.info("MEM[" + address + "(" + address + ")" + "]=>" + value + "(" + value + ")");
 
-    } else {
-        logging.severe("INVALID:MEM[" + address + "(" + address + ")" + "]=>" + value + "(" + value + ")");
-
-    }
-}
-
-
-
-
-    public int get(String address){
-        int IntAddress = Integer.valueOf(address,2);
+    public int get(String address) {
+        int IntAddress = Integer.valueOf(address, 2);
         return get(IntAddress);
     }
 
@@ -93,15 +93,14 @@ size of mem
         }
     }
 
-
     public String ToBinaryString(int value) {
-        String a=Integer.toBinaryString(value);// Change to BinaryString
-        String Stringlength=""+16;
-        String format="%0numberd".replace("number", Stringlength);
-        return String.format(format,Long.valueOf(a));//
+        String a = Integer.toBinaryString(value);// Change to BinaryString
+        String Stringlength = "" + 16;
+        String format = "%0numberd".replace("number", Stringlength);
+        return String.format(format, Long.valueOf(a));//
     }
 
-    public void PrintHashMap(){
+    public void PrintHashMap() {
         for (Integer key : memory.keySet()) {
             System.out.println("DUMP:MEM[" + ToBinaryString(key) + "(" + key + ")" + "]=>" + ToBinaryString(memory.get(key)) + "(" + memory.get(key) + ")");
         }
