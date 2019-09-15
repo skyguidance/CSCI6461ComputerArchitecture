@@ -20,6 +20,7 @@ public class LimitedDocument extends PlainDocument {
         this._maxLength = maxLength;
     }
 
+    @Override
     public void insertString(int offset, String str, AttributeSet attrSet) throws BadLocationException {
         if (str == null) {
             return;
