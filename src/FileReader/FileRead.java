@@ -5,7 +5,7 @@ import java.io.*;
 public class FileRead {
     private  Reader fileRead;
 
-    public FileRead(Reader fileRead) throws IOException {
+    public FileRead(Reader fileRead) {
         this.fileRead=fileRead;
         }
 
@@ -16,13 +16,17 @@ public class FileRead {
         try (BufferedReader br = new BufferedReader(fileRead)) {
             String line;
             while ((line = br.readLine())!=null) {
-              if(line.startsWith("#")){
-              }
-              if(line.startsWith("MEM")){
+                String convertString;
+                if (line.startsWith("#")) {
+                }
+                if(line.startsWith("MEM")){
+                 convertString= ReadMEMtype(line);
+                  appendStrToFile(convertString);
 
               }
               else {
-
+                convertString=ReadandConvertOneLine(line);
+                  appendStrToFile(convertString);
               }
 
             }
@@ -30,16 +34,16 @@ public class FileRead {
             e.printStackTrace();
         }
     }
-    // not done yet
-    public String ReadMEMtype(String line){
-        String binarycode="";
+
+    private String ReadMEMtype(String line){
         String linepart[]=line.split(" ");
         String secondpart[]=linepart[1].split("->");
+        String binarycode = Integer.toBinaryString(Integer.valueOf(secondpart[0]))+Integer.toBinaryString(Integer.valueOf(secondpart[1]));
 
         return binarycode;
     }
 
-    public String ReadandConvertOneLine(String line){
+    private String ReadandConvertOneLine(String line){
 
         String linepart[]=line.split(" ");
         String opcode="";
@@ -81,7 +85,7 @@ public class FileRead {
         binaryLine=opcode+R+IX+I+Address;
         return  binaryLine+"/n";
     }
-    public static void appendStrToFile(String str)
+    private static void appendStrToFile(String str)
     {
         try {
             // Open given file in append mode.
