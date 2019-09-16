@@ -384,13 +384,14 @@
           <component id="eaac9" class="javax.swing.JCheckBox" binding="ToDECcheckbox">
             <constraints/>
             <properties>
-              <text value="Show as Decimal"/>
+              <enabled value="false"/>
+              <text value="Show as Decimal (Beta)"/>
             </properties>
           </component>
           <component id="9ccc2" class="javax.swing.JCheckBox" binding="GodViewButton">
             <constraints/>
             <properties>
-              <text value="GodView"/>
+              <text value="God Mode"/>
             </properties>
           </component>
         </children>

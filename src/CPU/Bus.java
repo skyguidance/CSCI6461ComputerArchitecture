@@ -94,7 +94,9 @@ this function is to calculate effective address
     private void executeInstruction(int ea) {
         switch (componets.getCU().getOpcode()) {
             case 0: {
+                //HALT
                 isHalt = true;
+                componets.PC.setValue(6); // Reset PC
                 System.out.println("BUS:HALT");
                 break;
             }

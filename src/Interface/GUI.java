@@ -336,8 +336,15 @@ public class GUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == DMReadButton) {
-                    int Memdata = simulator.DataMemory.get(DMAddressInput.getText());
-                    DMValueInput.setText(simulator.DataMemory.ToBinaryString(Memdata));
+                    if (ToDECcheckbox.isSelected()){
+                        int Memdata = simulator.DataMemory.get(Integer.valueOf(DMAddressInput.getText()));
+                        DMValueInput.setText(String.valueOf(Memdata));
+                    }
+                    else{
+                        int Memdata = simulator.DataMemory.get(DMAddressInput.getText());
+                        DMValueInput.setText(simulator.DataMemory.ToBinaryString(Memdata));
+                    }
+
                     flushData(simulator.componets);
                 }
 
@@ -348,8 +355,14 @@ public class GUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == DMwriteButton) {
-                    simulator.DataMemory.UserSet(DMAddressInput.getText(), DMValueInput.getText(),true);
-                    IOString = IOString + "\n" + "MEM[" + DMAddressInput.getText() + "]=>" + DMValueInput.getText();
+                    if (ToDECcheckbox.isSelected()){
+                        simulator.DataMemory.UserSet(DMAddressInput.getText(), DMValueInput.getText(),false);
+                        IOString = IOString + "\n" + "MEM[" + DMAddressInput.getText() + "]=>" + DMValueInput.getText();
+                    }
+                    else{
+                        simulator.DataMemory.UserSet(DMAddressInput.getText(), DMValueInput.getText(),true);
+                        IOString = IOString + "\n" + "MEM[" + DMAddressInput.getText() + "]=>" + DMValueInput.getText();
+                    }
                     flushData(simulator.componets);
                 }
 
@@ -431,7 +444,7 @@ public class GUI extends JFrame {
                     } else {
                         // BIN
                         SetInputLimiter();
-                        flushData(simulator.componets);
+                        flushDataBIN(simulator.componets);
                     }
                 }
             }
@@ -442,6 +455,7 @@ public class GUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == GodViewButton) {
                     if (GodViewButton.isSelected()) {
+                        ToDECcheckbox.setEnabled(true);
                         IRInput.setEditable(true);
                         CC1Button.setEnabled(true);
                         CC2Button.setEnabled(true);
@@ -451,6 +465,8 @@ public class GUI extends JFrame {
                         System.out.println("GOD VIEW:DUMPING CURRENT MEM INFO...");
                         simulator.DataMemory.PrintHashMap();
                     } else {
+                        ToDECcheckbox.setSelected(false);
+                        ToDECcheckbox.setEnabled(false);
                         IRInput.setEditable(false);
                         CC1Button.setEnabled(false);
                         CC2Button.setEnabled(false);
@@ -490,7 +506,18 @@ public class GUI extends JFrame {
 
     }
 
-    public void flushData(Componets data) {
+    public void flushData(Componets data){
+        if (ToDECcheckbox.isSelected()){
+            //DEC MODE
+            flushDataDEC(data);
+        }
+        else{
+            //BIN MODE
+            flushDataBIN(data);
+        }
+    }
+
+    public void flushDataBIN(Componets data) {
         redirectSystemStreams();
         PCInput.setText(data.PC.ToBinaryString());
         IRInput.setText(data.IR.ToBinaryString());
