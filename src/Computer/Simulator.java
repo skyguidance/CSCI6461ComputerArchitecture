@@ -48,7 +48,7 @@ public class Simulator {
             while ((line = br.readLine()) != null) {
                 String[] buff = line.split(",");
                 //buff[0]=address;buff[1]=data;
-                DataMemory.UserSet(buff[0], buff[1]);
+                DataMemory.UserSet(buff[0], buff[1], true);
                 i++;
             }
             System.out.println("[MEMLOAD]SET " + i + " MEMORY DATA TOTAL.");
