@@ -24,3 +24,9 @@ Here is an example:
 
 
 The example above load data "0000011100011111" to memory location 01,10,11,100.
+
+#### Usage of the assembly code translator
+1. Download your testing program (assembly code) and save it into a txt file.<br>
+2. Find the FileRead class in our project (src->FileReader->FileRead), and set the txtPath (Line 138) to yours.<br> 
+(Remember to use 2 backslash when you want to indicate slash in string!) <br>
+3. Run this class, and you will get the "Instruction.csv" file, which is compatible to the "LOAD MEM" function memtioned above.<br>
