@@ -32,6 +32,6 @@ The example above load data "0000011100011111" to memory location 01,10,11,100.
 3. Run this class, and you will get the "Instruction.csv" file, which is compatible to the "LOAD MEM" function memtioned above.<br>
 
 
-<H3>About testing <H3>
+#### About testing 
   
-  <br> There are smoe cases that could not be implied <br>   
+ There are smoe cases that could not be implied   
