@@ -1,13 +1,13 @@
 # CSCI 6461 Computer Architecture
-This is our 6461 Simple Computer Simulator
+This is our 6461 Simple Computer Simulator<br>
+Project Mannual:http://www.mslcourses.com/CSCI6461Section10Fall2019/AdaptedKaislerFiles/ClassProjectDescription.doc
 #### Clone This Project
 
-
+git clone https://github.com/skyguidance/CSCI6461ComputerArchitecture.git
 
 #### Update to the update-to-date version
 
-> git pull
-## :construction: Project Work In Progress for P1 :construction:
+> git pull 
 
 #### Detail about "LOAD MEM" Button
 
@@ -34,4 +34,6 @@ The example above load data "0000011100011111" to memory location 01,10,11,100.
 
 #### About testing 
   
- There are smoe cases that could not be implied   
+ There are some cases that could not be implied   
+
+## :construction: Project Work In Progress for P2 :construction:
