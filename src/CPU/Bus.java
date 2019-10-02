@@ -161,34 +161,67 @@ public class Bus {
                 break;
             }
             case 10: {
+                //JZ  jump to effective address if register is 0
+                if(componets.getGPRRegister().getValue()==0){
+                    componets.getPC().setValue(ea);
+                }
+               else{ componets.getPC().incrementOne();}
 
                 break;
             }
             case 11: {
+                //JNE  jump to effective address if register is not 0
+                if(componets.getGPRRegister().getValue()!=0){
+                    componets.getPC().setValue(ea);
+                }
+                else{ componets.getPC().incrementOne();}
 
                 break;
             }
             case 12: {
+                //JNE  jump to effective address if CC is 1
+                if(componets.getCC().getValue()==1){
+                    componets.getPC().setValue(ea);
+                }
+                else{ componets.getPC().incrementOne();}
 
                 break;
             }
             case 13: {
+                //JMA  jump to effective address if CC is 1
+
+                    componets.getPC().setValue(ea);
+                break;
+            }
+            case 14: {//JSR TODO unkonw for R0
+                componets.R3.setValue(componets.getPC().getValue()+1);
+                componets.getPC().setValue(ea);
 
                 break;
             }
-            case 14: {
+            case 15: {//RFS Return From Subroutine w/
+                // return code as Immed portion (optional) stored in the instruction’s address field.
+                componets.R0.setValue(componets.getCU().getAddress());
+
+                componets.getPC().setValue(componets.R3.getValue());
+                break;
+            }
+            case 16: {//SOB
+                componets.getGPRRegister().setValue(componets.getGPRRegister().getValue()-1);
+
+                if(componets.getGPRRegister().getValue()>0){
+                    componets.getPC().setValue(ea);
+                }
+                else{ componets.getPC().incrementOne();}
+
 
                 break;
             }
-            case 15: {
-
-                break;
-            }
-            case 16: {
-
-                break;
-            }
-            case 17: {
+            case 17: {//JGE
+                if(componets.getGPRRegister().getValue()>=0){
+                    componets.getPC().setValue(ea);
+                }
+                else{ componets.getPC().incrementOne();}
 
                 break;
             }

@@ -7,7 +7,7 @@ import java.util.logging.Logger;
  * This class is a collection of all Registers in CPU we initialized
  */
 public class Componets {
-    public Condition_Code CC1, CC2, CC3, CC4;
+    public Condition_Code CC1, CC2, CC3, CC0;
     public General_Purpose_Registers R0, R1, R2, R3;
     public Instruction_Register IR;
     public IX_Register IX3, IX1, IX2;
@@ -34,7 +34,7 @@ public class Componets {
         CC1 = new Condition_Code(false);
         CC2 = new Condition_Code(false);
         CC3 = new Condition_Code(false);
-        CC4 = new Condition_Code(false);
+        CC0 = new Condition_Code(false);
         // GPR R0-R3
         R0 = new General_Purpose_Registers(0);
         R1 = new General_Purpose_Registers(0);
@@ -58,6 +58,21 @@ public class Componets {
         PC = new ProgramCounter(6);
         // Control Unit
         CU = new ControlUnit(IR.ToBinaryString());
+    }
+
+    public Register getCC(){
+        int index = CU.getR();
+        if (index == 0) {
+            return CC0;
+        }
+        if (index == 1) {
+            return CC1;
+        }
+        if (index == 2) {
+            return CC2;
+        } else {
+            return CC3;
+        }
     }
 
     /**
