@@ -20,7 +20,6 @@ public class Simulator {
 
     public Componets componets;
     public Memory DataMemory;
-    public ALU ALU;
     public Bus BUS;
     private ArrayList UserProgram = new ArrayList();
     public Integer UserProgramLength;
@@ -39,7 +38,6 @@ public class Simulator {
     public void initialize() {
         componets = new Componets();
         DataMemory = new Memory();
-        ALU = new ALU(componets, DataMemory);
         BUS = new Bus(componets, DataMemory);
     }
 

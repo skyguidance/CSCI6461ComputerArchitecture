@@ -1,7 +1,6 @@
 package CPU;
 
 import Memory.Memory;
-
 import java.util.logging.Logger;
 
 /**
@@ -145,116 +144,228 @@ public class Bus {
                 break;
             }
             case 4: {
-
+                // AMR. Add Memory To Register.
+                componets.ALU.Calc(componets.getCU().getOpcode(), componets.getGPRRegister().getValue(), dataMemory.get(ea));
+                componets.CC0.set(componets.ALU.CC0);
+                componets.getGPRRegister().setValue(componets.ALU.output);
                 break;
             }
             case 5: {
-
+                // SMR. Subtract Memory From Register.
+                componets.ALU.Calc(componets.getCU().getOpcode(), componets.getGPRRegister().getValue(), dataMemory.get(ea));
+                componets.CC1.set(componets.ALU.CC1);
+                componets.getGPRRegister().setValue(componets.ALU.output);
                 break;
             }
             case 6: {
-
+                // AIR. Add Immediate to Register.
+                componets.ALU.Calc(componets.getCU().getOpcode(), componets.getGPRRegister().getValue(), componets.getCU().getAddress());
+                componets.CC0.set(componets.ALU.CC0);
+                componets.getGPRRegister().setValue(componets.ALU.output);
                 break;
             }
             case 7: {
-
+                // SIR. Subtract  Immediate  from Register.
+                componets.ALU.Calc(componets.getCU().getOpcode(), componets.getGPRRegister().getValue(), componets.getCU().getAddress());
+                componets.CC1.set(componets.ALU.CC1);
+                componets.getGPRRegister().setValue(componets.ALU.output);
                 break;
             }
             case 10: {
-                //JZ  jump to effective address if register is 0
-                if(componets.getGPRRegister().getValue()==0){
+                //JZ.  jump to effective address if register is 0
+                if (componets.getGPRRegister().getValue() == 0) {
                     componets.getPC().setValue(ea);
+                } else {
+                    componets.getPC().incrementOne();
                 }
-               else{ componets.getPC().incrementOne();}
 
                 break;
             }
             case 11: {
-                //JNE  jump to effective address if register is not 0
-                if(componets.getGPRRegister().getValue()!=0){
+                //JNE.  jump to effective address if register is not 0
+                if (componets.getGPRRegister().getValue() != 0) {
                     componets.getPC().setValue(ea);
+                } else {
+                    componets.getPC().incrementOne();
                 }
-                else{ componets.getPC().incrementOne();}
 
                 break;
             }
             case 12: {
-                //JNE  jump to effective address if CC is 1
-                if(componets.getCC().getValue()==1){
+                //JNE.  jump to effective address if CC is 1
+                if (componets.getCC().getValue() == 1) {
                     componets.getPC().setValue(ea);
+                } else {
+                    componets.getPC().incrementOne();
                 }
-                else{ componets.getPC().incrementOne();}
 
                 break;
             }
             case 13: {
-                //JMA  jump to effective address if CC is 1
+                //JMA.  jump to effective address if CC is 1
 
-                    componets.getPC().setValue(ea);
+                componets.getPC().setValue(ea);
                 break;
             }
-            case 14: {//JSR TODO unkonw for R0
-                componets.R3.setValue(componets.getPC().getValue()+1);
+            case 14: {
+                //JSR. TODO unknown for R0
+                componets.R3.setValue(componets.getPC().getValue() + 1);
                 componets.getPC().setValue(ea);
 
                 break;
             }
-            case 15: {//RFS Return From Subroutine w/
+            case 15: {
+                //RFS Return From Subroutine w/
                 // return code as Immed portion (optional) stored in the instruction’s address field.
                 componets.R0.setValue(componets.getCU().getAddress());
 
                 componets.getPC().setValue(componets.R3.getValue());
                 break;
             }
-            case 16: {//SOB
-                componets.getGPRRegister().setValue(componets.getGPRRegister().getValue()-1);
+            case 16: {
+                //SOB
+                componets.getGPRRegister().setValue(componets.getGPRRegister().getValue() - 1);
 
-                if(componets.getGPRRegister().getValue()>0){
+                if (componets.getGPRRegister().getValue() > 0) {
                     componets.getPC().setValue(ea);
+                } else {
+                    componets.getPC().incrementOne();
                 }
-                else{ componets.getPC().incrementOne();}
 
 
                 break;
             }
-            case 17: {//JGE
-                if(componets.getGPRRegister().getValue()>=0){
+            case 17: {
+                //JGE
+                if (componets.getGPRRegister().getValue() >= 0) {
                     componets.getPC().setValue(ea);
+                } else {
+                    componets.getPC().incrementOne();
                 }
-                else{ componets.getPC().incrementOne();}
 
                 break;
             }
             case 20: {
-
+                // MLT: Multiply Register by Register.
+                // Get Rx and Ry value.
+                int Rx = componets.getRxRegister(true).getValue();
+                int Ry = componets.getRyRegister(true).getValue();
+                // Call ALU to do the Multi calculation.
+                componets.ALU.Calc(componets.getCU().getOpcode(), Rx, Ry);
+                Boolean OVERFLOW = (componets.ALU.output != 0);
+                // Get Rx Register Index (is 0 or 2).
+                int RxIndex = componets.getCU().getRx();
+                if (RxIndex == 0) {
+                    //Set the value to R0 and R1.
+                    componets.R0.setValue(componets.ALU.HIResult);
+                    componets.R1.setValue(componets.ALU.LOResult);
+                    componets.CC0.set(OVERFLOW);
+                } else if (RxIndex == 2) {
+                    //Set the value to R2 and R3.
+                    componets.R2.setValue(componets.ALU.HIResult);
+                    componets.R3.setValue(componets.ALU.LOResult);
+                    componets.CC0.set(OVERFLOW);
+                } else {
+                    // Rx Index is neither 0 nor 2. raise an error.
+                    logging.severe("Request Other than R0 or R2 in Case 20.");
+                    System.out.println("Request Other than R0 or R2 in Case 20.");
+                }
                 break;
             }
             case 21: {
-
+                // DVD: Divide Register by Register.
+                // Get Rx and Ry value.
+                int Rx = componets.getRxRegister(true).getValue();
+                int Ry = componets.getRyRegister(true).getValue();
+                // Call ALU to do the Divide calculation.
+                componets.ALU.Calc(componets.getCU().getOpcode(), Rx, Ry);
+                Boolean DIVZERO = (componets.ALU.output != 0);
+                // Get Rx Register Index (is 0 or 2).
+                int RxIndex = componets.getCU().getRx();
+                if (RxIndex == 0) {
+                    //Set the value to R0 and R1.
+                    componets.R0.setValue(componets.ALU.HIResult);
+                    componets.R1.setValue(componets.ALU.LOResult);
+                    componets.CC2.set(DIVZERO);
+                } else if (RxIndex == 2) {
+                    //Set the value to R2 and R3.
+                    componets.R2.setValue(componets.ALU.HIResult);
+                    componets.R3.setValue(componets.ALU.LOResult);
+                    componets.CC2.set(DIVZERO);
+                } else {
+                    // Rx Index is neither 0 nor 2. raise an error.
+                    logging.severe("Request Other than R0 or R2 in Case 20.");
+                    System.out.println("Request Other than R0 or R2 in Case 20.");
+                }
                 break;
             }
             case 22: {
-
+                // TRR. Test the Equality of Register and Register.
+                int Rx = componets.getRxRegister(false).getValue();
+                int Ry = componets.getRyRegister(false).getValue();
+                componets.CC3.set((Rx == Ry) ? true : false);
                 break;
             }
             case 23: {
-
+                // AND. Logical And of Register and Register.
+                int Rx = componets.getRxRegister(false).getValue();
+                int Ry = componets.getRyRegister(false).getValue();
+                componets.ALU.Calc(componets.getCU().getOpcode(), Rx, Ry);
+                componets.getRxRegister(false).setValue(componets.ALU.output);
                 break;
             }
             case 24: {
-
+                // ORR. Logical Or of Register and Register.
+                int Rx = componets.getRxRegister(false).getValue();
+                int Ry = componets.getRyRegister(false).getValue();
+                componets.ALU.Calc(componets.getCU().getOpcode(), Rx, Ry);
+                componets.getRxRegister(false).setValue(componets.ALU.output);
                 break;
             }
             case 25: {
-
+                // NOT. Logical Not of Register To Register
+                int Rx = componets.getRxRegister(false).getValue();
+                componets.ALU.Calc(componets.getCU().getOpcode(), Rx, 0);
+                componets.getRxRegister(false).setValue(componets.ALU.output);
                 break;
             }
             case 31: {
-
+                // SRC. Shift Register by Count.
+                int Value = componets.getGPRRegister().getValue();
+                int Count = componets.getCU().getCount();
+                if (componets.getCU().getAL() == 0 && componets.getCU().getLR() == 0) {
+                    //Shift right arithmetically.
+                    Value = Value >> Count;
+                }
+                if (componets.getCU().getAL() == 1 && componets.getCU().getLR() == 0) {
+                    //Shift right logically.
+                    Value = Value >>> Count;
+                }
+                if (componets.getCU().getAL() == 0 && componets.getCU().getLR() == 1) {
+                    //Shift left arithmetically.
+                    Value = Value << Count;
+                }
+                if (componets.getCU().getAL() == 1 && componets.getCU().getLR() == 1) {
+                    //Shift left logically.
+                    //TODO:Do we have logical shift left in Java?
+                    Value = Value << Count;
+                }
+                componets.getGPRRegister().setValue(Value);
                 break;
             }
             case 32: {
-
+                // RRC. Rotate Register by Count.
+                int Value = componets.getGPRRegister().getValue();
+                int Count = componets.getCU().getCount();
+                if (componets.getCU().getLR() == 1){
+                    //Rotate Left
+                    Value = (Value << Count) | (Value >> (16 - Count));
+                }
+                if (componets.getCU().getLR() == 0){
+                    //Rotate Right
+                    Value = (Value >> Count) | (Value << (16 - Count));
+                }
+                componets.getGPRRegister().setValue(Value);
                 break;
             }
             case 33: {

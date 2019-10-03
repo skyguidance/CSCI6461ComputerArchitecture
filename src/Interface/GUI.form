@@ -287,7 +287,7 @@
                 </properties>
                 <border type="none"/>
                 <children>
-                  <component id="cf16f" class="javax.swing.JRadioButton" binding="CC1Button">
+                  <component id="cf16f" class="javax.swing.JRadioButton" binding="CC0Button" custom-create="true">
                     <constraints>
                       <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -295,17 +295,17 @@
                       <background color="-1"/>
                       <enabled value="false"/>
                       <selected value="false"/>
-                      <text value="1"/>
+                      <text value="0"/>
                     </properties>
                   </component>
-                  <component id="c97eb" class="javax.swing.JRadioButton" binding="CC2Button">
+                  <component id="c97eb" class="javax.swing.JRadioButton" binding="CC1Button">
                     <constraints>
                       <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
                       <background color="-1"/>
                       <enabled value="false"/>
-                      <text value="2"/>
+                      <text value="1"/>
                     </properties>
                   </component>
                 </children>
@@ -320,24 +320,24 @@
                 </properties>
                 <border type="none"/>
                 <children>
-                  <component id="1a81a" class="javax.swing.JRadioButton" binding="CC3Button">
+                  <component id="1a81a" class="javax.swing.JRadioButton" binding="CC2Button">
                     <constraints>
                       <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
                       <background color="-1"/>
                       <enabled value="false"/>
-                      <text value="3"/>
+                      <text value="2"/>
                     </properties>
                   </component>
-                  <component id="4cc2" class="javax.swing.JRadioButton" binding="CC4Button">
+                  <component id="4cc2" class="javax.swing.JRadioButton" binding="CC3Button">
                     <constraints>
                       <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
                       <background color="-1"/>
                       <enabled value="false"/>
-                      <text value="4"/>
+                      <text value="3"/>
                     </properties>
                   </component>
                 </children>

@@ -48,10 +48,10 @@ public class GUI extends JFrame {
     private JButton DMwriteButton;
     private JLabel Address;
     private JLabel Value;
+    private JRadioButton CC0Button;
     private JRadioButton CC1Button;
     private JRadioButton CC2Button;
     private JRadioButton CC3Button;
-    private JRadioButton CC4Button;
     private JTextArea Console;
     private JPanel IOOutputPanel;
     private JButton LoadMEMButton;
@@ -541,10 +541,10 @@ public class GUI extends JFrame {
                         // Preform to GOD mode. Could do set to any register and BETA feature.
                         ToDECcheckbox.setEnabled(true);
                         IRInput.setEditable(true);
+                        CC0Button.setEnabled(true);
                         CC1Button.setEnabled(true);
                         CC2Button.setEnabled(true);
                         CC3Button.setEnabled(true);
-                        CC4Button.setEnabled(true);
                         MFRInput.setEditable(true);
                         System.out.println("GOD VIEW:DUMPING CURRENT MEM INFO...");
                         simulator.DataMemory.PrintHashMap();
@@ -553,10 +553,10 @@ public class GUI extends JFrame {
                         ToDECcheckbox.setSelected(false);
                         ToDECcheckbox.setEnabled(false);
                         IRInput.setEditable(false);
+                        CC0Button.setEnabled(false);
                         CC1Button.setEnabled(false);
                         CC2Button.setEnabled(false);
                         CC3Button.setEnabled(false);
-                        CC4Button.setEnabled(false);
                         MFRInput.setEditable(false);
                     }
                 }
@@ -631,10 +631,10 @@ public class GUI extends JFrame {
         IX1Input.setText(data.IX1.ToBinaryString());
         IX2Input.setText(data.IX2.ToBinaryString());
         IX3Input.setText(data.IX3.ToBinaryString());
+        CC0Button.setSelected(data.CC0.get());
         CC1Button.setSelected(data.CC1.get());
         CC2Button.setSelected(data.CC2.get());
         CC3Button.setSelected(data.CC3.get());
-        CC4Button.setSelected(data.CC4.get());
     }
 
     /**
@@ -666,10 +666,10 @@ public class GUI extends JFrame {
         } else {
             DMValueInput.setText("" + Integer.valueOf(DMValueInput.getText(), 2));
         }
+        CC0Button.setSelected(data.CC0.get());
         CC1Button.setSelected(data.CC1.get());
         CC2Button.setSelected(data.CC2.get());
         CC3Button.setSelected(data.CC3.get());
-        CC4Button.setSelected(data.CC4.get());
     }
 
 
@@ -715,6 +715,10 @@ public class GUI extends JFrame {
         System.setOut(new PrintStream(out, true));
         //DEBUG ONLY:Redirect the Error Info to GUI-IO.
         System.setErr(new PrintStream(out, true));
+    }
+
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
     }
 }
 

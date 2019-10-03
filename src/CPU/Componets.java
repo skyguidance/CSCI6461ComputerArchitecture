@@ -7,7 +7,7 @@ import java.util.logging.Logger;
  * This class is a collection of all Registers in CPU we initialized
  */
 public class Componets {
-    public Condition_Code CC1, CC2, CC3, CC0;
+    public Condition_Code CC0, CC1, CC2, CC3;
     public General_Purpose_Registers R0, R1, R2, R3;
     public Instruction_Register IR;
     public IX_Register IX3, IX1, IX2;
@@ -16,6 +16,7 @@ public class Componets {
     public Memory_Buffer_Register MBR;
     public Address_Register EA;
     public ProgramCounter PC;
+    public ALU ALU;
     private ControlUnit CU;
 
 
@@ -31,10 +32,10 @@ public class Componets {
      */
     public void initialize() {
         //Conditional Code Indicator.
+        CC0 = new Condition_Code(false);
         CC1 = new Condition_Code(false);
         CC2 = new Condition_Code(false);
         CC3 = new Condition_Code(false);
-        CC0 = new Condition_Code(false);
         // GPR R0-R3
         R0 = new General_Purpose_Registers(0);
         R1 = new General_Purpose_Registers(0);
@@ -56,11 +57,13 @@ public class Componets {
         EA = new Address_Register(0);
         // PC
         PC = new ProgramCounter(6);
+        // ALU
+        ALU = new ALU();
         // Control Unit
         CU = new ControlUnit(IR.ToBinaryString());
     }
 
-    public Register getCC(){
+    public Register getCC() {
         int index = CU.getR();
         if (index == 0) {
             return CC0;
@@ -118,6 +121,60 @@ public class Componets {
             return new Register(0, 0, "");
         }
 
+    }
+
+    /**
+     * find the GPR(Rx Field) we are working on right now
+     * This function could only be called when meeting a MULTI/DIV Instr.
+     * Otherwise, the output is useless.
+     * If the boolean flag limited is set to TRUE, Rx could only index R0 and R2.
+     * Requesting Other Register will be declined.
+     *
+     * @param limited Boolean. If is set to TRUE, Rx could only index R0 and R2.
+     * @return The GPR Register that requested.
+     */
+    public Register getRxRegister(boolean limited) {
+        int index = CU.getRx();
+        if (index == 0) {
+            return R0;
+        } else if (index == 2) {
+            return R2;
+        } else if (index == 1 && !limited) {
+            return R1;
+        } else if (index == 3 && !limited) {
+            return R3;
+        } else {
+            logging.severe("getRxRegister: LIMITED.Request Register other than R0 or R2.");
+            System.out.println("getRxRegister: LIMITED.Request Register other than R0 or R2.");
+            return new Register(0, 0, "");
+        }
+    }
+
+    /**
+     * find the GPR(Ry Field) we are working on right now
+     * This function could only be called when meeting a MULTI/DIV Instr.
+     * Otherwise, the output is useless.
+     * If the boolean flag limited is set to TRUE, Ry could only index R0 and R2.
+     * Requesting Other Register will be declined.
+     *
+     * @param limited Boolean. If is set to TRUE, Ry could only index R0 and R2.
+     * @return The GPR Register that requested.
+     */
+    public Register getRyRegister(boolean limited) {
+        int index = CU.getRy();
+        if (index == 0) {
+            return R0;
+        } else if (index == 2) {
+            return R2;
+        } else if (index == 1 && !limited) {
+            return R1;
+        } else if (index == 3 && !limited) {
+            return R3;
+        } else {
+            logging.severe("getRyRegister: LIMITED.Request Register other than R0 or R2.");
+            System.out.println("getRyRegister: LIMITED.Request Register other than R0 or R2.");
+            return new Register(0, 0, "");
+        }
     }
 
     /**

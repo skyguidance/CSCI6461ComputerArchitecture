@@ -9,6 +9,8 @@ import java.util.logging.Logger;
 public class ControlUnit {
 
     private int opcode, I, R, IX, address;
+    private int Rx,Ry;
+    private int AL,LR,Count;
     final Logger logging = Logger.getLogger("CPU.ControlUnit");
 
     public ControlUnit(String BinaryString) {
@@ -33,6 +35,13 @@ public class ControlUnit {
         IX = Integer.valueOf(BinaryString.substring(8, 10), 2);
         I = Integer.valueOf(BinaryString.substring(10, 11), 2);
         address = Integer.valueOf(BinaryString.substring(11, 16), 2);
+        // Extra Decode for MULTI/DIV Instr.
+        Rx = Integer.valueOf(BinaryString.substring(6, 8), 2);
+        Ry = Integer.valueOf(BinaryString.substring(8, 10), 2);
+        // Rotate Indicator.
+        AL = Integer.valueOf(BinaryString.substring(8, 9), 2);
+        LR = Integer.valueOf(BinaryString.substring(9, 10), 2);
+        Count = Integer.valueOf(BinaryString.substring(12, 16), 2);
         // Print the result for easy Debug.
         logging.info("CTRL DECODE:OPCODE=>" + opcode + "\tGPR=>" + R + "\tIX=>" + IX + "\tI=>" + I + "\tAddress=>" + address);
         System.out.println("CTRL DECODE:OPCODE=>" + opcode + "\tGPR=>" + R + "\tIX=>" + IX + "\tI=>" + I + "\tAddress=>" + address);
@@ -49,6 +58,26 @@ public class ControlUnit {
 
     public int getIX() {
         return IX;
+    }
+
+    public int getRx() {
+        return Rx;
+    }
+
+    public int getRy() {
+        return Ry;
+    }
+
+    public int getAL() {
+        return AL;
+    }
+
+    public int getLR() {
+        return LR;
+    }
+
+    public int getCount() {
+        return Count;
     }
 
     public int getR() {
