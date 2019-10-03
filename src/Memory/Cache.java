@@ -2,7 +2,14 @@ package Memory;
 
 import java.util.*;
 import java.util.logging.Logger;
+import java.util.ArrayList;
+
 
 public class Cache {
-    //TODO:Implement the cache.
+
+   public Cache(){
+
+   }
+
+
 }
