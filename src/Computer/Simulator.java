@@ -2,6 +2,7 @@ package Computer;
 
 import CPU.ALU;
 import CPU.Componets;
+import Interface.IOBuffer;
 import Memory.Memory;
 import CPU.Bus;
 
@@ -21,6 +22,7 @@ public class Simulator {
     public Componets componets;
     public Memory DataMemory;
     public Bus BUS;
+    public IOBuffer IOBuffer;
     private ArrayList UserProgram = new ArrayList();
     public Integer UserProgramLength;
 
@@ -38,7 +40,8 @@ public class Simulator {
     public void initialize() {
         componets = new Componets();
         DataMemory = new Memory();
-        BUS = new Bus(componets, DataMemory);
+        IOBuffer = new IOBuffer();
+        BUS = new Bus(componets, DataMemory,IOBuffer);
     }
 
     /**

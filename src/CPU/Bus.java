@@ -1,5 +1,6 @@
 package CPU;
 
+import Interface.IOBuffer;
 import Memory.Memory;
 import java.util.logging.Logger;
 
@@ -11,10 +12,11 @@ public class Bus {
     private Componets componets;
     private Memory dataMemory;
     private boolean isHalt = false;
-
-    public Bus(Componets componets, Memory dataMemory) {
+    private IOBuffer ioBuffer;
+    public Bus(Componets componets, Memory dataMemory, IOBuffer ioBuffer) {
         this.componets = componets;
         this.dataMemory = dataMemory;
+        this.ioBuffer = ioBuffer;
     }
 
     /**
@@ -407,10 +409,42 @@ public class Bus {
                 break;
             }
             case 61: {
-
+                // IN. Input Character To Register from Device.
+                int DevID = componets.getCU().getAddress();
+                char input = '\n';
+                if (DevID == 0){
+                    //Read from console keyboard.
+                    while (ioBuffer.isEmpty()){
+                        //TODO:POP UP User interface for input.
+                    }
+                    input = ioBuffer.getOneDigit();
+                }
+                if (DevID == 1){
+                    // Read from the console printer(illegal)
+                    logging.severe("IN Instr:can not read from printer.DEVID=1");
+                    System.out.println("IN Instr:can not read from printer.DEVID=1");
+                }
+                if (DevID == 2){
+                    //Read from console card-reader.
+                    //TODO:Card-reader
+                    while (ioBuffer.isEmpty()){
+                        //TODO:POP UP User interface for input.
+                    }
+                    input = ioBuffer.getOneDigit();
+                }
+                if (DevID>2 && DevID<32){
+                    //Read from console Register.
+                    //TODO:Console Registers.
+                }
+                else{
+                    logging.severe("IN Instr:can not read from printer.DEVID>32");
+                    System.out.println("IN Instr:can not read from printer.DEVID>32");
+                }
+                componets.getGPRRegister().setValue((int)input);
                 break;
             }
             case 62: {
+                // OUT. Output Character to Device from Register.
 
                 break;
             }
