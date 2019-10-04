@@ -22,7 +22,7 @@ public class Simulator {
     public Componets componets;
     public Memory DataMemory;
     public Bus BUS;
-    public IOBuffer IOBuffer;
+    public IOBuffer KeyboardBuffer,CardReaderBuffer;
     private ArrayList UserProgram = new ArrayList();
     public Integer UserProgramLength;
 
@@ -40,8 +40,7 @@ public class Simulator {
     public void initialize() {
         componets = new Componets();
         DataMemory = new Memory();
-        IOBuffer = new IOBuffer();
-        BUS = new Bus(componets, DataMemory,IOBuffer);
+        BUS = new Bus(componets,DataMemory);
     }
 
     /**

@@ -1,7 +1,14 @@
 package Interface;
 
+import javax.swing.*;
+
 public class IOBuffer {
     private String Buffer;
+    private String DeviceName;
+
+    public IOBuffer(String DeviceName){
+        this.DeviceName = DeviceName;
+    }
 
     public void setBuffer(String input){
         this.Buffer = input;
@@ -24,4 +31,11 @@ public class IOBuffer {
     public boolean isEmpty(){
         return Buffer.length()==0;
     }
+
+    public void setBufferFromGUI(){
+        JFrame frame = new JFrame(DeviceName+"Input Required!");
+        String input = JOptionPane.showInputDialog(frame, "Please type in your input for "+DeviceName);
+        setBuffer(input);
+    }
+
 }
