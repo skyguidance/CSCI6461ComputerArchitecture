@@ -287,7 +287,7 @@
                 </properties>
                 <border type="none"/>
                 <children>
-                  <component id="cf16f" class="javax.swing.JRadioButton" binding="CC0Button" custom-create="true">
+                  <component id="cf16f" class="javax.swing.JRadioButton" binding="CC0Button">
                     <constraints>
                       <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -344,6 +344,24 @@
               </grid>
             </children>
           </grid>
+          <component id="c27bb" class="javax.swing.JButton" binding="PrintConsoleRegisterButton">
+            <constraints>
+              <grid row="13" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <text value="Print Console Register"/>
+            </properties>
+          </component>
+          <component id="58faa" class="javax.swing.JLabel" binding="CR">
+            <constraints>
+              <grid row="13" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <text value="CR"/>
+            </properties>
+          </component>
         </children>
       </grid>
       <grid id="ca3ce" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="0">
@@ -379,6 +397,12 @@
             <constraints/>
             <properties>
               <text value="LOAD MEM"/>
+            </properties>
+          </component>
+          <component id="e9069" class="javax.swing.JButton" binding="CacheButton">
+            <constraints/>
+            <properties>
+              <text value="PRINT CACHE"/>
             </properties>
           </component>
           <component id="eaac9" class="javax.swing.JCheckBox" binding="ToDECcheckbox">

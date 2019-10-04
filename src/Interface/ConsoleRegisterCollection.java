@@ -15,6 +15,13 @@ public class ConsoleRegisterCollection {
         Collections[index].setConsoleRegisterFromGUI();
     }
 
+    public void printCollection(){
+        int value;
+        for(int i=0;i<29;i++){
+            value = Collections[i].getValue();
+            System.out.println("DUMP-CR:"+i+"=>"+value);
+        }
+    }
 
 }
 

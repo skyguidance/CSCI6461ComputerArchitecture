@@ -17,7 +17,7 @@ public class Bus {
     private boolean isHalt = false;
     private IOBuffer KeyboardBuffer = new IOBuffer("Keyboard");
     private IOBuffer CardReaderBuffer = new IOBuffer("Card Reader");
-    private ConsoleRegisterCollection ConsoleRegisterCollection = new ConsoleRegisterCollection();
+    public ConsoleRegisterCollection ConsoleRegisterCollection = new ConsoleRegisterCollection();
     public Bus(Componets componets, Memory dataMemory) {
         this.componets = componets;
         this.dataMemory = dataMemory;

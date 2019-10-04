@@ -59,6 +59,9 @@ public class GUI extends JFrame {
     private JCheckBox ToDECcheckbox;
     private JCheckBox EXPANDMEMCheckbox;
     private JCheckBox GodViewButton;
+    private JButton CacheButton;
+    private JButton PrintConsoleRegisterButton;
+    private JLabel CR;
     private Simulator simulator;
     private String IOString;
 
@@ -513,6 +516,17 @@ public class GUI extends JFrame {
             }
         }));
 
+        // When the Print Cache button clicked...
+        CacheButton.addActionListener((new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == CacheButton) {
+                    //Print All the Cache Info to the console.
+                    simulator.DataMemory.PrintCache();
+                }
+            }
+        }));
+
         // When the To Decimal clickbox clicked... (BETA ONLY)
         ToDECcheckbox.addActionListener((new ActionListener() {
             @Override
@@ -579,7 +593,15 @@ public class GUI extends JFrame {
             }
         }));
 
-
+        PrintConsoleRegisterButton.addActionListener((new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == PrintConsoleRegisterButton) {
+                    //Print All the Cache Info to the console.
+                    simulator.BUS.ConsoleRegisterCollection.printCollection();
+                }
+            }
+        }));
     }
 
     /**
@@ -717,8 +739,5 @@ public class GUI extends JFrame {
         System.setErr(new PrintStream(out, true));
     }
 
-    private void createUIComponents() {
-        // TODO: place custom component creation code here
-    }
 }
 
