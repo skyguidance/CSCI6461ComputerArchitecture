@@ -31,6 +31,10 @@ public class Register {
 
     public String ToBinaryString(int value,int length) {
         String a = Integer.toBinaryString(value);// Change to BinaryString
+        if (a.length()==32 && a.substring(0,1).equals("1")){
+            // It is a negative number!
+            return a;
+        }
         String Stringlength = "" + length;
         String format = "%0numberd".replace("number", Stringlength);
         return String.format(format, Long.valueOf(a));//

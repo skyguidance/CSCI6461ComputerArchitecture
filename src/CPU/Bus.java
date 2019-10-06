@@ -161,7 +161,7 @@ public class Bus {
                 // SMR. Subtract Memory From Register.
                 componets.ALU.Calc(componets.getCU().getOpcode(), componets.getGPRRegister().getValue(), dataMemory.get(ea));
                 componets.CC1.set(componets.ALU.CC1);
-                componets.getGPRRegister().setValue(componets.ALU.output);
+                componets.getGPRRegister().setValue(componets.ALU.output,componets.ALU.CC1);
                 break;
             }
             case 6: {
@@ -175,7 +175,7 @@ public class Bus {
                 // SIR. Subtract  Immediate  from Register.
                 componets.ALU.Calc(componets.getCU().getOpcode(), componets.getGPRRegister().getValue(), componets.getCU().getAddress());
                 componets.CC1.set(componets.ALU.CC1);
-                componets.getGPRRegister().setValue(componets.ALU.output);
+                componets.getGPRRegister().setValue(componets.ALU.output,componets.ALU.CC1);
                 break;
             }
             case 10: {
