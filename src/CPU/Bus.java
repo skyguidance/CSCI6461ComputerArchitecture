@@ -333,7 +333,7 @@ public class Bus {
                 // NOT. Logical Not of Register To Register
                 int Rx = componets.getRxRegister(false).getValue();
                 componets.ALU.Calc(componets.getCU().getOpcode(), Rx, 0);
-                componets.getRxRegister(false).setValue(componets.ALU.output);
+                componets.getRxRegister(false).setValue(componets.ALU.output,true);
                 break;
             }
             case 31: {
