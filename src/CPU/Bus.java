@@ -342,20 +342,46 @@ public class Bus {
                 int Count = componets.getCU().getCount();
                 if (componets.getCU().getAL() == 0 && componets.getCU().getLR() == 0) {
                     //Shift right arithmetically.
-                    Value = Value >> Count;
+                    //TODO:Is the project description right?
+                    String StringValue = ToBinaryString(Value,16);
+                    String SignBit = StringValue.substring(0,1);
+                    if (SignBit.equals("1")){
+                        componets.CC1.set(true);
+                    }
+                    for (int i=0;i<Count;i++){
+                        StringValue = SignBit+ StringValue;
+                    }
+                    StringValue = StringValue.substring(0,16);
+                    Value = Integer.valueOf(StringValue,2);
                 }
                 if (componets.getCU().getAL() == 1 && componets.getCU().getLR() == 0) {
                     //Shift right logically.
-                    Value = Value >>> Count;
+                    String StringValue = ToBinaryString(Value,16);
+                    for (int i=0;i<Count;i++){
+                        StringValue = "0" + StringValue;
+                    }
+                    StringValue = StringValue.substring(0,16);
+                    Value = Integer.valueOf(StringValue,2);
                 }
                 if (componets.getCU().getAL() == 0 && componets.getCU().getLR() == 1) {
                     //Shift left arithmetically.
-                    Value = Value << Count;
+                    String StringValue = ToBinaryString(Value,16);
+                    String SignBit = StringValue.substring(0,1);
+                    for (int i=0;i<Count;i++){
+                        StringValue = StringValue + "0";
+                    }
+                    StringValue = StringValue.substring(StringValue.length()-15);
+                    StringValue = SignBit + StringValue;
+                    Value = Integer.valueOf(StringValue,2);
                 }
                 if (componets.getCU().getAL() == 1 && componets.getCU().getLR() == 1) {
                     //Shift left logically.
-                    //TODO:Do we have logical shift left in Java?
-                    Value = Value << Count;
+                    String StringValue = ToBinaryString(Value,16);
+                    for (int i=0;i<Count;i++){
+                        StringValue = StringValue + "0";
+                    }
+                    StringValue = StringValue.substring(StringValue.length()-16);
+                    Value = Integer.valueOf(StringValue,2);
                 }
                 componets.getGPRRegister().setValue(Value);
                 break;
@@ -493,6 +519,17 @@ public class Bus {
             default:
                 break;
         }
+    }
+
+    public String ToBinaryString(int value,int length) {
+        String a = Integer.toBinaryString(value);// Change to BinaryString
+        if (a.length()==32 && a.substring(0,1).equals("1")){
+            // It is a negative number!
+            return a.substring(a.length()-length);
+        }
+        String Stringlength = "" + length;
+        String format = "%0numberd".replace("number", Stringlength);
+        return String.format(format, Long.valueOf(a));//
     }
 
 }
