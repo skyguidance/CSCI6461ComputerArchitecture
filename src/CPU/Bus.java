@@ -458,23 +458,23 @@ public class Bus {
                     }
                     input = KeyboardBuffer.getOneDigit();
                 }
-                if (DevID == 1) {
+                else if (DevID == 1) {
                     // Read from the console printer(illegal)
                     logging.severe("IN Instr:can not read from printer.DEVID=1");
                     System.out.println("IN Instr:can not read from printer.DEVID=1");
                 }
-                if (DevID == 2) {
+                else if (DevID == 2) {
                     //Read from console card-reader.
                     while (CardReaderBuffer.isEmpty()) {
                         CardReaderBuffer.setBufferFromGUI();
                     }
                     input = CardReaderBuffer.getOneDigit();
                 }
-                if (DevID > 2 && DevID < 32) {
+                else if (DevID > 2 && DevID < 32) {
                     //Read from console Register.
-                    ConsoleRegisterCollection.setRegisterValue(DevID - 2);
+                    ConsoleRegisterCollection.setRegisterValue(DevID - 3);
                     try {
-                        input = (char) ConsoleRegisterCollection.getRegisterValue(DevID - 2);
+                        input = (char) ConsoleRegisterCollection.getRegisterValue(DevID - 3);
                     } catch (Exception e) {
                         logging.severe("IN:Cast to char failed.");
                         System.out.println("IN:Cast to char failed.");
@@ -503,15 +503,15 @@ public class Bus {
                     logging.severe("OUT Instr:can not write from keyboard.DEVID=0");
                     System.out.println("OUT Instr:can not write from keyboard.DEVID=0");
                 }
-                if (DevID == 1) {
+                else if (DevID == 1) {
                     // Out to the console printer.
                     System.out.print(output);
                 }
-                if (DevID == 2) {
+                else if (DevID == 2) {
                     //Out to the console card-reader.
                     System.out.print(output);
                 }
-                if (DevID > 2 && DevID < 32) {
+                else if (DevID > 2 && DevID < 32) {
                     //Out to console Register.
                     System.out.print(output);
                 } else {
