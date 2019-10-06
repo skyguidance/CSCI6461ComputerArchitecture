@@ -18,6 +18,7 @@ public class Bus {
     private IOBuffer KeyboardBuffer = new IOBuffer("Keyboard");
     private IOBuffer CardReaderBuffer = new IOBuffer("Card Reader");
     public ConsoleRegisterCollection ConsoleRegisterCollection = new ConsoleRegisterCollection();
+
     public Bus(Componets componets, Memory dataMemory) {
         this.componets = componets;
         this.dataMemory = dataMemory;
@@ -363,11 +364,11 @@ public class Bus {
                 // RRC. Rotate Register by Count.
                 int Value = componets.getGPRRegister().getValue();
                 int Count = componets.getCU().getCount();
-                if (componets.getCU().getLR() == 1){
+                if (componets.getCU().getLR() == 1) {
                     //Rotate Left
                     Value = (Value << Count) | (Value >> (16 - Count));
                 }
-                if (componets.getCU().getLR() == 0){
+                if (componets.getCU().getLR() == 0) {
                     //Rotate Right
                     Value = (Value >> Count) | (Value << (16 - Count));
                 }
@@ -416,74 +417,70 @@ public class Bus {
                 // IN. Input Character To Register from Device.
                 int DevID = componets.getCU().getAddress();
                 char input = '\n';
-                if (DevID == 0){
+                if (DevID == 0) {
                     //Read from console keyboard.
-                    while (KeyboardBuffer.isEmpty()){
+                    while (KeyboardBuffer.isEmpty()) {
                         KeyboardBuffer.setBufferFromGUI();
                     }
                     input = KeyboardBuffer.getOneDigit();
                 }
-                if (DevID == 1){
+                if (DevID == 1) {
                     // Read from the console printer(illegal)
                     logging.severe("IN Instr:can not read from printer.DEVID=1");
                     System.out.println("IN Instr:can not read from printer.DEVID=1");
                 }
-                if (DevID == 2){
+                if (DevID == 2) {
                     //Read from console card-reader.
-                    while (CardReaderBuffer.isEmpty()){
+                    while (CardReaderBuffer.isEmpty()) {
                         CardReaderBuffer.setBufferFromGUI();
                     }
                     input = CardReaderBuffer.getOneDigit();
                 }
-                if (DevID>2 && DevID<32){
+                if (DevID > 2 && DevID < 32) {
                     //Read from console Register.
-                    ConsoleRegisterCollection.setRegisterValue(DevID-2);
-                    try{
-                        input = (char)ConsoleRegisterCollection.getRegisterValue(DevID-2);
-                    }
-                    catch(Exception e){
+                    ConsoleRegisterCollection.setRegisterValue(DevID - 2);
+                    try {
+                        input = (char) ConsoleRegisterCollection.getRegisterValue(DevID - 2);
+                    } catch (Exception e) {
                         logging.severe("IN:Cast to char failed.");
                         System.out.println("IN:Cast to char failed.");
                     }
-                }
-                else{
+                } else {
                     logging.severe("IN Instr:Invalid DEVID.DEVID>32");
                     System.out.println("IN Instr:Invalid DEVID.DEVID>32");
                 }
-                componets.getGPRRegister().setValue((int)input);
+                componets.getGPRRegister().setValue((int) input);
                 break;
             }
             case 62: {
                 // OUT. Output Character to Device from Register.
                 int DevID = componets.getCU().getAddress();
                 // Get the output from the register and cast to char.
-                char output='\n';
-                try{
-                    output = (char)componets.getGPRRegister().getValue();
-                }
-                catch(Exception e){
+                char output = '\n';
+                try {
+                    output = (char) componets.getGPRRegister().getValue();
+                } catch (Exception e) {
                     logging.severe("OUT:Cast to char failed.");
                     System.out.println("OUT:Cast to char failed.");
                 }
 
-                if (DevID == 0){
+                if (DevID == 0) {
                     // Out to console keyboard.(illegal)
                     logging.severe("OUT Instr:can not write from keyboard.DEVID=0");
                     System.out.println("OUT Instr:can not write from keyboard.DEVID=0");
                 }
-                if (DevID == 1){
+                if (DevID == 1) {
                     // Out to the console printer.
                     System.out.print(output);
                 }
-                if (DevID == 2){
+                if (DevID == 2) {
                     //Out to the console card-reader.
                     System.out.print(output);
                 }
-                if (DevID>2 && DevID<32){
+                if (DevID > 2 && DevID < 32) {
                     //Out to console Register.
                     System.out.print(output);
-                }
-                else{
+                } else {
                     logging.severe("OUT Instr:Invalid DEVID.DEVID>32");
                     System.out.println("OUT Instr:Invalid DEVID.DEVID>32");
                 }
