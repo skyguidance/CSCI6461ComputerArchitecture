@@ -487,7 +487,7 @@ public class Bus {
                 break;
             }
             case 62: {
-                // OUT. Output Character to Device from Register.
+                // OUT. Output Character to Device from the Register.
                 int DevID = componets.getCU().getAddress();
                 // Get the output from the register and cast to char.
                 char output = '\n';
