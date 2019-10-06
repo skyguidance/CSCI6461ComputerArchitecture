@@ -91,19 +91,24 @@ public class Memory {
     }
 
     public void UserSet(String address, String value, boolean DecOrBinary) {
-        boolean UserOrNot = true;
-        int IntAddress = Integer.valueOf(address, 2);
-        int IntValue = Integer.valueOf(value, 2);
+        // This set function protect the reserved memory area.
+        int addressInt;
+        int valueInt;
+        // The input is a binary String.
         if (DecOrBinary) {
-            IntAddress = Integer.valueOf(address);
-            IntValue = Integer.valueOf(value);
+            addressInt = Integer.valueOf(address, 2);
+            valueInt = Integer.valueOf(value, 2);
         }
-
-        if (UserOrNot && IntAddress < 6) {
+        // The input is a int value but stored as a String.
+        else {
+            addressInt = Integer.valueOf(address);
+            valueInt = Integer.valueOf(value);
+        }
+        if (addressInt < 6) {
             logging.severe("User try to set protected Memory.");
             System.out.println("User try to set protected Memory.");
         } else {
-            set(IntAddress, IntValue);
+            set(addressInt, valueInt);
         }
     }
 
@@ -121,13 +126,15 @@ public class Memory {
     public void set(int address, int value) {
         MemoryData current = new MemoryData(address, value);
         if (address > Memory.length || value > 65536) {
-            logging.severe("Memory Out of bound.");
-            System.out.println("Memory Out of bound.");
+            logging.severe("INVALID:MEM[" + ToBinaryString(address) + "(" + address + ")" + "]=>" + ToBinaryString(value) + "(" + value + ")");
+            System.out.println("INVALID:MEM[" + ToBinaryString(address) + "(" + address + ")" + "]=>" + ToBinaryString(value) + "(" + value + ")");
         } else {
             //set cache
             addElementtoCache(current);
             //set memory
             Memory[address] = current;
+            logging.info("MEM[" + ToBinaryString(address) + "(" + address + ")" + "]=>" + ToBinaryString(value) + "(" + value + ")");
+            System.out.println("MEM[" + ToBinaryString(address) + "(" + address + ")" + "]=>" + ToBinaryString(value) + "(" + value + ")");
         }
     }
 
@@ -136,12 +143,15 @@ public class Memory {
         int IntValue = Integer.valueOf(value, 2);
         MemoryData current = new MemoryData(IntAddress, IntValue);
         if (IntAddress > Memory.length || IntValue > 65536) {
-
+            logging.severe("INVALID:MEM[" + ToBinaryString(IntAddress) + "(" + IntAddress + ")" + "]=>" + ToBinaryString(IntValue) + "(" + IntValue + ")");
+            System.out.println("INVALID:MEM[" + ToBinaryString(IntAddress) + "(" + IntAddress + ")" + "]=>" + ToBinaryString(IntValue) + "(" + IntValue + ")");
         } else {
             //set cache
             addElementtoCache(current);
             //set memory
             Memory[IntAddress] = current;
+            logging.info("MEM[" + ToBinaryString(IntAddress) + "(" + IntAddress + ")" + "]=>" + ToBinaryString(IntValue) + "(" + IntValue + ")");
+            System.out.println("MEM[" + ToBinaryString(IntAddress) + "(" + IntAddress + ")" + "]=>" + ToBinaryString(IntValue) + "(" + IntValue + ")");
         }
     }
 
@@ -164,7 +174,10 @@ public class Memory {
 
     public void PrintHashMap() {
         for (int i = 0; i < MEMORY_LENGTH; i++) {
-            System.out.println("" + Memory[i].address + "=>" + Memory[i].value);
+            if (Memory[i]==null){
+                continue;
+            }
+            System.out.println("DUMP:MEM[" + ToBinaryString(Memory[i].address) + "(" + Memory[i].address + ")" + "]=>" + ToBinaryString(Memory[i].value) + "(" + Memory[i].value + ")");
         }
 
     }
