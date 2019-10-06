@@ -8,6 +8,7 @@ public class IOBuffer {
 
     public IOBuffer(String DeviceName){
         this.DeviceName = DeviceName;
+        this.Buffer = "";
     }
 
     public void setBuffer(String input){
