@@ -1,104 +1,98 @@
 package Memory;
 
-
-import java.util.HashMap;
+import java.util.Vector;
 import java.util.logging.Logger;
 
-/**
- * The DataMemory Class (DM).
- */
 public class Memory {
-    // Use HashMap to save data.
-    HashMap<Integer, Integer> memory;
-    // The memory upper bound. (A.K.A Memory Size.)
-    private int DMADDRESSMAX = 2048;
-
+    private final static int WORD_LENGTH = 16;
+    private int MEMORY_LENGTH = 2048;
+    public MemoryData[] Memory;
+    public static Vector<MemoryData> cache = new Vector<MemoryData>(16);
     final Logger logging = Logger.getLogger("Memory");
 
     public Memory() {
-        memory = new HashMap<>();
+        Memory = new MemoryData[MEMORY_LENGTH];
     }
 
     /**
      * Expand the MEM to 4096.
      */
     public void expandMEM() {
-        DMADDRESSMAX = 4096;
+        MEMORY_LENGTH = 4096;
+        Memory = new MemoryData[MEMORY_LENGTH];
     }
 
     /**
      * Shrink the MEM to 2048.
      */
     public void shrinkMEM() {
-        DMADDRESSMAX = 2048;
+        MEMORY_LENGTH = 2048;
+        Memory = new MemoryData[MEMORY_LENGTH];
     }
 
-    /**
-     * Set the memory value.(Force Set)
-     * <p>
-     * !!! WARNING: THIS IS THE FORCE SET. NO MATTER THE MEM AREA IS PROTECTED OR NOT!
-     * <p>
-     * If the memory address and the value is legit, set the value.
-     * Else print an INVALID operation log and do nothing.
-     *
-     * @param address The Binary String of the address (12 bit)
-     * @param value   The Binary String of the value (16 bit)
-     */
-    public void set(String address, String value) {
-        int addressInt = Integer.valueOf(address, 2);
-        // if the address is legit, do the MEMWrite.
-        if (addressInt < DMADDRESSMAX && value.length() <= 16) {
-            memory.put(addressInt, Integer.valueOf(value, 2));
-            logging.info("MEM[" + address + "(" + addressInt + ")" + "]=>" + value + "(" + Integer.valueOf(value, 2).toString() + ")");
-            System.out.println("MEM[" + address + "(" + addressInt + ")" + "]=>" + value + "(" + Integer.valueOf(value, 2).toString() + ")");
+
+    public static int getWordLength() {
+        return WORD_LENGTH;
+    }
+
+    public int getMemoryLength() {
+        return MEMORY_LENGTH;
+    }
+
+
+    // this add element to cache and remove the extra
+    public void addElementtoCache(MemoryData newData) {
+        cache.add(0, newData);
+        cache.setSize(16);
+    }
+
+    public int get(String address) {
+        int IntAddress = Integer.valueOf(address, 2);
+        return get(IntAddress);
+    }
+
+    public int get(int address) {
+        //check cache
+        for (int i = 0; i < cache.size(); i++) {
+            MemoryData current = cache.elementAt(i);
+            if (current.address == address) {
+                return current.value;
+            }
         }
-        // The address is not legit.
-        else {
-            logging.severe("INVALID:MEM[" + address + "(" + addressInt + ")" + "]=>" + value + "(" + Long.valueOf(value, 2).toString() + ")");
-            System.out.println("INVALID:MEM[" + address + "(" + addressInt + ")" + "]=>" + value + "(" + Long.valueOf(value, 2).toString() + ")");
+
+
+        //check memory
+        for (int i = 0; i < Memory.length; i++) {
+            if (Memory[i] == null) {
+                continue;
+            }
+            MemoryData current = Memory[i];
+            if (current.address == address) {
+                return current.value;
+            }
+
+        }
+        logging.severe("Did not find info on the address, check if you have valid address");
+        return 0;
+    }
+
+
+    public void set(String address, String value, boolean UserOrNot, boolean DecOrBinary) {
+        int IntAddress = Integer.valueOf(address, 2);
+        int IntValue = Integer.valueOf(value, 2);
+        if (DecOrBinary) {
+            IntAddress = Integer.valueOf(address);
+            IntValue = Integer.valueOf(value);
+        }
+
+        if (UserOrNot && IntAddress < 6) {
+            logging.severe("User try to set protected Memory.");
+            System.out.println("User try to set protected Memory.");
+        } else {
+            set(IntAddress, IntValue);
         }
     }
 
-    /**
-     * Set the memory value.
-     * If the memory address and the value is legit, set the value.
-     * Else print an INVALID operation log and do nothing.
-     * If the UserOrNot Flag is Setto True. Then Preform a User Set.(Set to protected area will be rejected.)
-     * Else Do a force set.
-     *
-     * @param address   int address.
-     * @param value     int value.
-     * @param UserOrNot If true, preform a UserSet. Else force Set.
-     */
-    public void set(int address, int value, boolean UserOrNot) {
-        // A UserSet, and the address is legit.
-        if (UserOrNot && address > 5 && address < DMADDRESSMAX && value <= 65536) {
-            memory.put(address, value);
-            logging.info("MEM[" + ToBinaryString(address) + "(" + address + ")" + "]=>" + ToBinaryString(value) + "(" + value + ")");
-            System.out.println("MEM[" + ToBinaryString(address) + "(" + address + ")" + "]=>" + ToBinaryString(value) + "(" + value + ")");
-        }
-        // A force set, and the address is legit.
-        else if (!UserOrNot && address < DMADDRESSMAX && value <= 65536) {
-            memory.put(address, value);
-            logging.info("MEM[" + ToBinaryString(address) + "(" + address + ")" + "]=>" + ToBinaryString(value) + "(" + value + ")");
-            System.out.println("MEM[" + ToBinaryString(address) + "(" + address + ")" + "]=>" + ToBinaryString(value) + "(" + value + ")");
-
-        }
-        // The address is not legit.
-        else {
-            logging.severe("INVALID:MEM[" + ToBinaryString(address) + "(" + address + ")" + "]=>" + ToBinaryString(value) + "(" + value + ")");
-            System.out.println("INVALID:MEM[" + ToBinaryString(address) + "(" + address + ")" + "]=>" + ToBinaryString(value) + "(" + value + ")");
-
-        }
-    }
-
-    /**
-     * Do a UserSet of the Memory.
-     *
-     * @param address     The String of the address
-     * @param value       The String of the value
-     * @param DecOrBinary If true, than consider the input is a Binary String. Else consider as a Dec String.
-     */
     public void UserSet(String address, String value, boolean DecOrBinary) {
         // This set function protect the reserved memory area.
         int addressInt;
@@ -113,47 +107,57 @@ public class Memory {
             addressInt = Integer.valueOf(address);
             valueInt = Integer.valueOf(value);
         }
-        // Do the UserSet Function.
-        set(addressInt, valueInt, true);
+        if (addressInt < 6) {
+            logging.severe("User try to set protected Memory.");
+            System.out.println("User try to set protected Memory.");
+        } else {
+            set(addressInt, valueInt);
+        }
     }
 
-    /**
-     * Read the memory.
-     *
-     * @param address The Memory address (Binary String)
-     * @return the int value of the data.(MEM[address])
-     */
-    public int get(String address) {
+
+    public void set(int address, int value, boolean UserOrNot) {
+        if (UserOrNot && address < 6) {
+            logging.severe("User try to set protected Memory.");
+            System.out.println("User try to set protected Memory.");
+        } else {
+            set(address, value);
+        }
+    }
+
+
+    public void set(int address, int value) {
+        MemoryData current = new MemoryData(address, value);
+        if (address > Memory.length || value > 65536) {
+            logging.severe("INVALID:MEM[" + ToBinaryString(address) + "(" + address + ")" + "]=>" + ToBinaryString(value) + "(" + value + ")");
+            System.out.println("INVALID:MEM[" + ToBinaryString(address) + "(" + address + ")" + "]=>" + ToBinaryString(value) + "(" + value + ")");
+        } else {
+            //set cache
+            addElementtoCache(current);
+            //set memory
+            Memory[address] = current;
+            logging.info("MEM[" + ToBinaryString(address) + "(" + address + ")" + "]=>" + ToBinaryString(value) + "(" + value + ")");
+            System.out.println("MEM[" + ToBinaryString(address) + "(" + address + ")" + "]=>" + ToBinaryString(value) + "(" + value + ")");
+        }
+    }
+
+    public void set(String address, String value) {
         int IntAddress = Integer.valueOf(address, 2);
-        return get(IntAddress);
-    }
-
-    /**
-     * Read the memory.
-     * If the address is not legit, print an INVALID operation log and return all zero.
-     *
-     * @param address The Memory address (Int).
-     * @return the int value of the data.(MEM[address])
-     */
-    public int get(int address) {
-        // The Memory has value in it. Return the value.
-        if (memory.containsKey(address)) {
-            return memory.get(address);
-        }
-        // Else. No value or the address is not legit.
-        else {
-            logging.severe("INVALID:MEM[" + ToBinaryString(address) + "(" + address + ")" + "],NO DATA IN THIS ADDRESS!");
-            System.out.println("INVALID:MEM[" + ToBinaryString(address) + "(" + address + ")" + "],NO DATA IN THIS ADDRESS!");
-            return 0;
+        int IntValue = Integer.valueOf(value, 2);
+        MemoryData current = new MemoryData(IntAddress, IntValue);
+        if (IntAddress > Memory.length || IntValue > 65536) {
+            logging.severe("INVALID:MEM[" + ToBinaryString(IntAddress) + "(" + IntAddress + ")" + "]=>" + ToBinaryString(IntValue) + "(" + IntValue + ")");
+            System.out.println("INVALID:MEM[" + ToBinaryString(IntAddress) + "(" + IntAddress + ")" + "]=>" + ToBinaryString(IntValue) + "(" + IntValue + ")");
+        } else {
+            //set cache
+            addElementtoCache(current);
+            //set memory
+            Memory[IntAddress] = current;
+            logging.info("MEM[" + ToBinaryString(IntAddress) + "(" + IntAddress + ")" + "]=>" + ToBinaryString(IntValue) + "(" + IntValue + ")");
+            System.out.println("MEM[" + ToBinaryString(IntAddress) + "(" + IntAddress + ")" + "]=>" + ToBinaryString(IntValue) + "(" + IntValue + ")");
         }
     }
 
-    /**
-     * Convert The input value to 16bit binary String.
-     *
-     * @param value The int value to be converted.
-     * @return A 16 bit String.
-     */
     public String ToBinaryString(int value) {
         String a = Integer.toBinaryString(value);// Change to BinaryString
         String Stringlength = "" + 16;
@@ -161,13 +165,29 @@ public class Memory {
         return String.format(format, Long.valueOf(a));//
     }
 
-    /**
-     * Dump the entire memory data.
-     */
-    public void PrintHashMap() {
-        for (Integer key : memory.keySet()) {
-            System.out.println("DUMP:MEM[" + ToBinaryString(key) + "(" + key + ")" + "]=>" + ToBinaryString(memory.get(key)) + "(" + memory.get(key) + ")");
+    public void PrintCache() {
+        int address;
+        int value;
+        System.out.println("CACHE DUMP ...");
+        logging.info("CACHE DUMP ...");
+        for (int i = 0; i < cache.size(); i++) {
+            address = cache.get(i).address;
+            value = cache.get(i).value;
+            System.out.println("DUMP:CACHE #" + i + " [" + ToBinaryString(address) + "(" + address + ")" + "]=>" + ToBinaryString(value) + "(" + value + ")");
+            logging.info("DUMP:CACHE #" + i + " [" + ToBinaryString(address) + "(" + address + ")" + "]=>" + ToBinaryString(value) + "(" + value + ")");
         }
+        System.out.println("TOTAL DUMPED " + cache.size() + " CACHE LOGS.");
+        logging.info("TOTAL DUMPED " + cache.size() + " CACHE LOGS.");
     }
 
+    public void PrintHashMap() {
+        for (int i = 0; i < MEMORY_LENGTH; i++) {
+            if (Memory[i] == null) {
+                continue;
+            }
+            System.out.println("DUMP:MEM[" + ToBinaryString(Memory[i].address) + "(" + Memory[i].address + ")" + "]=>" + ToBinaryString(Memory[i].value) + "(" + Memory[i].value + ")");
+            logging.info("DUMP:MEM[" + ToBinaryString(Memory[i].address) + "(" + Memory[i].address + ")" + "]=>" + ToBinaryString(Memory[i].value) + "(" + Memory[i].value + ")");
+        }
+
+    }
 }

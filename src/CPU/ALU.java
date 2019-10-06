@@ -89,6 +89,7 @@ public class ALU {
                 }catch (Exception e) {
                     logging.severe("ALU Java DIV error.");
                     System.out.println("ALU Java DIV error.");
+                    CC2 = true;
                 }
                 break;
             }
@@ -112,9 +113,14 @@ public class ALU {
 
     public String ToBinaryString(int value,int length) {
         String a = Integer.toBinaryString(value);// Change to BinaryString
-        String Stringlength = "" + length;
-        String format = "%0numberd".replace("number", Stringlength);
-        return String.format(format, Long.valueOf(a));//
+        int LeftLength = length - a.length();
+        for (int i=0;i<LeftLength;i++){
+            a = "0" + a;
+        }
+        return a;
+//        String Stringlength = "" + length;
+//        String format = "%0numberd".replace("number", Stringlength);
+//        return String.format(format, Long.valueOf(a));//
     }
 
 }

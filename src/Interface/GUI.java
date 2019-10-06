@@ -59,6 +59,9 @@ public class GUI extends JFrame {
     private JCheckBox ToDECcheckbox;
     private JCheckBox EXPANDMEMCheckbox;
     private JCheckBox GodViewButton;
+    private JButton CacheButton;
+    private JButton PrintConsoleRegisterButton;
+    private JLabel CR;
     private Simulator simulator;
     private String IOString;
 
@@ -283,6 +286,82 @@ public class GUI extends JFrame {
                     simulator.componets.MFR.setValue(MFRInput.getText());
                     // Flush GUI Interface.
                     IOString = IOString + "\n" + "MFR=>" + MFRInput.getText();
+                    flushData(simulator.componets);
+                }
+            }
+        });
+
+        // When the CC0 Indicator is clicked...
+        CC0Button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == CC0Button) {
+                    //If the Indicator is set:
+                    if (CC0Button.isSelected()) {
+                        simulator.componets.CC0.set(true);
+                    }
+                    // The indicator is unset:
+                    else {
+                        simulator.componets.CC0.set(false);
+                    }
+                    // Flush GUI Interface.
+                    flushData(simulator.componets);
+                }
+            }
+        });
+
+        // When the CC1 Indicator is clicked...
+        CC1Button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == CC1Button) {
+                    //If the Indicator is set:
+                    if (CC1Button.isSelected()) {
+                        simulator.componets.CC1.set(true);
+                    }
+                    // The indicator is unset:
+                    else {
+                        simulator.componets.CC1.set(false);
+                    }
+                    // Flush GUI Interface.
+                    flushData(simulator.componets);
+                }
+            }
+        });
+
+        // When the CC2 Indicator is clicked...
+        CC2Button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == CC2Button) {
+                    //If the Indicator is set:
+                    if (CC2Button.isSelected()) {
+                        simulator.componets.CC2.set(true);
+                    }
+                    // The indicator is unset:
+                    else {
+                        simulator.componets.CC2.set(false);
+                    }
+                    // Flush GUI Interface.
+                    flushData(simulator.componets);
+                }
+            }
+        });
+
+        // When the CC3 Indicator is clicked...
+        CC3Button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == CC3Button) {
+                    //If the Indicator is set:
+                    if (CC3Button.isSelected()) {
+                        simulator.componets.CC3.set(true);
+                    }
+                    // The indicator is unset:
+                    else {
+                        simulator.componets.CC3.set(false);
+                    }
+                    // Flush GUI Interface.
                     flushData(simulator.componets);
                 }
             }
@@ -513,6 +592,17 @@ public class GUI extends JFrame {
             }
         }));
 
+        // When the Print Cache button clicked...
+        CacheButton.addActionListener((new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == CacheButton) {
+                    //Print All the Cache Info to the console.
+                    simulator.DataMemory.PrintCache();
+                }
+            }
+        }));
+
         // When the To Decimal clickbox clicked... (BETA ONLY)
         ToDECcheckbox.addActionListener((new ActionListener() {
             @Override
@@ -579,7 +669,15 @@ public class GUI extends JFrame {
             }
         }));
 
-
+        PrintConsoleRegisterButton.addActionListener((new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == PrintConsoleRegisterButton) {
+                    //Print All the Cache Info to the console.
+                    simulator.BUS.ConsoleRegisterCollection.printCollection();
+                }
+            }
+        }));
     }
 
     /**
@@ -717,8 +815,5 @@ public class GUI extends JFrame {
         System.setErr(new PrintStream(out, true));
     }
 
-    private void createUIComponents() {
-        // TODO: place custom component creation code here
-    }
 }
 

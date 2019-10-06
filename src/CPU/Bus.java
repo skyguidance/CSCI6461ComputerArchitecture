@@ -1,6 +1,10 @@
 package CPU;
 
+import Interface.ConsoleRegisterCollection;
+import Interface.IOBuffer;
 import Memory.Memory;
+
+import javax.smartcardio.Card;
 import java.util.logging.Logger;
 
 /**
@@ -11,6 +15,9 @@ public class Bus {
     private Componets componets;
     private Memory dataMemory;
     private boolean isHalt = false;
+    private IOBuffer KeyboardBuffer = new IOBuffer("Keyboard");
+    private IOBuffer CardReaderBuffer = new IOBuffer("Card Reader");
+    public ConsoleRegisterCollection ConsoleRegisterCollection = new ConsoleRegisterCollection();
 
     public Bus(Componets componets, Memory dataMemory) {
         this.componets = componets;
@@ -147,28 +154,28 @@ public class Bus {
                 // AMR. Add Memory To Register.
                 componets.ALU.Calc(componets.getCU().getOpcode(), componets.getGPRRegister().getValue(), dataMemory.get(ea));
                 componets.CC0.set(componets.ALU.CC0);
-                componets.getGPRRegister().setValue(componets.ALU.output);
+                componets.getGPRRegister().setValue(componets.ALU.output, componets.ALU.CC0);
                 break;
             }
             case 5: {
                 // SMR. Subtract Memory From Register.
                 componets.ALU.Calc(componets.getCU().getOpcode(), componets.getGPRRegister().getValue(), dataMemory.get(ea));
                 componets.CC1.set(componets.ALU.CC1);
-                componets.getGPRRegister().setValue(componets.ALU.output);
+                componets.getGPRRegister().setValue(componets.ALU.output,componets.ALU.CC1);
                 break;
             }
             case 6: {
                 // AIR. Add Immediate to Register.
                 componets.ALU.Calc(componets.getCU().getOpcode(), componets.getGPRRegister().getValue(), componets.getCU().getAddress());
                 componets.CC0.set(componets.ALU.CC0);
-                componets.getGPRRegister().setValue(componets.ALU.output);
+                componets.getGPRRegister().setValue(componets.ALU.output, componets.ALU.CC0);
                 break;
             }
             case 7: {
                 // SIR. Subtract  Immediate  from Register.
                 componets.ALU.Calc(componets.getCU().getOpcode(), componets.getGPRRegister().getValue(), componets.getCU().getAddress());
                 componets.CC1.set(componets.ALU.CC1);
-                componets.getGPRRegister().setValue(componets.ALU.output);
+                componets.getGPRRegister().setValue(componets.ALU.output,componets.ALU.CC1);
                 break;
             }
             case 10: {
@@ -252,7 +259,7 @@ public class Bus {
                 int Ry = componets.getRyRegister(true).getValue();
                 // Call ALU to do the Multi calculation.
                 componets.ALU.Calc(componets.getCU().getOpcode(), Rx, Ry);
-                Boolean OVERFLOW = (componets.ALU.output != 0);
+                Boolean OVERFLOW = componets.ALU.CC0;
                 // Get Rx Register Index (is 0 or 2).
                 int RxIndex = componets.getCU().getRx();
                 if (RxIndex == 0) {
@@ -279,7 +286,7 @@ public class Bus {
                 int Ry = componets.getRyRegister(true).getValue();
                 // Call ALU to do the Divide calculation.
                 componets.ALU.Calc(componets.getCU().getOpcode(), Rx, Ry);
-                Boolean DIVZERO = (componets.ALU.output != 0);
+                Boolean DIVZERO = componets.ALU.CC2;
                 // Get Rx Register Index (is 0 or 2).
                 int RxIndex = componets.getCU().getRx();
                 if (RxIndex == 0) {
@@ -326,7 +333,7 @@ public class Bus {
                 // NOT. Logical Not of Register To Register
                 int Rx = componets.getRxRegister(false).getValue();
                 componets.ALU.Calc(componets.getCU().getOpcode(), Rx, 0);
-                componets.getRxRegister(false).setValue(componets.ALU.output);
+                componets.getRxRegister(false).setValue(componets.ALU.output,true);
                 break;
             }
             case 31: {
@@ -335,20 +342,46 @@ public class Bus {
                 int Count = componets.getCU().getCount();
                 if (componets.getCU().getAL() == 0 && componets.getCU().getLR() == 0) {
                     //Shift right arithmetically.
-                    Value = Value >> Count;
+                    //TODO:Is the project description right?
+                    String StringValue = ToBinaryString(Value,16);
+                    String SignBit = StringValue.substring(0,1);
+                    if (SignBit.equals("1")){
+                        componets.CC1.set(true);
+                    }
+                    for (int i=0;i<Count;i++){
+                        StringValue = SignBit+ StringValue;
+                    }
+                    StringValue = StringValue.substring(0,16);
+                    Value = Integer.valueOf(StringValue,2);
                 }
                 if (componets.getCU().getAL() == 1 && componets.getCU().getLR() == 0) {
                     //Shift right logically.
-                    Value = Value >>> Count;
+                    String StringValue = ToBinaryString(Value,16);
+                    for (int i=0;i<Count;i++){
+                        StringValue = "0" + StringValue;
+                    }
+                    StringValue = StringValue.substring(0,16);
+                    Value = Integer.valueOf(StringValue,2);
                 }
                 if (componets.getCU().getAL() == 0 && componets.getCU().getLR() == 1) {
                     //Shift left arithmetically.
-                    Value = Value << Count;
+                    String StringValue = ToBinaryString(Value,16);
+                    String SignBit = StringValue.substring(0,1);
+                    for (int i=0;i<Count;i++){
+                        StringValue = StringValue + "0";
+                    }
+                    StringValue = StringValue.substring(StringValue.length()-15);
+                    StringValue = SignBit + StringValue;
+                    Value = Integer.valueOf(StringValue,2);
                 }
                 if (componets.getCU().getAL() == 1 && componets.getCU().getLR() == 1) {
                     //Shift left logically.
-                    //TODO:Do we have logical shift left in Java?
-                    Value = Value << Count;
+                    String StringValue = ToBinaryString(Value,16);
+                    for (int i=0;i<Count;i++){
+                        StringValue = StringValue + "0";
+                    }
+                    StringValue = StringValue.substring(StringValue.length()-16);
+                    Value = Integer.valueOf(StringValue,2);
                 }
                 componets.getGPRRegister().setValue(Value);
                 break;
@@ -357,11 +390,11 @@ public class Bus {
                 // RRC. Rotate Register by Count.
                 int Value = componets.getGPRRegister().getValue();
                 int Count = componets.getCU().getCount();
-                if (componets.getCU().getLR() == 1){
+                if (componets.getCU().getLR() == 1) {
                     //Rotate Left
                     Value = (Value << Count) | (Value >> (16 - Count));
                 }
-                if (componets.getCU().getLR() == 0){
+                if (componets.getCU().getLR() == 0) {
                     //Rotate Right
                     Value = (Value >> Count) | (Value << (16 - Count));
                 }
@@ -407,11 +440,76 @@ public class Bus {
                 break;
             }
             case 61: {
-
+                // IN. Input Character To Register from Device.
+                int DevID = componets.getCU().getAddress();
+                char input = '\n';
+                if (DevID == 0) {
+                    //Read from console keyboard.
+                    while (KeyboardBuffer.isEmpty()) {
+                        KeyboardBuffer.setBufferFromGUI();
+                    }
+                    input = KeyboardBuffer.getOneDigit();
+                }
+                if (DevID == 1) {
+                    // Read from the console printer(illegal)
+                    logging.severe("IN Instr:can not read from printer.DEVID=1");
+                    System.out.println("IN Instr:can not read from printer.DEVID=1");
+                }
+                if (DevID == 2) {
+                    //Read from console card-reader.
+                    while (CardReaderBuffer.isEmpty()) {
+                        CardReaderBuffer.setBufferFromGUI();
+                    }
+                    input = CardReaderBuffer.getOneDigit();
+                }
+                if (DevID > 2 && DevID < 32) {
+                    //Read from console Register.
+                    ConsoleRegisterCollection.setRegisterValue(DevID - 2);
+                    try {
+                        input = (char) ConsoleRegisterCollection.getRegisterValue(DevID - 2);
+                    } catch (Exception e) {
+                        logging.severe("IN:Cast to char failed.");
+                        System.out.println("IN:Cast to char failed.");
+                    }
+                } else {
+                    logging.severe("IN Instr:Invalid DEVID.DEVID>32");
+                    System.out.println("IN Instr:Invalid DEVID.DEVID>32");
+                }
+                componets.getGPRRegister().setValue((int) input);
                 break;
             }
             case 62: {
+                // OUT. Output Character to Device from Register.
+                int DevID = componets.getCU().getAddress();
+                // Get the output from the register and cast to char.
+                char output = '\n';
+                try {
+                    output = (char) componets.getGPRRegister().getValue();
+                } catch (Exception e) {
+                    logging.severe("OUT:Cast to char failed.");
+                    System.out.println("OUT:Cast to char failed.");
+                }
 
+                if (DevID == 0) {
+                    // Out to console keyboard.(illegal)
+                    logging.severe("OUT Instr:can not write from keyboard.DEVID=0");
+                    System.out.println("OUT Instr:can not write from keyboard.DEVID=0");
+                }
+                if (DevID == 1) {
+                    // Out to the console printer.
+                    System.out.print(output);
+                }
+                if (DevID == 2) {
+                    //Out to the console card-reader.
+                    System.out.print(output);
+                }
+                if (DevID > 2 && DevID < 32) {
+                    //Out to console Register.
+                    System.out.print(output);
+                } else {
+                    logging.severe("OUT Instr:Invalid DEVID.DEVID>32");
+                    System.out.println("OUT Instr:Invalid DEVID.DEVID>32");
+                }
                 break;
             }
             case 63: {
@@ -421,6 +519,17 @@ public class Bus {
             default:
                 break;
         }
+    }
+
+    public String ToBinaryString(int value,int length) {
+        String a = Integer.toBinaryString(value);// Change to BinaryString
+        if (a.length()==32 && a.substring(0,1).equals("1")){
+            // It is a negative number!
+            return a.substring(a.length()-length);
+        }
+        String Stringlength = "" + length;
+        String format = "%0numberd".replace("number", Stringlength);
+        return String.format(format, Long.valueOf(a));//
     }
 
 }
