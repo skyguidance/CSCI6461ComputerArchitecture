@@ -74,7 +74,9 @@ public class Memory2 {
         logging.info("Did not find info on the address, check if you have valid address");
         return -1;
     }
-    
+
+
+
 
     public void set(String address,String value,boolean UserOrNot,boolean DecOrBinary) {
         int IntAddress = Integer.valueOf(address, 2);
