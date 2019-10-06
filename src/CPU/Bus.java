@@ -154,7 +154,7 @@ public class Bus {
                 // AMR. Add Memory To Register.
                 componets.ALU.Calc(componets.getCU().getOpcode(), componets.getGPRRegister().getValue(), dataMemory.get(ea));
                 componets.CC0.set(componets.ALU.CC0);
-                componets.getGPRRegister().setValue(componets.ALU.output);
+                componets.getGPRRegister().setValue(componets.ALU.output,componets.ALU.CC0);
                 break;
             }
             case 5: {
