@@ -89,6 +89,7 @@ public class ALU {
                 }catch (Exception e) {
                     logging.severe("ALU Java DIV error.");
                     System.out.println("ALU Java DIV error.");
+                    CC2 = true;
                 }
                 break;
             }

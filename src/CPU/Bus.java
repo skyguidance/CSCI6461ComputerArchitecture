@@ -259,7 +259,7 @@ public class Bus {
                 int Ry = componets.getRyRegister(true).getValue();
                 // Call ALU to do the Multi calculation.
                 componets.ALU.Calc(componets.getCU().getOpcode(), Rx, Ry);
-                Boolean OVERFLOW = (componets.ALU.output != 0);
+                Boolean OVERFLOW = componets.ALU.CC0;
                 // Get Rx Register Index (is 0 or 2).
                 int RxIndex = componets.getCU().getRx();
                 if (RxIndex == 0) {
@@ -286,7 +286,7 @@ public class Bus {
                 int Ry = componets.getRyRegister(true).getValue();
                 // Call ALU to do the Divide calculation.
                 componets.ALU.Calc(componets.getCU().getOpcode(), Rx, Ry);
-                Boolean DIVZERO = (componets.ALU.output != 0);
+                Boolean DIVZERO = componets.ALU.CC2;
                 // Get Rx Register Index (is 0 or 2).
                 int RxIndex = componets.getCU().getRx();
                 if (RxIndex == 0) {
