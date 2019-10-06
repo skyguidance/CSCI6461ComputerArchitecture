@@ -112,9 +112,14 @@ public class ALU {
 
     public String ToBinaryString(int value,int length) {
         String a = Integer.toBinaryString(value);// Change to BinaryString
-        String Stringlength = "" + length;
-        String format = "%0numberd".replace("number", Stringlength);
-        return String.format(format, Long.valueOf(a));//
+        int LeftLength = length - a.length();
+        for (int i=0;i<LeftLength;i++){
+            a = "0" + a;
+        }
+        return a;
+//        String Stringlength = "" + length;
+//        String format = "%0numberd".replace("number", Stringlength);
+//        return String.format(format, Long.valueOf(a));//
     }
 
 }
