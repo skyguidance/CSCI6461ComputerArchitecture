@@ -23,8 +23,6 @@ public class Condition_Code extends Register{
     public void set(boolean value) {
         this.cc = value;
         setValue(value? 1:0);
-        logging.info("CC=>" + value);
-        System.out.println("CC=>" + value);
     }
 
     public boolean get() {

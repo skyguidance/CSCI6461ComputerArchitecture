@@ -63,7 +63,7 @@ public class Memory {
 
         //check memory
         for (int i = 0; i < Memory.length; i++) {
-            if (Memory[i]==null){
+            if (Memory[i] == null) {
                 continue;
             }
             MemoryData current = Memory[i];
@@ -170,19 +170,19 @@ public class Memory {
         int value;
         System.out.println("CACHE DUMP ...");
         logging.info("CACHE DUMP ...");
-        for(int i=0;i<cache.size();i++){
+        for (int i = 0; i < cache.size(); i++) {
             address = cache.get(i).address;
             value = cache.get(i).value;
             System.out.println("DUMP:CACHE #" + i + " [" + ToBinaryString(address) + "(" + address + ")" + "]=>" + ToBinaryString(value) + "(" + value + ")");
             logging.info("DUMP:CACHE #" + i + " [" + ToBinaryString(address) + "(" + address + ")" + "]=>" + ToBinaryString(value) + "(" + value + ")");
         }
-        System.out.println("TOTAL DUMPED "+cache.size()+" CACHE LOGS.");
-        logging.info("TOTAL DUMPED "+cache.size()+" CACHE LOGS.");
+        System.out.println("TOTAL DUMPED " + cache.size() + " CACHE LOGS.");
+        logging.info("TOTAL DUMPED " + cache.size() + " CACHE LOGS.");
     }
 
     public void PrintHashMap() {
         for (int i = 0; i < MEMORY_LENGTH; i++) {
-            if (Memory[i]==null){
+            if (Memory[i] == null) {
                 continue;
             }
             System.out.println("DUMP:MEM[" + ToBinaryString(Memory[i].address) + "(" + Memory[i].address + ")" + "]=>" + ToBinaryString(Memory[i].value) + "(" + Memory[i].value + ")");
