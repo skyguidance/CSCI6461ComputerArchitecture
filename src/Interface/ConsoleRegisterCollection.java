@@ -7,6 +7,13 @@ import javax.swing.*;
 public class ConsoleRegisterCollection {
     public ConsoleRegister[] Collections = new ConsoleRegister[29];
 
+    public ConsoleRegisterCollection(){
+        // Init ConsoleRegisterCollection.
+        for(int i=0;i<29;i++){
+            Collections[i] = new ConsoleRegister(0);
+        }
+    }
+
     public int getRegisterValue(int index){
         return Collections[index].getValue();
     }
