@@ -392,11 +392,19 @@ public class Bus {
                 int Count = componets.getCU().getCount();
                 if (componets.getCU().getLR() == 1) {
                     //Rotate Left
-                    Value = (Value << Count) | (Value >> (16 - Count));
+                    String StringValue = ToBinaryString(Value,16);
+                    String MovePart = StringValue.substring(0,Count);
+                    StringValue = StringValue + MovePart;
+                    StringValue = StringValue.substring(StringValue.length()-16);
+                    Value = Integer.valueOf(StringValue,2);
                 }
                 if (componets.getCU().getLR() == 0) {
                     //Rotate Right
-                    Value = (Value >> Count) | (Value << (16 - Count));
+                    String StringValue = ToBinaryString(Value,16);
+                    String MovePart = StringValue.substring(StringValue.length()-Count);
+                    StringValue = MovePart + StringValue;
+                    StringValue = StringValue.substring(0,16);
+                    Value = Integer.valueOf(StringValue,2);
                 }
                 componets.getGPRRegister().setValue(Value);
                 break;
