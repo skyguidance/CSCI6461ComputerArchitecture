@@ -11,7 +11,10 @@ public class Test_Program_1 {
 
     public Test_Program_1(String userinput) {
         this.userinput = userinput;
-
+        String[] parseString=userinput.split(",");
+        for (int i = 0; i < parseString.length; i++) {
+            add(parseString[i]);
+        }
     }
 
     public boolean isInteger(String input) {
@@ -42,8 +45,6 @@ public class Test_Program_1 {
                 abs = currentabs;
                 colesti = i;
             }
-
-
         }
         return user20number.get(colesti);
     }
