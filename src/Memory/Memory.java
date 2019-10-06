@@ -63,13 +63,16 @@ public class Memory {
 
         //check memory
         for (int i = 0; i < Memory.length; i++) {
+            if (Memory[i]==null){
+                continue;
+            }
             MemoryData current = Memory[i];
             if (current.address == address) {
                 return current.value;
             }
 
         }
-        logging.info("Did not find info on the address, check if you have valid address");
+        logging.severe("Did not find info on the address, check if you have valid address");
         return 0;
     }
 
@@ -163,13 +166,18 @@ public class Memory {
     }
 
     public void PrintCache() {
-        cache.forEach((n) -> print(n));
-    }
-
-    public static void print(MemoryData n) {
-        System.out.println("Object Details");
-        System.out.println("address : " + n.address);
-        System.out.println("value : " + n.value);
+        int address;
+        int value;
+        System.out.println("CACHE DUMP ...");
+        logging.info("CACHE DUMP ...");
+        for(int i=0;i<cache.size();i++){
+            address = cache.get(i).address;
+            value = cache.get(i).value;
+            System.out.println("DUMP:CACHE #" + i + " [" + ToBinaryString(address) + "(" + address + ")" + "]=>" + ToBinaryString(value) + "(" + value + ")");
+            logging.info("DUMP:CACHE #" + i + " [" + ToBinaryString(address) + "(" + address + ")" + "]=>" + ToBinaryString(value) + "(" + value + ")");
+        }
+        System.out.println("TOTAL DUMPED "+cache.size()+" CACHE LOGS.");
+        logging.info("TOTAL DUMPED "+cache.size()+" CACHE LOGS.");
     }
 
     public void PrintHashMap() {
@@ -178,6 +186,7 @@ public class Memory {
                 continue;
             }
             System.out.println("DUMP:MEM[" + ToBinaryString(Memory[i].address) + "(" + Memory[i].address + ")" + "]=>" + ToBinaryString(Memory[i].value) + "(" + Memory[i].value + ")");
+            logging.info("DUMP:MEM[" + ToBinaryString(Memory[i].address) + "(" + Memory[i].address + ")" + "]=>" + ToBinaryString(Memory[i].value) + "(" + Memory[i].value + ")");
         }
 
     }
