@@ -6,7 +6,7 @@ import java.util.ArrayList;
 reading 20 number input from user
  */
 public class Test_Program_1 {
-    String userinput;// example "1234449473/n"
+    private String userinput;// example "123,4,4,494,73"
     ArrayList<String> user20number = new ArrayList<>(20);
 
     public Test_Program_1(String userinput) {
@@ -22,6 +22,7 @@ public class Test_Program_1 {
             Integer.parseInt(input);
             return true;
         } catch (Exception e) {
+            System.out.println("Please input valid number from 0 to 65536");
             return false;
         }
     }
@@ -38,7 +39,6 @@ public class Test_Program_1 {
         ;
         int currentabs = 0;
         int colesti = -1;
-
         for (int i = 0; i < user20number.size(); i++) {
             currentabs = Math.abs(Integer.valueOf(user20number.get(i)) - intInput);
             if (currentabs < abs) {
@@ -46,7 +46,9 @@ public class Test_Program_1 {
                 colesti = i;
             }
         }
+        System.out.println("the colest number is "+user20number.get(colesti));
         return user20number.get(colesti);
+
     }
 }
 
