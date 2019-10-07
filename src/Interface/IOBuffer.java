@@ -36,6 +36,7 @@ public class IOBuffer {
     public void setBufferFromGUI(){
         JFrame frame = new JFrame(DeviceName+"Input Required!");
         String input = JOptionPane.showInputDialog(frame, "Please type in your input for "+DeviceName);
+        input = input + "\n";
         setBuffer(input);
     }
 
