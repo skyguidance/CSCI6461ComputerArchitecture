@@ -1,23 +1,32 @@
 package CPU;
+
 import java.util.logging.Logger;
 
-public class Condition_Code {
- 
-	private boolean cc;
-	private final Logger logging = Logger.getLogger("CPU.Condition_Code");
+/**
+ * This is the Conditional Code Register Class.
+ */
+public class Condition_Code extends Register{
 
-	public Condition_Code(boolean value) {
-		cc=value;
-	}
+    private boolean cc;
+    private final Logger logging = Logger.getLogger("CPU.Condition_Code");
 
-	public void set(boolean value) {
-		this.cc = value;
-		logging.info("CC=>" + value);
-		System.out.println("CC=>" + value);
-	}
+    public Condition_Code(boolean value) {
 
-	public boolean get() {
-		return this.cc;
-	}
+        super(value? 1:0,2,"CC");
+        cc=value;
+
+    }
+    public boolean getBoolean(){
+        return cc;
+    }
+
+    public void set(boolean value) {
+        this.cc = value;
+        setValue(value? 1:0);
+    }
+
+    public boolean get() {
+        return this.cc;
+    }
 
 }

@@ -2,7 +2,7 @@
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="Interface.GUI">
   <grid id="27dc6" binding="panelMain" layout-manager="BorderLayout" hgap="3" vgap="3">
     <constraints>
-      <xy x="20" y="20" width="1002" height="580"/>
+      <xy x="20" y="20" width="831" height="580"/>
     </constraints>
     <properties>
       <toolTipText value=""/>
@@ -498,15 +498,6 @@
                 </constraints>
                 <properties>
                   <text value="EXP"/>
-                </properties>
-              </component>
-              <component id="f9a36" class="javax.swing.JButton" binding="testbutton1">
-                <constraints>
-                  <grid row="0" column="7" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                  <gridbag weightx="0.0" weighty="0.0"/>
-                </constraints>
-                <properties>
-                  <text value="Read20Number"/>
                 </properties>
               </component>
             </children>

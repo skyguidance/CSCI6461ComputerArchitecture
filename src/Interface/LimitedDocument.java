@@ -6,6 +6,11 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.PlainDocument;
 
 @SuppressWarnings("serial")
+
+/**
+ * This class do the limitation of the GUI input.
+ * For example, when it is set to preform binary input, input besides 0 and 1 will be ignored and do not accepted.
+ */
 public class LimitedDocument extends PlainDocument {
 
     private int _maxLength = -1;

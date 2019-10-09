@@ -2,15 +2,15 @@ package CPU;
 
 import java.util.logging.Logger;
 
-/*
-register IR
+/**
+ * IR Register.
  */
-public class Instruction_Register extends Register{
+public class Instruction_Register extends Register {
 
     final Logger logging = Logger.getLogger("CPU.Instruction_Register");
 
     public Instruction_Register(int value) {
-      super(value,16,"IR");
+        super(value, 16, "IR");
     }
 
 
