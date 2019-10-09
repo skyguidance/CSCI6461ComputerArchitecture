@@ -8,9 +8,6 @@ public class FileRead {
     public FileRead(Reader fileRead) {
         this.fileRead=fileRead;
         }
-
-
-
     public void Read() {
 
         try (BufferedReader br = new BufferedReader(fileRead)) {
