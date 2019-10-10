@@ -29,6 +29,8 @@ public class Register {
         return String.format(format, Long.valueOf(a));//
     }
 
+
+
     public String ToBinaryString(int value,int length) {
         String a = Integer.toBinaryString(value);// Change to BinaryString
         if (a.length()==32 && a.substring(0,1).equals("1")){
@@ -106,5 +108,6 @@ public class Register {
             }
         }
     }
+
 
 }
