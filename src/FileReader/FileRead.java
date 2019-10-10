@@ -71,6 +71,8 @@ public class FileRead {
         }
 
         switch (linepart[0]) {
+            case "HALT":
+                opcode = "000000";
             case "LDR":
                 opcode = "000001";
                 break;
@@ -80,18 +82,106 @@ public class FileRead {
             case "LDA":
                 opcode = "000011";
                 break;
+            case "AMR":
+                opcode = "000100";
+                break;
+            case "SMR":
+                opcode = "000101";
+                break;
+            case "AIR":
+                opcode = "000110";
+                break;
+            case "SIR":
+                opcode = "000111";
+                break;
+
+            case "JZ":
+                opcode = "001010";
+                break;
+            case "JNE":
+                opcode = "001011";
+            case "JCC":
+                opcode = "001100";
+                break;
+            case "JMA":
+                opcode = "001101";
+                break;
+            case "JSR":
+                opcode = "001110";
+                break;
+            case "RFS":
+                opcode = "001111";
+                break;
+            case "SOB":
+                opcode = "010000";
+                break;
+            case "JGE":
+                opcode = "010001";
+                break;
+            case "MLT":
+                opcode = "010100";
+                break;
+            case "DVD":
+                opcode = "010101";
+                break;
+            case "TRR":
+                opcode = "010110";
+                break;
+            case "AND":
+                opcode = "010111";
+                break;
+            case "ORR":
+                opcode = "011000";
+                break;
+            case "NOT":
+                opcode = "011001";
+                break;
+            case "SRC":
+                opcode = "011111";
+                break;
+            case "RRC":
+                opcode = "100000";
+                break;
+            case "FADD":
+                opcode = "100001";
+                break;
+            case "FSUB":
+                opcode = "100010";
+                break;
+            case "VADD":
+                opcode = "100011";
+                break;
+            case "VSUB":
+                opcode = "100100";
+                break;
+            case "CNVRT":
+                opcode = "100101";
+                break;
+            case "LDFR":
+                opcode = "110010";
+                break;
+            case "STFR":
+                opcode = "110011";
+                break;
+
             case "LDX":
                 opcode = "101001";
                 break;
             case "STX":
                 opcode = "101010";
                 break;
-            case "JZ":
-                opcode = "001010";
+            case "IN":
+                opcode = "111101";
                 break;
-            case "HALT":
-                opcode = "000000";
+            case "OUT":
+                opcode = "111110";
                 break;
+            case "CHK":
+                opcode = "111111";
+                break;
+
+
+
             default:
                 break;
         }
@@ -145,4 +235,3 @@ public class FileRead {
         }
     }
 }
-
