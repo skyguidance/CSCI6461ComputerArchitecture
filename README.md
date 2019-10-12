@@ -8,7 +8,7 @@ http://www.mslcourses.com/CSCI6461Section10Fall2019/AdaptedKaislerFiles/ClassPro
 ## Download and Execute
 #### Usage Of this simulator
 - Clone the Project first, and checkout master branch.
-> git clone https://github.com/skyguidance/CSCI6461ComputerArchitecture.git
+> git clone https://github.com/skyguidance/CSCI6461ComputerArchitecture.git <br>
 > git checkout master
 - Use [IDEA](https://www.jetbrains.com/idea/) to Open the project.
 - Run src/Inferface/GUI class to start the simulator.
