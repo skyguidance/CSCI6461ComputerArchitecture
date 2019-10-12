@@ -2,7 +2,9 @@ package Memory;
 
 import java.util.Vector;
 import java.util.logging.Logger;
-
+/*
+this a Memory with cache
+ */
 public class Memory {
     private final static int WORD_LENGTH = 16;
     private int MEMORY_LENGTH = 2048;
@@ -50,7 +52,9 @@ public class Memory {
         int IntAddress = Integer.valueOf(address, 2);
         return get(IntAddress);
     }
-
+/*
+get will check cache first if not exist check remaining memory;
+ */
     public int get(int address) {
         //check cache
         for (int i = 0; i < cache.size(); i++) {
@@ -80,7 +84,11 @@ public class Memory {
         return 0;
     }
 
-
+/*
+   set method by address value
+   @parameter userOrNot true for user
+   @parameter DecOrBinary true for Decimal
+ */
     public void set(String address, String value, boolean UserOrNot, boolean DecOrBinary) {
         int IntAddress = Integer.valueOf(address, 2);
         int IntValue = Integer.valueOf(value, 2);
@@ -118,7 +126,10 @@ public class Memory {
             set(addressInt, valueInt);
         }
     }
-
+/*
+ set with int input
+ @parameter UserOrNot true for user
+ */
 
     public void set(int address, int value, boolean UserOrNot) {
         if (UserOrNot && address < 6) {
@@ -168,7 +179,9 @@ public class Memory {
         String format = "%0numberd".replace("number", Stringlength);
         return String.format(format, Long.valueOf(a));//
     }
-
+/*
+print every thing in cache
+ */
     public void PrintCache() {
         int address;
         int value;
@@ -183,6 +196,9 @@ public class Memory {
         System.out.println("TOTAL DUMPED " + cache.size() + " CACHE LOGS.");
         logging.info("TOTAL DUMPED " + cache.size() + " CACHE LOGS.");
     }
+    /*
+        print everything in memory
+     */
 
     public void PrintHashMap() {
         for (int i = 0; i < MEMORY_LENGTH; i++) {
