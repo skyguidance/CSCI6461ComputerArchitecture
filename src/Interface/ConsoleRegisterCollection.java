@@ -5,6 +5,9 @@ import CPU.Register;
 import javax.swing.*;
 import java.util.logging.Logger;
 
+/*
+this is consoleRegisters
+ */
 public class ConsoleRegisterCollection {
     public ConsoleRegister[] Collections = new ConsoleRegister[29];
     final Logger logging = Logger.getLogger("ConsoleRegisterCollection");

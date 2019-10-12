@@ -2,7 +2,6 @@ package Interface;
 
 import CPU.Componets;
 import Computer.Simulator;
-import test.Test_Program_1;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -63,7 +62,7 @@ public class GUI extends JFrame {
     private JButton CacheButton;
     private JButton PrintConsoleRegisterButton;
     private JLabel CR;
-    private JButton testbutton1;
+
     private Simulator simulator;
     private String IOString;
 
@@ -224,18 +223,7 @@ public class GUI extends JFrame {
         IOString = "";
 
 
-        testbutton1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (e.getSource() == testbutton1) {
-                  JFrame frame = new JFrame("Please type 20 number seperated by comma");
-                  String input = JOptionPane.showInputDialog(frame, "Please type 20 number seperated by comma");
-                    Test_Program_1 test_program_1=new Test_Program_1(input);
-                    String input2 = JOptionPane.showInputDialog(frame, "Please type one number to find cloestest number");
-                    test_program_1.findCloseNumber(input2);
-                }
-            }
-        });
+
         // When the PC Input is changed and enter is pressed...
         PCInput.addActionListener(new ActionListener() {
             @Override

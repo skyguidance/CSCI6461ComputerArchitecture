@@ -500,15 +500,6 @@
                   <text value="EXP"/>
                 </properties>
               </component>
-              <component id="f9a36" class="javax.swing.JButton" binding="testbutton1">
-                <constraints>
-                  <grid row="0" column="7" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                  <gridbag weightx="0.0" weighty="0.0"/>
-                </constraints>
-                <properties>
-                  <text value="Read20Number"/>
-                </properties>
-              </component>
             </children>
           </grid>
           <grid id="3d618" binding="IOOutputPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
