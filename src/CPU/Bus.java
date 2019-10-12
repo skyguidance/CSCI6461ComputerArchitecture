@@ -40,30 +40,52 @@ public class Bus {
         return isHalt;
     }
 
-
-    public void setBreakPoint(int BreakPointPC){
+    /**
+     * Set the BreakPoint of the PC.
+     *
+     * @param BreakPointPC The BreakPoint PC Value.
+     */
+    public void setBreakPoint(int BreakPointPC) {
         BreakPointList.add(BreakPointPC);
     }
 
-    public boolean BreakPointCheck(int PC){
-        for (int i=0;i<BreakPointList.size();i++){
-            if (BreakPointList.get(i) == PC){
+    /**
+     * Check if the current PC is in the BreakPoint List.
+     *
+     * @param PC the current PC you'd like to check.
+     * @return If the PC is in the Breakpoint list, return true. else return false.
+     */
+    public boolean BreakPointCheck(int PC) {
+        for (int i = 0; i < BreakPointList.size(); i++) {
+            if (BreakPointList.get(i) == PC) {
                 return true;
             }
         }
         return false;
     }
 
-    public void removeBreakPoint(int PC){
-        for (int i=0;i<BreakPointList.size();i++){
-            if (BreakPointList.get(i) == PC){
+    /**
+     * Remove the specified PC from the BreakPoint List.
+     * If the PC is not in the BreakPoint list, do nothing.
+     *
+     * @param PC The spcified breakpoint PC value you want to remove.
+     */
+    public void removeBreakPoint(int PC) {
+        for (int i = 0; i < BreakPointList.size(); i++) {
+            if (BreakPointList.get(i) == PC) {
                 BreakPointList.remove(i);
                 break;
             }
         }
     }
 
-    public Object[] getBreakPointList(){
+    /**
+     * Return the entire BreakPointList as a list.
+     * This is used for GUI Rendering(JList).
+     *
+     * @return the list of breakpoint.
+     */
+    public Object[] getBreakPointList() {
         return BreakPointList.toArray();
     }
 
@@ -75,6 +97,7 @@ public class Bus {
     public void setHalt() {
         isHalt = true;
     }
+
 
     /**
      * Execute one instruction.
@@ -96,12 +119,14 @@ public class Bus {
     /**
      * Execute the whole program. Break when it meets HALT.
      * *TIPS* When it comes to empty Memory, the DataMemory Components will return 16'b0. This is HALT itself!
-     * Stop Criteria: HALT(Both HALT Instr and Manually set from GUI), Program Drop out of the bottom.
+     * Stop Criteria:
+     * -> HALT(Both HALT Instr and Manually set from GUI), Program Drop out of the bottom.
+     * -> BreakPoint Match.
      */
     public void run() {
         while (true) {
             tik();
-            if (BreakPointCheck(componets.PC.getValue())){
+            if (BreakPointCheck(componets.PC.getValue())) {
                 break;
             }
             if (isHalt) {
@@ -158,7 +183,12 @@ public class Bus {
         }
     }
 
-
+    /**
+     * Effective Address (EA) Calculator
+     * After CTRL Module decode the Instr to CTRL signal, Call this method to calucate EA.
+     *
+     * @return The Effective Address.(Int)
+     */
     private int calculateEA_LDX() {
         // Get Address (Immediate Value from Instr), the last 5 digits.
         int address = componets.getCU().getAddress();
@@ -230,7 +260,7 @@ public class Bus {
                 // SMR. Subtract Memory From Register.
                 componets.ALU.Calc(componets.getCU().getOpcode(), componets.getGPRRegister().getValue(), dataMemory.get(ea));
                 componets.CC1.set(componets.ALU.CC1);
-                componets.getGPRRegister().setValue(componets.ALU.output,componets.ALU.CC1);
+                componets.getGPRRegister().setValue(componets.ALU.output, componets.ALU.CC1);
                 break;
             }
             case 6: {
@@ -244,7 +274,7 @@ public class Bus {
                 // SIR. Subtract  Immediate  from Register.
                 componets.ALU.Calc(componets.getCU().getOpcode(), componets.getGPRRegister().getValue(), componets.getCU().getAddress());
                 componets.CC1.set(componets.ALU.CC1);
-                componets.getGPRRegister().setValue(componets.ALU.output,componets.ALU.CC1);
+                componets.getGPRRegister().setValue(componets.ALU.output, componets.ALU.CC1);
                 break;
             }
             case 10: {
@@ -314,7 +344,7 @@ public class Bus {
             }
             case 17: {
                 //JGE
-                if (componets.getGPRRegister().getValue() >= 0 && componets.CC1.get()==false) {
+                if (componets.getGPRRegister().getValue() >= 0 && componets.CC1.get() == false) {
                     componets.getPC().setValue(ea);
                 } else {
                     //componets.getPC().incrementOne();
@@ -403,7 +433,7 @@ public class Bus {
                 // NOT. Logical Not of Register To Register
                 int Rx = componets.getRxRegister(false).getValue();
                 componets.ALU.Calc(componets.getCU().getOpcode(), Rx, 0);
-                componets.getRxRegister(false).setValue(componets.ALU.output,true);
+                componets.getRxRegister(false).setValue(componets.ALU.output, true);
                 break;
             }
             case 31: {
@@ -413,45 +443,45 @@ public class Bus {
                 if (componets.getCU().getAL() == 0 && componets.getCU().getLR() == 0) {
                     //Shift right arithmetically.
                     //TODO:Is the project description right?
-                    String StringValue = ToBinaryString(Value,16);
-                    String SignBit = StringValue.substring(0,1);
-                    if (SignBit.equals("1")){
+                    String StringValue = ToBinaryString(Value, 16);
+                    String SignBit = StringValue.substring(0, 1);
+                    if (SignBit.equals("1")) {
                         componets.CC1.set(true);
                     }
-                    for (int i=0;i<Count;i++){
-                        StringValue = SignBit+ StringValue;
+                    for (int i = 0; i < Count; i++) {
+                        StringValue = SignBit + StringValue;
                     }
-                    StringValue = StringValue.substring(0,16);
-                    Value = Integer.valueOf(StringValue,2);
+                    StringValue = StringValue.substring(0, 16);
+                    Value = Integer.valueOf(StringValue, 2);
                 }
                 if (componets.getCU().getAL() == 1 && componets.getCU().getLR() == 0) {
                     //Shift right logically.
-                    String StringValue = ToBinaryString(Value,16);
-                    for (int i=0;i<Count;i++){
+                    String StringValue = ToBinaryString(Value, 16);
+                    for (int i = 0; i < Count; i++) {
                         StringValue = "0" + StringValue;
                     }
-                    StringValue = StringValue.substring(0,16);
-                    Value = Integer.valueOf(StringValue,2);
+                    StringValue = StringValue.substring(0, 16);
+                    Value = Integer.valueOf(StringValue, 2);
                 }
                 if (componets.getCU().getAL() == 0 && componets.getCU().getLR() == 1) {
                     //Shift left arithmetically.
-                    String StringValue = ToBinaryString(Value,16);
-                    String SignBit = StringValue.substring(0,1);
-                    for (int i=0;i<Count;i++){
+                    String StringValue = ToBinaryString(Value, 16);
+                    String SignBit = StringValue.substring(0, 1);
+                    for (int i = 0; i < Count; i++) {
                         StringValue = StringValue + "0";
                     }
-                    StringValue = StringValue.substring(StringValue.length()-15);
+                    StringValue = StringValue.substring(StringValue.length() - 15);
                     StringValue = SignBit + StringValue;
-                    Value = Integer.valueOf(StringValue,2);
+                    Value = Integer.valueOf(StringValue, 2);
                 }
                 if (componets.getCU().getAL() == 1 && componets.getCU().getLR() == 1) {
                     //Shift left logically.
-                    String StringValue = ToBinaryString(Value,16);
-                    for (int i=0;i<Count;i++){
+                    String StringValue = ToBinaryString(Value, 16);
+                    for (int i = 0; i < Count; i++) {
                         StringValue = StringValue + "0";
                     }
-                    StringValue = StringValue.substring(StringValue.length()-16);
-                    Value = Integer.valueOf(StringValue,2);
+                    StringValue = StringValue.substring(StringValue.length() - 16);
+                    Value = Integer.valueOf(StringValue, 2);
                 }
                 componets.getGPRRegister().setValue(Value);
                 break;
@@ -462,19 +492,19 @@ public class Bus {
                 int Count = componets.getCU().getCount();
                 if (componets.getCU().getLR() == 1) {
                     //Rotate Left
-                    String StringValue = ToBinaryString(Value,16);
-                    String MovePart = StringValue.substring(0,Count);
+                    String StringValue = ToBinaryString(Value, 16);
+                    String MovePart = StringValue.substring(0, Count);
                     StringValue = StringValue + MovePart;
-                    StringValue = StringValue.substring(StringValue.length()-16);
-                    Value = Integer.valueOf(StringValue,2);
+                    StringValue = StringValue.substring(StringValue.length() - 16);
+                    Value = Integer.valueOf(StringValue, 2);
                 }
                 if (componets.getCU().getLR() == 0) {
                     //Rotate Right
-                    String StringValue = ToBinaryString(Value,16);
-                    String MovePart = StringValue.substring(StringValue.length()-Count);
+                    String StringValue = ToBinaryString(Value, 16);
+                    String MovePart = StringValue.substring(StringValue.length() - Count);
                     StringValue = MovePart + StringValue;
-                    StringValue = StringValue.substring(0,16);
-                    Value = Integer.valueOf(StringValue,2);
+                    StringValue = StringValue.substring(0, 16);
+                    Value = Integer.valueOf(StringValue, 2);
                 }
                 componets.getGPRRegister().setValue(Value);
                 break;
@@ -528,20 +558,17 @@ public class Bus {
                         KeyboardBuffer.setBufferFromGUI();
                     }
                     input = KeyboardBuffer.getOneDigit();
-                }
-                else if (DevID == 1) {
+                } else if (DevID == 1) {
                     // Read from the console printer(illegal)
                     logging.severe("IN Instr:can not read from printer.DEVID=1");
                     System.out.println("IN Instr:can not read from printer.DEVID=1");
-                }
-                else if (DevID == 2) {
+                } else if (DevID == 2) {
                     //Read from console card-reader.
                     while (CardReaderBuffer.isEmpty()) {
                         CardReaderBuffer.setBufferFromGUI();
                     }
                     input = CardReaderBuffer.getOneDigit();
-                }
-                else if (DevID > 2 && DevID < 32) {
+                } else if (DevID > 2 && DevID < 32) {
                     //Read from console Register.
                     ConsoleRegisterCollection.setRegisterValue(DevID - 3);
                     try {
@@ -573,18 +600,15 @@ public class Bus {
                     // Out to console keyboard.(illegal)
                     logging.severe("OUT Instr:can not write from keyboard.DEVID=0");
                     System.out.println("OUT Instr:can not write from keyboard.DEVID=0");
-                }
-                else if (DevID == 1) {
+                } else if (DevID == 1) {
                     // Out to the console printer.
                     System.out.print(output);
                     OutputString = OutputString + output;
-                }
-                else if (DevID == 2) {
+                } else if (DevID == 2) {
                     //Out to the console card-reader.
                     System.out.print(output);
                     OutputString = OutputString + output;
-                }
-                else if (DevID > 2 && DevID < 32) {
+                } else if (DevID > 2 && DevID < 32) {
                     //Out to console Register.
                     System.out.print(output);
                     OutputString = OutputString + output;
@@ -603,11 +627,18 @@ public class Bus {
         }
     }
 
-    public String ToBinaryString(int value,int length) {
+    /**
+     * Change the int value to BinaryString (Could Handle Negative Value)
+     *
+     * @param value  the value
+     * @param length the length of the Binary String you want to get.
+     * @return the Binary String.
+     */
+    public String ToBinaryString(int value, int length) {
         String a = Integer.toBinaryString(value);// Change to BinaryString
-        if (a.length()==32 && a.substring(0,1).equals("1")){
+        if (a.length() == 32 && a.substring(0, 1).equals("1")) {
             // It is a negative number!
-            return a.substring(a.length()-length);
+            return a.substring(a.length() - length);
         }
         String Stringlength = "" + length;
         String format = "%0numberd".replace("number", Stringlength);

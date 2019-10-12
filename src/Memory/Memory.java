@@ -2,8 +2,9 @@ package Memory;
 
 import java.util.Vector;
 import java.util.logging.Logger;
-/*
-this a Memory with cache
+
+/**
+ * This is the Memory and the cache class.
  */
 public class Memory {
     private final static int WORD_LENGTH = 16;
@@ -33,28 +34,53 @@ public class Memory {
     }
 
 
+    /**
+     * Get the current word length.
+     *
+     * @return the length of the WORD.
+     */
     public static int getWordLength() {
         return WORD_LENGTH;
     }
 
+    /**
+     * Get the current memory length.
+     *
+     * @return the current memory capacity.
+     */
     public int getMemoryLength() {
         return MEMORY_LENGTH;
     }
 
 
-    // this add element to cache and remove the extra
+    /**
+     * add element to cache and remove the extra (The FIFO Algorithm)
+     * The logic is to adding to the first place and set to only accept the first 16 value.
+     *
+     * @param newData the new data you try to add.
+     */
     public void addElementtoCache(MemoryData newData) {
         cache.add(0, newData);
         cache.setSize(16);
     }
 
+    /**
+     * Get a value from the cache first, if not exits, find the value from the memory.
+     *
+     * @param address the address you want to visit.
+     * @return The value.
+     */
     public int get(String address) {
         int IntAddress = Integer.valueOf(address, 2);
         return get(IntAddress);
     }
-/*
-get will check cache first if not exist check remaining memory;
- */
+
+    /**
+     * Get a value from the cache first, if not exits, find the value from the memory.
+     *
+     * @param address the address you want to visit.
+     * @return The value.
+     */
     public int get(int address) {
         //check cache
         for (int i = 0; i < cache.size(); i++) {
@@ -84,11 +110,15 @@ get will check cache first if not exist check remaining memory;
         return 0;
     }
 
-/*
-   set method by address value
-   @parameter userOrNot true for user
-   @parameter DecOrBinary true for Decimal
- */
+
+    /**
+     * set the memory. and the cache.
+     *
+     * @param address     the address.
+     * @param value       the value you try to set.
+     * @param UserOrNot   true for userset.(Writing to protected location will be prohibited.)
+     * @param DecOrBinary true for Binary.
+     */
     public void set(String address, String value, boolean UserOrNot, boolean DecOrBinary) {
         int IntAddress = Integer.valueOf(address, 2);
         int IntValue = Integer.valueOf(value, 2);
@@ -105,6 +135,13 @@ get will check cache first if not exist check remaining memory;
         }
     }
 
+    /**
+     * Do a UserSet.
+     *
+     * @param address     the address.
+     * @param value       the value you try to set.
+     * @param DecOrBinary true for Binary.
+     */
     public void UserSet(String address, String value, boolean DecOrBinary) {
         // This set function protect the reserved memory area.
         int addressInt;
@@ -126,11 +163,14 @@ get will check cache first if not exist check remaining memory;
             set(addressInt, valueInt);
         }
     }
-/*
- set with int input
- @parameter UserOrNot true for user
- */
 
+    /**
+     * Set the value.
+     *
+     * @param address   the address.
+     * @param value     the value you try to set.
+     * @param UserOrNot true for userset.(Writing to protected location will be prohibited.)
+     */
     public void set(int address, int value, boolean UserOrNot) {
         if (UserOrNot && address < 6) {
             logging.severe("User try to set protected Memory.");
@@ -179,9 +219,11 @@ get will check cache first if not exist check remaining memory;
         String format = "%0numberd".replace("number", Stringlength);
         return String.format(format, Long.valueOf(a));//
     }
-/*
-print every thing in cache
- */
+
+    /**
+     * Dump the cache.
+     * Print each value of the cache.
+     */
     public void PrintCache() {
         int address;
         int value;
@@ -196,10 +238,11 @@ print every thing in cache
         System.out.println("TOTAL DUMPED " + cache.size() + " CACHE LOGS.");
         logging.info("TOTAL DUMPED " + cache.size() + " CACHE LOGS.");
     }
-    /*
-        print everything in memory
-     */
 
+    /**
+     * Dump memory.
+     * Print Each value of the memory (if it is not empty.)
+     */
     public void PrintHashMap() {
         for (int i = 0; i < MEMORY_LENGTH; i++) {
             if (Memory[i] == null) {

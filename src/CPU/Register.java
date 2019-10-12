@@ -30,7 +30,13 @@ public class Register {
     }
 
 
-
+    /**
+     * Change the int value to BinaryString (Could Handle Negative Value)
+     *
+     * @param value  the value
+     * @param length the length of the Binary String you want to get.
+     * @return the Binary String.
+     */
     public String ToBinaryString(int value,int length) {
         String a = Integer.toBinaryString(value);// Change to BinaryString
         if (a.length()==32 && a.substring(0,1).equals("1")){

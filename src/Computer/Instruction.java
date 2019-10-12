@@ -1,5 +1,9 @@
 package Computer;
 
+/**
+ * Instruction enumerator.
+ * This is used for easy programming.
+ */
 public enum Instruction {
     HALT(0),
     LDR(1),

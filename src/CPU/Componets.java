@@ -63,6 +63,11 @@ public class Componets {
         CU = new ControlUnit(IR.ToBinaryString());
     }
 
+    /**
+     * find the CC we are working on right now
+     *
+     * @return The CC Register this Instruction is in Use. (CC Object.)
+     */
     public Register getCC() {
         int index = CU.getR();
         if (index == 0) {
