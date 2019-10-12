@@ -5,6 +5,10 @@ import Interface.IOBuffer;
 import Memory.Memory;
 
 import javax.smartcardio.Card;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -19,6 +23,9 @@ public class Bus {
     private IOBuffer CardReaderBuffer = new IOBuffer("Card Reader");
     public ConsoleRegisterCollection ConsoleRegisterCollection = new ConsoleRegisterCollection();
 
+    public String OutputString = "";
+    public ArrayList<Integer> BreakPointList = new ArrayList<Integer>(100);
+
     public Bus(Componets componets, Memory dataMemory) {
         this.componets = componets;
         this.dataMemory = dataMemory;
@@ -32,6 +39,34 @@ public class Bus {
     public boolean getHaltStatus() {
         return isHalt;
     }
+
+
+    public void setBreakPoint(int BreakPointPC){
+        BreakPointList.add(BreakPointPC);
+    }
+
+    public boolean BreakPointCheck(int PC){
+        for (int i=0;i<BreakPointList.size();i++){
+            if (BreakPointList.get(i) == PC){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void removeBreakPoint(int PC){
+        for (int i=0;i<BreakPointList.size();i++){
+            if (BreakPointList.get(i) == PC){
+                BreakPointList.remove(i);
+                break;
+            }
+        }
+    }
+
+    public Object[] getBreakPointList(){
+        return BreakPointList.toArray();
+    }
+
 
     /**
      * Manually set the Halt Status.
@@ -66,6 +101,9 @@ public class Bus {
     public void run() {
         while (true) {
             tik();
+            if (BreakPointCheck(componets.PC.getValue())){
+                break;
+            }
             if (isHalt) {
                 break;
             }
@@ -539,14 +577,17 @@ public class Bus {
                 else if (DevID == 1) {
                     // Out to the console printer.
                     System.out.print(output);
+                    OutputString = OutputString + output;
                 }
                 else if (DevID == 2) {
                     //Out to the console card-reader.
                     System.out.print(output);
+                    OutputString = OutputString + output;
                 }
                 else if (DevID > 2 && DevID < 32) {
                     //Out to console Register.
                     System.out.print(output);
+                    OutputString = OutputString + output;
                 } else {
                     logging.severe("OUT Instr:Invalid DEVID.DEVID>32");
                     System.out.println("OUT Instr:Invalid DEVID.DEVID>32");

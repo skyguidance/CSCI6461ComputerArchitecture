@@ -432,17 +432,6 @@
             </properties>
             <border type="none"/>
             <children>
-              <component id="2151c" class="javax.swing.JTextField" binding="DMAddressInput">
-                <constraints>
-                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="-1"/>
-                  </grid>
-                  <gridbag weightx="0.0" weighty="0.0"/>
-                </constraints>
-                <properties>
-                  <text value="000000000000"/>
-                </properties>
-              </component>
               <component id="fa346" class="javax.swing.JLabel" binding="Address">
                 <constraints>
                   <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
@@ -450,17 +439,6 @@
                 </constraints>
                 <properties>
                   <text value="Address"/>
-                </properties>
-              </component>
-              <component id="d30e7" class="javax.swing.JTextField" binding="DMValueInput">
-                <constraints>
-                  <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="-1"/>
-                  </grid>
-                  <gridbag weightx="0.0" weighty="0.0"/>
-                </constraints>
-                <properties>
-                  <text value="0000000000000000"/>
                 </properties>
               </component>
               <component id="98622" class="javax.swing.JLabel" binding="Value">
@@ -500,35 +478,162 @@
                   <text value="EXP"/>
                 </properties>
               </component>
+              <grid id="bfc48" layout-manager="BorderLayout" hgap="0" vgap="0">
+                <constraints>
+                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="0.0" weighty="0.0"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="2151c" class="javax.swing.JTextField" binding="DMAddressInput">
+                    <constraints border-constraint="Center"/>
+                    <properties>
+                      <text value="000000000000"/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
+              <grid id="d18ab" layout-manager="BorderLayout" hgap="0" vgap="0">
+                <constraints>
+                  <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="0.0" weighty="0.0"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="d30e7" class="javax.swing.JTextField" binding="DMValueInput">
+                    <constraints border-constraint="Center"/>
+                    <properties>
+                      <text value="0000000000000000"/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
             </children>
           </grid>
-          <grid id="3d618" binding="IOOutputPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
+          <grid id="ef227" layout-manager="BorderLayout" hgap="0" vgap="0">
             <constraints border-constraint="Center"/>
             <properties/>
             <border type="none"/>
             <children>
-              <component id="2ac14" class="javax.swing.JLabel">
-                <constraints border-constraint="North"/>
-                <properties>
-                  <text value="Console Display"/>
-                  <verticalTextPosition value="0"/>
-                </properties>
-              </component>
-              <scrollpane id="7fbf3">
+              <tabbedpane id="47b42" binding="tabbedPane1" default-binding="true">
                 <constraints border-constraint="Center"/>
                 <properties>
-                  <verticalScrollBarPolicy value="20"/>
+                  <enabled value="true"/>
                 </properties>
                 <border type="none"/>
                 <children>
-                  <component id="d5201" class="javax.swing.JTextArea" binding="Console">
-                    <constraints/>
+                  <grid id="18235" binding="OutputField" layout-manager="BorderLayout" hgap="0" vgap="0">
+                    <constraints>
+                      <tabbedpane title="Console Output"/>
+                    </constraints>
+                    <properties/>
+                    <border type="none"/>
+                    <children>
+                      <scrollpane id="b8132">
+                        <constraints border-constraint="Center"/>
+                        <properties/>
+                        <border type="none"/>
+                        <children>
+                          <component id="97ed1" class="javax.swing.JTextArea" binding="Output">
+                            <constraints/>
+                            <properties/>
+                          </component>
+                        </children>
+                      </scrollpane>
+                    </children>
+                  </grid>
+                  <grid id="ee817" binding="ConsoleField" layout-manager="BorderLayout" hgap="0" vgap="0">
+                    <constraints>
+                      <tabbedpane title="Machine Log"/>
+                    </constraints>
+                    <properties/>
+                    <border type="none"/>
+                    <children>
+                      <scrollpane id="1b566">
+                        <constraints border-constraint="Center"/>
+                        <properties/>
+                        <border type="none"/>
+                        <children>
+                          <component id="cf5b8" class="javax.swing.JTextArea" binding="Console">
+                            <constraints/>
+                            <properties/>
+                          </component>
+                        </children>
+                      </scrollpane>
+                    </children>
+                  </grid>
+                  <grid id="f9c72" binding="BreakPointField" layout-manager="BorderLayout" hgap="0" vgap="0">
+                    <constraints>
+                      <tabbedpane title="Insert BreakPoint"/>
+                    </constraints>
                     <properties>
-                      <editable value="false"/>
+                      <enabled value="true"/>
                     </properties>
-                  </component>
+                    <border type="none"/>
+                    <children>
+                      <grid id="eb74b" layout-manager="GridBagLayout">
+                        <constraints border-constraint="South"/>
+                        <properties/>
+                        <border type="none"/>
+                        <children>
+                          <component id="48184" class="javax.swing.JButton" binding="PCBreakPointAddButton">
+                            <constraints>
+                              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                              <gridbag weightx="0.0" weighty="0.0"/>
+                            </constraints>
+                            <properties>
+                              <text value="Add"/>
+                            </properties>
+                          </component>
+                          <grid id="590e9" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                            <margin top="0" left="0" bottom="0" right="0"/>
+                            <constraints>
+                              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                              <gridbag weightx="0.0" weighty="0.0"/>
+                            </constraints>
+                            <properties/>
+                            <border type="none"/>
+                            <children>
+                              <component id="531e8" class="javax.swing.JTextField" binding="BreakPointInput">
+                                <constraints>
+                                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                    <preferred-size width="150" height="-1"/>
+                                  </grid>
+                                </constraints>
+                                <properties/>
+                              </component>
+                            </children>
+                          </grid>
+                          <component id="5cfa8" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                              <gridbag weightx="0.0" weighty="0.0"/>
+                            </constraints>
+                            <properties>
+                              <text value="Indicate the PC (Integer) for BreakPoint:"/>
+                            </properties>
+                          </component>
+                          <component id="e3e7d" class="javax.swing.JButton" binding="PCBreakPointRemoveButton">
+                            <constraints>
+                              <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                              <gridbag weightx="0.0" weighty="0.0"/>
+                            </constraints>
+                            <properties>
+                              <text value="Remove"/>
+                            </properties>
+                          </component>
+                        </children>
+                      </grid>
+                      <component id="8f29f" class="javax.swing.JList" binding="BreakPointListView">
+                        <constraints border-constraint="Center"/>
+                        <properties/>
+                      </component>
+                    </children>
+                  </grid>
                 </children>
-              </scrollpane>
+              </tabbedpane>
             </children>
           </grid>
         </children>

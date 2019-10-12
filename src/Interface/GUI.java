@@ -53,7 +53,6 @@ public class GUI extends JFrame {
     private JRadioButton CC2Button;
     private JRadioButton CC3Button;
     private JTextArea Console;
-    private JPanel IOOutputPanel;
     private JButton LoadMEMButton;
     private JButton HALTButton;
     private JCheckBox ToDECcheckbox;
@@ -62,6 +61,15 @@ public class GUI extends JFrame {
     private JButton CacheButton;
     private JButton PrintConsoleRegisterButton;
     private JLabel CR;
+    private JTabbedPane tabbedPane1;
+    private JPanel OutputField;
+    private JPanel ConsoleField;
+    private JTextArea Output;
+    private JButton PCBreakPointAddButton;
+    private JList BreakPointListView;
+    private JPanel BreakPointField;
+    private JTextField BreakPointInput;
+    private JButton PCBreakPointRemoveButton;
     private Simulator simulator;
     private String IOString;
 
@@ -669,12 +677,39 @@ public class GUI extends JFrame {
             }
         }));
 
+        //When the Print Console Register clickbox clicked...
         PrintConsoleRegisterButton.addActionListener((new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == PrintConsoleRegisterButton) {
                     //Print All the Cache Info to the console.
                     simulator.BUS.ConsoleRegisterCollection.printCollection();
+                }
+            }
+        }));
+
+        //When the Add PC BreakPoint clickbox clicked...
+        PCBreakPointAddButton.addActionListener((new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == PCBreakPointAddButton) {
+                    //Print All the Cache Info to the console.
+                    int BreakPointPC = Integer.valueOf(BreakPointInput.getText());
+                    simulator.BUS.setBreakPoint(BreakPointPC);
+                    BreakPointListView.setListData(simulator.BUS.getBreakPointList());
+                }
+            }
+        }));
+
+        //When the Remove PC BreakPoint clickbox clicked...
+        PCBreakPointRemoveButton.addActionListener((new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == PCBreakPointRemoveButton) {
+                    //Print All the Cache Info to the console.
+                    int BreakPointPC = Integer.valueOf(BreakPointInput.getText());
+                    simulator.BUS.removeBreakPoint(BreakPointPC);
+                    BreakPointListView.setListData(simulator.BUS.getBreakPointList());
                 }
             }
         }));
@@ -733,6 +768,7 @@ public class GUI extends JFrame {
         CC1Button.setSelected(data.CC1.get());
         CC2Button.setSelected(data.CC2.get());
         CC3Button.setSelected(data.CC3.get());
+        Output.setText(simulator.BUS.OutputString);
     }
 
     /**
@@ -768,6 +804,7 @@ public class GUI extends JFrame {
         CC1Button.setSelected(data.CC1.get());
         CC2Button.setSelected(data.CC2.get());
         CC3Button.setSelected(data.CC3.get());
+        Output.setText(simulator.BUS.OutputString);
     }
 
 

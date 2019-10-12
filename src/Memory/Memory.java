@@ -56,11 +56,14 @@ public class Memory {
         for (int i = 0; i < cache.size(); i++) {
             MemoryData current = cache.elementAt(i);
             if (current.address == address) {
+                logging.info("Cache HIT!");
+                System.out.println("Cache HIT!");
                 return current.value;
             }
         }
 
-
+        logging.info("Cache Miss!");
+        System.out.println("Cache Miss!");
         //check memory
         for (int i = 0; i < Memory.length; i++) {
             if (Memory[i] == null) {
@@ -68,6 +71,7 @@ public class Memory {
             }
             MemoryData current = Memory[i];
             if (current.address == address) {
+
                 return current.value;
             }
 
