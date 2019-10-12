@@ -812,7 +812,7 @@ public class GUI extends JFrame {
 
         System.setOut(new PrintStream(out, true));
         //DEBUG ONLY:Redirect the Error Info to GUI-IO.
-        System.setErr(new PrintStream(out, true));
+        //System.setErr(new PrintStream(out, true));
     }
 
 }
