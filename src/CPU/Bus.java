@@ -120,6 +120,37 @@ public class Bus {
         }
     }
 
+
+    private int calculateEA_LDX() {
+        // Get Address (Immediate Value from Instr), the last 5 digits.
+        int address = componets.getCU().getAddress();
+        // NOT Indirect Addressing.
+        if (componets.getCU().getI() == 0) {
+            // Check IX.
+            if (componets.getCU().getIX() == 0) {
+                return address;
+            } else {
+                return address;
+            }
+        }
+        // Indirect Addressing.
+        else if (componets.getCU().getI() == 1) {
+            // Check IX.
+            if (componets.getCU().getIX() == 0) {
+                return dataMemory.get(address);
+            } else {
+                return dataMemory.get(address);
+            }
+        }
+        // Else... Return Severe Error Accidents.
+        else {
+            logging.severe("I has trouble");
+            System.out.println("I has trouble");
+            return -1;
+        }
+    }
+
+
     /**
      * Do the Rest work to execute one Instruction.
      *
@@ -183,7 +214,7 @@ public class Bus {
                 if (componets.getGPRRegister().getValue() == 0) {
                     componets.getPC().setValue(ea);
                 } else {
-                    componets.getPC().incrementOne();
+                    //componets.getPC().incrementOne();
                 }
 
                 break;
@@ -193,7 +224,7 @@ public class Bus {
                 if (componets.getGPRRegister().getValue() != 0) {
                     componets.getPC().setValue(ea);
                 } else {
-                    componets.getPC().incrementOne();
+                    //componets.getPC().incrementOne();
                 }
 
                 break;
@@ -203,7 +234,7 @@ public class Bus {
                 if (componets.getCC().getValue() == 1) {
                     componets.getPC().setValue(ea);
                 } else {
-                    componets.getPC().incrementOne();
+                    //componets.getPC().incrementOne();
                 }
 
                 break;
@@ -216,7 +247,8 @@ public class Bus {
             }
             case 14: {
                 //JSR. TODO unknown for R0
-                componets.R3.setValue(componets.getPC().getValue() + 1);
+                //When execute this part, the PC value is PC + 1.
+                componets.R3.setValue(componets.getPC().getValue());
                 componets.getPC().setValue(ea);
 
                 break;
@@ -236,7 +268,7 @@ public class Bus {
                 if (componets.getGPRRegister().getValue() > 0) {
                     componets.getPC().setValue(ea);
                 } else {
-                    componets.getPC().incrementOne();
+                    //componets.getPC().incrementOne();
                 }
 
 
@@ -244,10 +276,10 @@ public class Bus {
             }
             case 17: {
                 //JGE
-                if (componets.getGPRRegister().getValue() >= 0) {
+                if (componets.getGPRRegister().getValue() >= 0 && componets.CC1.get()==false) {
                     componets.getPC().setValue(ea);
                 } else {
-                    componets.getPC().incrementOne();
+                    //componets.getPC().incrementOne();
                 }
 
                 break;
@@ -431,6 +463,7 @@ public class Bus {
             }
             case 41: {
                 // Write the IX register with MEM[EA].
+                ea = calculateEA_LDX();
                 componets.getIXRegister().setValue(dataMemory.get(ea));
                 break;
             }
