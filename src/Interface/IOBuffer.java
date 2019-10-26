@@ -1,6 +1,10 @@
 package Interface;
 
 import javax.swing.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 
 /**
  * This is the Input/Output Buffer for simulator to handle I/O instr.
@@ -70,6 +74,39 @@ public class IOBuffer {
         String input = JOptionPane.showInputDialog(frame, "Please type in your input for " + DeviceName);
         input = input + "\n";
         setBuffer(input);
+    }
+
+    /**
+     * Set the buffer from the File.
+     * This function is usually called when IOBuffer class are initialized as a Card Reader.
+     * (Which Card Reader is Simply a file IO)
+     * !!!!! Please Note the File must contains 1 line of document and 1 line ONLY. !!!!!
+     * This will automatically add an "\n" to the end of the input for the simulator to easy identification.
+     */
+    public void setBufferFromFile() {
+        JFileChooser IoFileChooser = new JFileChooser();
+        int select = IoFileChooser.showOpenDialog(null);
+        if (select == IoFileChooser.APPROVE_OPTION) {
+            // We get the file!
+            File IOFile = IoFileChooser.getSelectedFile();
+            System.out.println("[I//OLOAD]READING IO BUFFER FILE:" + IOFile.getName());
+            // Read the file into the buffer.
+            try {
+                InputStreamReader reader = new InputStreamReader(
+                        new FileInputStream(IOFile));
+                BufferedReader br = new BufferedReader(reader);
+                String line = null;
+                line = br.readLine();
+                // Check if the line end with "\n".
+                // Sorry I don't understand the Java, So I don't know if readLine automatically add "\n" to the end.
+                if (!line.endsWith("\n")) {
+                    line = line + "\n";
+                }
+                setBuffer(line);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 }

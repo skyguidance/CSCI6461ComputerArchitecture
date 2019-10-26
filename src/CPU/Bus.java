@@ -565,7 +565,7 @@ public class Bus {
                 } else if (DevID == 2) {
                     //Read from console card-reader.
                     while (CardReaderBuffer.isEmpty()) {
-                        CardReaderBuffer.setBufferFromGUI();
+                        CardReaderBuffer.setBufferFromFile();
                     }
                     input = CardReaderBuffer.getOneDigit();
                 } else if (DevID > 2 && DevID < 32) {
