@@ -50,6 +50,8 @@ The example above load data "0000011100011111" to memory location 001,010,011,10
   
  **Testing Program 0 (P1)**<br>
  This is the basic testcase for Stage 1 to test 5 LOAD/STORE Instr.<br>
-  **Testing Program 1 (P2)**<br>
+ **Testing Program 1 (P2)**<br>
 A program that reads 20 numbers (integers) from the keyboard, prints the numbers to the console printer, requests a number from the user, and searches the 20 numbers read in for the number closest to the number entered by the user. Print the number entered by the user and the number closest to that number. Your numbers should not be 1…10, but distributed over the range of 0 … 65,535. Therefore, as you read a character in, you need to check it is a digit, convert it to a number, and assemble the integer. <br>
+ **Testing Program 2 (P3)**<br>
+A program that reads a set of a paragraph of 6 sentences from a file into memory. It prints the sentences on the console printer. It then asks the user for a word. It searches the paragraph to see if it contains the word. If so, it prints out the word, the sentence number, and the word number in the sentence.<br>
 ## :construction: Project Work In Progress for P3 :construction:
