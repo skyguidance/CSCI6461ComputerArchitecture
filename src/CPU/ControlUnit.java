@@ -9,8 +9,9 @@ import java.util.logging.Logger;
 public class ControlUnit {
 
     private int opcode, I, R, IX, address;
-    private int Rx,Ry;
-    private int AL,LR,Count;
+    private int Rx, Ry;
+    private int AL, LR, Count;
+    private int TrapCode;
     final Logger logging = Logger.getLogger("CPU.ControlUnit");
 
     public ControlUnit(String BinaryString) {
@@ -42,6 +43,8 @@ public class ControlUnit {
         AL = Integer.valueOf(BinaryString.substring(8, 9), 2);
         LR = Integer.valueOf(BinaryString.substring(9, 10), 2);
         Count = Integer.valueOf(BinaryString.substring(12, 16), 2);
+        // Trap Code.
+        TrapCode = Integer.valueOf(BinaryString.substring(12, 16), 2);
         // Print the result for easy Debug.
         logging.info("CTRL DECODE:OPCODE=>" + opcode + "\tGPR=>" + R + "\tIX=>" + IX + "\tI=>" + I + "\tAddress=>" + address);
         System.out.println("CTRL DECODE:OPCODE=>" + opcode + "\tGPR=>" + R + "\tIX=>" + IX + "\tI=>" + I + "\tAddress=>" + address);
@@ -82,6 +85,10 @@ public class ControlUnit {
 
     public int getR() {
         return R;
+    }
+
+    public int getTrapCode() {
+        return TrapCode;
     }
 
     public int getI() {

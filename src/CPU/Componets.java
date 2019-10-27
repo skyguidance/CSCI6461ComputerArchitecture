@@ -201,6 +201,16 @@ public class Componets {
     }
 
     /**
+     * Get MFR Register.
+     *
+     * @return The MFR Register (Object.)
+     */
+    public Register getMFR() {
+        return MFR;
+    }
+
+
+    /**
      * Get MBR Register.
      *
      * @return The MBR Register (Object.)
@@ -235,4 +245,5 @@ public class Componets {
     public ProgramCounter getPC() {
         return PC;
     }
+
 }

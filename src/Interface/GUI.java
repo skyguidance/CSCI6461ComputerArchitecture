@@ -669,9 +669,11 @@ public class GUI extends JFrame {
                     if (EXPANDMEMCheckbox.isSelected()) {
                         // Expand the memory to 4096.
                         simulator.DataMemory.expandMEM();
+                        simulator.BUS.isMemoryExpanded = true;
                     } else {
                         // Shrink to 2048.
                         simulator.DataMemory.shrinkMEM();
+                        simulator.BUS.isMemoryExpanded = false;
                     }
                 }
             }
