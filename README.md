@@ -55,3 +55,7 @@ A program that reads 20 numbers (integers) from the keyboard, prints the numbers
  **Testing Program 2 (P3)**<br>
 A program that reads a set of a paragraph of 6 sentences from a file into memory. It prints the sentences on the console printer. It then asks the user for a word. It searches the paragraph to see if it contains the word. If so, it prints out the word, the sentence number, and the word number in the sentence.<br>
 ## :construction: Project Work In Progress for P3 :construction:
+For Testing Program 2: <br>
+- For this stage, the Card Reader I/O Port is implemented as a file I/O in our simulator. So in that case if requested an IN instr at Card Reader (DevID = 2), the simulator will request an .txt file for this specific input.<br>
+- Testing Program 2 requires to read a set of paragraph of 6 sentences. The sample file is contained in the file **TestProgram2-Paragraph.txt**. <br>
+- For the main string compare logic, please refer to the C program contains in this project. The file is called **TestProgram2-Logic.c**. Reading this C file gives you a basic idea of what I'm trying to do in the assamble code. For a easy understanding, I also upload my hand-written translation notes **TestProgram2-HandWrittenLogic.pdf**. This includes some memory location identifier. And I've comments the main compare logic part in the assemable code, so it is much easier for you to read and understand.(the variable in the comment is the same as the C code and the hand-written logic).
