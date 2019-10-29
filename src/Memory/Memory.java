@@ -248,8 +248,21 @@ public class Memory {
             if (Memory[i] == null) {
                 continue;
             }
-            System.out.println("DUMP:MEM[" + ToBinaryString(Memory[i].address) + "(" + Memory[i].address + ")" + "]=>" + ToBinaryString(Memory[i].value) + "(" + Memory[i].value + ")");
-            logging.info("DUMP:MEM[" + ToBinaryString(Memory[i].address) + "(" + Memory[i].address + ")" + "]=>" + ToBinaryString(Memory[i].value) + "(" + Memory[i].value + ")");
+            if(Memory[i].value <= 127){
+                char castToChar = (char)Memory[i].value;
+                try {
+                    System.out.println("DUMP:MEM[" + ToBinaryString(Memory[i].address) + "(" + Memory[i].address + ")" + "]=>" + ToBinaryString(Memory[i].value) + "(" + Memory[i].value + ")" + "Cast:" + String.valueOf(castToChar));
+                    logging.info("DUMP:MEM[" + ToBinaryString(Memory[i].address) + "(" + Memory[i].address + ")" + "]=>" + ToBinaryString(Memory[i].value) + "(" + Memory[i].value + ")" + "Cast:" + String.valueOf(castToChar));
+                } catch (Exception e){
+                    System.out.println("DUMP:MEM[" + ToBinaryString(Memory[i].address) + "(" + Memory[i].address + ")" + "]=>" + ToBinaryString(Memory[i].value) + "(" + Memory[i].value + ")");
+                    logging.info("DUMP:MEM[" + ToBinaryString(Memory[i].address) + "(" + Memory[i].address + ")" + "]=>" + ToBinaryString(Memory[i].value) + "(" + Memory[i].value + ")");
+                }
+            }
+            else {
+                System.out.println("DUMP:MEM[" + ToBinaryString(Memory[i].address) + "(" + Memory[i].address + ")" + "]=>" + ToBinaryString(Memory[i].value) + "(" + Memory[i].value + ")");
+                logging.info("DUMP:MEM[" + ToBinaryString(Memory[i].address) + "(" + Memory[i].address + ")" + "]=>" + ToBinaryString(Memory[i].value) + "(" + Memory[i].value + ")");
+            }
+
         }
 
     }
