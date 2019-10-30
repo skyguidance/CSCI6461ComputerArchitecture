@@ -6,7 +6,9 @@ This is our CSCI6461 Simple Computer Simulator for George Washington University,
 Project Mannual is avilable at:<br>
 http://www.mslcourses.com/CSCI6461Section10Fall2019/AdaptedKaislerFiles/ClassProjectDescription.doc
 ## Download and Execute
-#### Usage Of this simulator
+#### Download Pre-compiled JAR file
+Please refer to the [release](https://github.com/skyguidance/CSCI6461ComputerArchitecture/releases) page of this project.
+#### Manual Compile the project
 - Clone the Project first, and checkout master branch.
 > git clone https://github.com/skyguidance/CSCI6461ComputerArchitecture.git <br>
 > git checkout master
