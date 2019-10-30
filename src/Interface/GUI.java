@@ -70,11 +70,6 @@ public class GUI extends JFrame {
     private JPanel BreakPointField;
     private JTextField BreakPointInput;
     private JButton PCBreakPointRemoveButton;
-    private JPanel MemTraceField;
-    private JTable MemTraceTable;
-    private JTextField MemTraceInput;
-    private JButton MemTraceAddButton;
-    private JButton MemTraceRemoveButton;
     private Simulator simulator;
     private String IOString;
 
