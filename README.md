@@ -1,7 +1,7 @@
 
 # CSCI 6461 Computer Architecture 
-This is our CSCI6461 Simple Computer Simulator for George Washington University, Fall 2019, Group 1.<br>
-
+This is our CSCI6461 Simple Computer Simulator for George Washington University, Fall 2019, Group 1.<br><br>
+![](https://github.com/skyguidance/CSCI6461ComputerArchitecture/raw/master/preview/Preview.jpg)
 #### About the Mannual
 Project Mannual is avilable at:<br>
 http://www.mslcourses.com/CSCI6461Section10Fall2019/AdaptedKaislerFiles/ClassProjectDescription.doc
