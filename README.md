@@ -64,3 +64,5 @@ A program that reads a set of a paragraph of 6 sentences from a file into memory
 ## :construction: Project Work In Progress for P4! We are almost there! Amazing Works! :construction:
 ### Floating Point Convertion
 https://www.geeksforgeeks.org/floating-point-representation-digital-logic/
+### Pipelining
+![](https://static.careerengine.us/api/aov2/http%3A_%7C__%7C_mmbiz.qpic.cn_%7C_mmbiz_jpg_%7C_YdXCvBnr3mGGIvuJwwFozOBibdS9dyIxOttRTficTJKU1QAPybS8vVWqLIkGEtGA4ZOHTtEYo3RJVlnZp1360waA_%7C_0%3Fwx_fmt%3Djpeg)
