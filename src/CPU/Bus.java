@@ -104,10 +104,10 @@ public class Bus {
      * Execute one instruction.
      */
     public void tik() {
-        // MAR <- PC,PC++;
+        // 1. MAR <- PC,PC++;
         componets.getMAR().setValue(componets.getPC().getValue());
         componets.getPC().incrementOne();
-        // MBR <- MEM[MAR]
+        // 2. MBR <- MEM[MAR]
         if (componets.getMAR().getValue()>=2048 && isMemoryExpanded == false){
             //Machine Fault. User try to visit memory above 2K.
             componets.getMFR().setValue(8);
@@ -116,11 +116,11 @@ public class Bus {
             return;
         }
         componets.getMBR().setValue(dataMemory.get(componets.getMAR().getValue()));
-        // IR <- MBR
+        // 3. IR <- MBR
         componets.getIR().setValue(componets.getMBR().getValue());
-        // CTRL-DECODE
+        // 4. CTRL-DECODE
         componets.getCU().decodeInstruction(componets.getIR().getValue());
-        // Execute Process
+        // 5. Execute Process
         executeInstruction(calculateEA());
     }
 
@@ -569,6 +569,9 @@ public class Bus {
                 break;
             }
             case 33: {
+                // FADD. Floating Point Add.
+                Floating_Register FloatingEA = new Floating_Register(ea);
+                Floating_Register FR = componets.getFRRegister();
 
                 break;
             }

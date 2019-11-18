@@ -15,6 +15,7 @@ public class Componets {
     public Memory_Address_Register MAR;
     public Memory_Buffer_Register MBR;
     public Address_Register EA;
+    public Floating_Register FR0, FR1;
     public ProgramCounter PC;
     public ALU ALU;
     private ControlUnit CU;
@@ -61,6 +62,9 @@ public class Componets {
         ALU = new ALU();
         // Control Unit
         CU = new ControlUnit(IR.ToBinaryString());
+        // Floating Point Register
+        FR0 = new Floating_Register();
+        FR1 = new Floating_Register();
     }
 
     /**
@@ -127,6 +131,27 @@ public class Componets {
         }
 
     }
+
+    /**
+     * find the Floating Point (Rx Field) we are working on right now
+     * This function could only be called when meeting a Floating Point Instr.
+     * Otherwise, the output is useless.
+     *
+     * @return The Floating Point Register that requested.
+     */
+    public Floating_Register getFRRegister() {
+        int index = CU.getRx();
+        if (index == 0) {
+            return FR0;
+        } else if (index == 1) {
+            return FR1;
+        } else {
+            logging.severe("getFRRegister: request Floating Point Register not exist!");
+            System.out.println("getFRRegister: request Floating Point Register not exist!");
+            return new Floating_Register();
+        }
+    }
+
 
     /**
      * find the GPR(Rx Field) we are working on right now
