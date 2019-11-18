@@ -571,12 +571,15 @@ public class Bus {
             case 33: {
                 // FADD. Floating Point Add.
                 Floating_Register FloatingEA = new Floating_Register(ea);
-                Floating_Register FR = componets.getFRRegister();
-
+                float result = FloatingEA.toFloatingPoint()+componets.getFRRegister().toFloatingPoint();
+                componets.getFRRegister().setFloatingPoint(result);
                 break;
             }
             case 34: {
-
+                // FSUB. Floating Point SUB.
+                Floating_Register FloatingEA = new Floating_Register(ea);
+                float result = componets.getFRRegister().toFloatingPoint()-FloatingEA.toFloatingPoint();
+                componets.getFRRegister().setFloatingPoint(result);
                 break;
             }
             case 35: {
@@ -588,6 +591,7 @@ public class Bus {
                 break;
             }
             case 37: {
+                int F = componets.getGPRRegister().getValue();
 
                 break;
             }
