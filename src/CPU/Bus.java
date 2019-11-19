@@ -103,7 +103,31 @@ public class Bus {
     /**
      * Execute one instruction.
      */
+
+    int pip_IR = 0;
+    int BubbleInPipeline = 1;
+
+    private void InsertBubbleInPipeline(){
+        System.out.println("=====================================================================================");
+        System.out.println("Pipeline=>Flushing(Bubble Insert)....................................................");
+        System.out.println("=====================================================================================");
+        pip_IR = 0;
+        BubbleInPipeline = 1;
+    }
+
     public void tik() {
+        System.out.println("=====================================================================================");
+        System.out.println("Pipeline=>Stage_B(Parallel)..........................................................");
+        System.out.println("=====================================================================================");
+        componets.getIR().setValue(pip_IR);
+        // 4. CTRL-DECODE
+        componets.getCU().decodeInstruction(componets.getIR().getValue());
+        // 5. Execute Process
+        executeInstruction(calculateEA());
+
+        System.out.println("=====================================================================================");
+        System.out.println("Pipeline=>Stage_A(Parallel)..........................................................");
+        System.out.println("=====================================================================================");
         // 1. MAR <- PC,PC++;
         componets.getMAR().setValue(componets.getPC().getValue());
         componets.getPC().incrementOne();
@@ -117,11 +141,9 @@ public class Bus {
         }
         componets.getMBR().setValue(dataMemory.get(componets.getMAR().getValue()));
         // 3. IR <- MBR
-        componets.getIR().setValue(componets.getMBR().getValue());
-        // 4. CTRL-DECODE
-        componets.getCU().decodeInstruction(componets.getIR().getValue());
-        // 5. Execute Process
-        executeInstruction(calculateEA());
+        pip_IR = componets.getMBR().getValue();
+
+        BubbleInPipeline-=1;
     }
 
     /**
@@ -243,10 +265,12 @@ public class Bus {
         //GET OPCODE to distinguish Instruction.
         switch (componets.getCU().getOpcode()) {
             case 0: {
-                //HALT
-                isHalt = true;
-                componets.PC.setValue(6); // Reset PC
-                System.out.println("BUS:HALT");
+                if(BubbleInPipeline <= 0){
+                    //HALT
+                    isHalt = true;
+                    componets.PC.setValue(6); // Reset PC
+                    System.out.println("BUS:HALT");
+                }
                 break;
             }
             case 1: {
@@ -323,6 +347,7 @@ public class Bus {
             case 10: {
                 //JZ.  jump to effective address if register is 0
                 if (componets.getGPRRegister().getValue() == 0) {
+                    InsertBubbleInPipeline();
                     componets.getPC().setValue(ea);
                 } else {
                     //componets.getPC().incrementOne();
@@ -333,6 +358,7 @@ public class Bus {
             case 11: {
                 //JNE.  jump to effective address if register is not 0
                 if (componets.getGPRRegister().getValue() != 0) {
+                    InsertBubbleInPipeline();
                     componets.getPC().setValue(ea);
                 } else {
                     //componets.getPC().incrementOne();
@@ -343,6 +369,7 @@ public class Bus {
             case 12: {
                 //JNE.  jump to effective address if CC is 1
                 if (componets.getCC().getValue() == 1) {
+                    InsertBubbleInPipeline();
                     componets.getPC().setValue(ea);
                 } else {
                     //componets.getPC().incrementOne();
@@ -352,7 +379,7 @@ public class Bus {
             }
             case 13: {
                 //JMA.  jump to effective address if CC is 1
-
+                InsertBubbleInPipeline();
                 componets.getPC().setValue(ea);
                 break;
             }
@@ -360,6 +387,7 @@ public class Bus {
                 //JSR. TODO unknown for R0
                 //When execute this part, the PC value is PC + 1.
                 componets.R3.setValue(componets.getPC().getValue());
+                InsertBubbleInPipeline();
                 componets.getPC().setValue(ea);
 
                 break;
@@ -368,7 +396,7 @@ public class Bus {
                 //RFS Return From Subroutine w/
                 // return code as Immed portion (optional) stored in the instruction’s address field.
                 componets.R0.setValue(componets.getCU().getAddress());
-
+                InsertBubbleInPipeline();
                 componets.getPC().setValue(componets.R3.getValue());
                 break;
             }
@@ -388,6 +416,7 @@ public class Bus {
             case 17: {
                 //JGE
                 if (componets.getGPRRegister().getValue() >= 0 && componets.CC1.get() == false) {
+                    InsertBubbleInPipeline();
                     componets.getPC().setValue(ea);
                 } else {
                     //componets.getPC().incrementOne();
