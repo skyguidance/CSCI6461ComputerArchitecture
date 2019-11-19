@@ -21,6 +21,15 @@ public class Floating_Register {
         Value = this.Value;
     }
 
+    public void setBinary(String Binary){
+        if(Binary.length()!=16){
+            logging.severe("Floating Point Binary Set Initialize Error.Length!=16");
+            System.out.println("Floating Point Binary Set Initialize Error.Length!=16");
+            return;
+        }
+        Value = Binary;
+    }
+
     public Floating_Register(int intValue) {
         String StringValue = ToBinaryString(intValue);
         if (StringValue.length() != 16) {
@@ -103,7 +112,7 @@ public class Floating_Register {
         double half = 0.5;
         double MantissaResult = 1;
         for (int i = 0; i < Mantissa.length(); i++) {
-            int bit = Integer.valueOf(Mantissa.substring(i,i+1));
+            int bit = Integer.valueOf(Mantissa.substring(i, i + 1));
             MantissaResult += half * bit;
             half = half / 2;
         }
@@ -172,7 +181,7 @@ public class Floating_Register {
 
     public static void main(String[] args) {
         Floating_Register FL = new Floating_Register();
-        FL.setFloatingPoint((float) 1.23456);
+        FL.setFloatingPoint((float) 1.5);
         System.out.println(FL.toFloatingPoint());
         System.out.println(FL.Value);
     }

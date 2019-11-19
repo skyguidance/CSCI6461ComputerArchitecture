@@ -108,10 +108,10 @@ public class Bus {
         componets.getMAR().setValue(componets.getPC().getValue());
         componets.getPC().incrementOne();
         // 2. MBR <- MEM[MAR]
-        if (componets.getMAR().getValue()>=2048 && isMemoryExpanded == false){
+        if (componets.getMAR().getValue() >= 2048 && isMemoryExpanded == false) {
             //Machine Fault. User try to visit memory above 2K.
             componets.getMFR().setValue(8);
-            dataMemory.set(4,componets.getPC().getValue());
+            dataMemory.set(4, componets.getPC().getValue());
             componets.getPC().setValue(dataMemory.get(1));
             return;
         }
@@ -180,10 +180,10 @@ public class Bus {
             if (componets.getCU().getIX() == 0) {
                 return dataMemory.get(address);
             } else {
-                if ((address + componets.getIXRegister().getValue())>=2048 && isMemoryExpanded == false){
+                if ((address + componets.getIXRegister().getValue()) >= 2048 && isMemoryExpanded == false) {
                     //Machine Fault. User try to visit memory above 2K.
                     componets.getMFR().setValue(8);
-                    dataMemory.set(4,componets.getPC().getValue());
+                    dataMemory.set(4, componets.getPC().getValue());
                     componets.getPC().setValue(dataMemory.get(1));
                     return 0;
                 }
@@ -251,10 +251,10 @@ public class Bus {
             }
             case 1: {
                 //Load the MEM[EA] to specific GPR.
-                if (ea>=2048 && isMemoryExpanded == false){
+                if (ea >= 2048 && isMemoryExpanded == false) {
                     //Machine Fault. User try to visit memory above 2K.
                     componets.getMFR().setValue(8);
-                    dataMemory.set(4,componets.getPC().getValue());
+                    dataMemory.set(4, componets.getPC().getValue());
                     componets.getPC().setValue(dataMemory.get(1));
                     break;
                 }
@@ -263,10 +263,10 @@ public class Bus {
             }
             case 2: {
                 // Store the GPR to MEM[EA].
-                if (ea < 6){
+                if (ea < 6) {
                     //Machine Fault. User Try to set protected memory.
                     componets.getMFR().setValue(1);
-                    dataMemory.set(4,componets.getPC().getValue());
+                    dataMemory.set(4, componets.getPC().getValue());
                     componets.getPC().setValue(dataMemory.get(1));
                     break;
                 }
@@ -280,10 +280,10 @@ public class Bus {
             }
             case 4: {
                 // AMR. Add Memory To Register.
-                if (ea>=2048 && isMemoryExpanded == false){
+                if (ea >= 2048 && isMemoryExpanded == false) {
                     //Machine Fault. User try to visit memory above 2K.
                     componets.getMFR().setValue(8);
-                    dataMemory.set(4,componets.getPC().getValue());
+                    dataMemory.set(4, componets.getPC().getValue());
                     componets.getPC().setValue(dataMemory.get(1));
                     break;
                 }
@@ -294,10 +294,10 @@ public class Bus {
             }
             case 5: {
                 // SMR. Subtract Memory From Register.
-                if (ea>=2048 && isMemoryExpanded == false){
+                if (ea >= 2048 && isMemoryExpanded == false) {
                     //Machine Fault. User try to visit memory above 2K.
                     componets.getMFR().setValue(8);
-                    dataMemory.set(4,componets.getPC().getValue());
+                    dataMemory.set(4, componets.getPC().getValue());
                     componets.getPC().setValue(dataMemory.get(1));
                     break;
                 }
@@ -485,7 +485,7 @@ public class Bus {
                 if (TrapCode > 15 || TrapCode < 0) {
                     // Machine Fault. This is not a valid Trap code.
                     componets.getMFR().setValue(2);
-                    dataMemory.set(4,componets.getPC().getValue());
+                    dataMemory.set(4, componets.getPC().getValue());
                     componets.getPC().setValue(dataMemory.get(1));
                     break;
                 }
@@ -570,38 +570,64 @@ public class Bus {
             }
             case 33: {
                 // FADD. Floating Point Add.
-                Floating_Register FloatingEA = new Floating_Register(ea);
-                float result = FloatingEA.toFloatingPoint()+componets.getFRRegister().toFloatingPoint();
+                Floating_Register FloatingEA = new Floating_Register(dataMemory.get(ea));
+                float result = FloatingEA.toFloatingPoint() + componets.getFRRegister().toFloatingPoint();
                 componets.getFRRegister().setFloatingPoint(result);
                 break;
             }
             case 34: {
                 // FSUB. Floating Point SUB.
-                Floating_Register FloatingEA = new Floating_Register(ea);
-                float result = componets.getFRRegister().toFloatingPoint()-FloatingEA.toFloatingPoint();
+                Floating_Register FloatingEA = new Floating_Register(dataMemory.get(ea));
+                float result = componets.getFRRegister().toFloatingPoint() - FloatingEA.toFloatingPoint();
                 componets.getFRRegister().setFloatingPoint(result);
                 break;
             }
             case 35: {
-
+                //VADD. Vector Add.
+                int VectorLength = Integer.valueOf(componets.getFRRegister().Value, 2);
+                int Vector1BaseAdd = dataMemory.get(ea);
+                int Vector2BaseAdd = dataMemory.get(ea + 1);
+                for (int i = 0; i < VectorLength; i++) {
+                    int Vector1CurrentValue = dataMemory.get(Vector1BaseAdd+i);
+                    int Vector2CurrentValue = dataMemory.get(Vector2BaseAdd+i);
+                    dataMemory.set(Vector1BaseAdd+i,Vector1CurrentValue+Vector2CurrentValue);
+                }
                 break;
             }
             case 36: {
-
+                //VSUB. Vector Sub.
+                int VectorLength = Integer.valueOf(componets.getFRRegister().Value, 2);
+                int Vector1BaseAdd = dataMemory.get(ea);
+                int Vector2BaseAdd = dataMemory.get(ea + 1);
+                for (int i = 0; i < VectorLength; i++) {
+                    int Vector1CurrentValue = dataMemory.get(Vector1BaseAdd+i);
+                    int Vector2CurrentValue = dataMemory.get(Vector2BaseAdd+i);
+                    dataMemory.set(Vector1BaseAdd+i,Vector1CurrentValue-Vector2CurrentValue);
+                }
                 break;
             }
             case 37: {
+                //CNVRT. Convert to Fixed/Floating Point Number.
                 int F = componets.getGPRRegister().getValue();
-
+                if (F == 0) {
+                    //convert(EA) to a fixed point number and store in r.
+                    Floating_Register FloatingEA = new Floating_Register(dataMemory.get(ea));
+                    int EAasInt = (int) FloatingEA.toFloatingPoint();
+                    componets.getGPRRegister().setValue(EAasInt);
+                }
+                if (F == 1) {
+                    //convert c(EA) to a floating number and stored in FR0.
+                    componets.FR0.setFloatingPoint(dataMemory.get(ea));
+                }
                 break;
             }
             case 41: {
                 // Write the IX register with MEM[EA].
                 ea = calculateEA_LDX();
-                if (ea>=2048 && isMemoryExpanded == false){
+                if (ea >= 2048 && isMemoryExpanded == false) {
                     //Machine Fault. User try to visit memory above 2K.
                     componets.getMFR().setValue(8);
-                    dataMemory.set(4,componets.getPC().getValue());
+                    dataMemory.set(4, componets.getPC().getValue());
                     componets.getPC().setValue(dataMemory.get(1));
                     break;
                 }
@@ -610,10 +636,10 @@ public class Bus {
             }
             case 42: {
                 // Store the IX to MEM[EA].
-                if (ea < 6){
+                if (ea < 6) {
                     //Machine Fault. User Try to set protected memory.
                     componets.getMFR().setValue(1);
-                    dataMemory.set(4,componets.getPC().getValue());
+                    dataMemory.set(4, componets.getPC().getValue());
                     componets.getPC().setValue(dataMemory.get(1));
                     break;
                 }
@@ -621,11 +647,15 @@ public class Bus {
                 break;
             }
             case 50: {
-
+                // LDFR. Load Floating Register From Memory.
+                componets.FR0.setBinary(dataMemory.ToBinaryString(dataMemory.get(ea)));
+                componets.FR1.setBinary(dataMemory.ToBinaryString(dataMemory.get(ea)));
                 break;
             }
             case 51: {
-
+                //STFR. Store Floating Register To Memory.
+                dataMemory.set(ea, Integer.valueOf(componets.FR0.Value, 2));
+                dataMemory.set(ea + 1, Integer.valueOf(componets.FR1.Value, 2));
                 break;
             }
             case 61: {
@@ -723,7 +753,7 @@ public class Bus {
             default: {
                 // Machine Fault. Unsupported OpCode.
                 componets.getMFR().setValue(4);
-                dataMemory.set(4,componets.getPC().getValue());
+                dataMemory.set(4, componets.getPC().getValue());
                 componets.getPC().setValue(dataMemory.get(1));
                 break;
             }
