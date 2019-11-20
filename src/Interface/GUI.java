@@ -70,6 +70,13 @@ public class GUI extends JFrame {
     private JPanel BreakPointField;
     private JTextField BreakPointInput;
     private JButton PCBreakPointRemoveButton;
+    private JLabel FR0;
+    private JTextField FR0Input;
+    private JLabel FR1;
+    private JTextField FR1Input;
+    private JPanel MemoryTraceField;
+    private JButton PrintMemoryButton;
+    private JTextArea MemoryTraceText;
     private Simulator simulator;
     private String IOString;
 
@@ -715,6 +722,21 @@ public class GUI extends JFrame {
                 }
             }
         }));
+
+        //When Memory Trace Dump Button is clicked...
+        PrintMemoryButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(e.getSource() == PrintMemoryButton){
+                    //Dump the memory info the the Memory Trace Field.
+                    MemoryTraceText.append("===================================================================\n");
+                    MemoryTraceText.append("Dump Memory when PC at "+simulator.componets.PC.getValue()+"\n");
+                    MemoryTraceText.append("===================================================================\n");
+                    MemoryTraceText.append(simulator.DataMemory.DumpMemoryAsString());
+                    MemoryTraceText.append("===================================================================\n");
+                }
+            }
+        });
     }
 
     /**
@@ -770,6 +792,8 @@ public class GUI extends JFrame {
         CC1Button.setSelected(data.CC1.get());
         CC2Button.setSelected(data.CC2.get());
         CC3Button.setSelected(data.CC3.get());
+        FR0Input.setText(data.FR0.Value);
+        FR1Input.setText(data.FR1.Value);
         Output.setText(simulator.BUS.OutputString);
     }
 
@@ -806,6 +830,8 @@ public class GUI extends JFrame {
         CC1Button.setSelected(data.CC1.get());
         CC2Button.setSelected(data.CC2.get());
         CC3Button.setSelected(data.CC3.get());
+        FR0Input.setText(data.FR0.Value);
+        FR1Input.setText(data.FR1.Value);
         Output.setText(simulator.BUS.OutputString);
     }
 

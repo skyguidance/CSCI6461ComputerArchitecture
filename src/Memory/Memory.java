@@ -266,4 +266,31 @@ public class Memory {
         }
 
     }
+
+    /**
+     * Dump memory.
+     * Redirect Each value of the memory as a string (if it is not empty.)
+     */
+    public String DumpMemoryAsString() {
+        String result = "";
+        for (int i = 0; i < MEMORY_LENGTH; i++) {
+            if (Memory[i] == null) {
+                continue;
+            }
+            if(Memory[i].value <= 127){
+                char castToChar = (char)Memory[i].value;
+                try {
+                    result = result + "DUMP:MEM[" + ToBinaryString(Memory[i].address) + "(" + Memory[i].address + ")" + "]=>" + ToBinaryString(Memory[i].value) + "(" + Memory[i].value + ")" + "Cast:" + String.valueOf(castToChar) + "\n";
+
+                } catch (Exception e){
+                    result = result + "DUMP:MEM[" + ToBinaryString(Memory[i].address) + "(" + Memory[i].address + ")" + "]=>" + ToBinaryString(Memory[i].value) + "(" + Memory[i].value + ")"+ "\n";
+                }
+            }
+            else {
+                result = result + "DUMP:MEM[" + ToBinaryString(Memory[i].address) + "(" + Memory[i].address + ")" + "]=>" + ToBinaryString(Memory[i].value) + "(" + Memory[i].value + ")"+ "\n";
+            }
+
+        }
+        return result;
+    }
 }
