@@ -1,10 +1,10 @@
 package CPU;
 
-import java.nio.Buffer;
 import java.util.logging.Logger;
 
 public class Floating_Register {
     public String Value;
+    public float fvalue;
 
     final Logger logging = Logger.getLogger("CPU.FloatingPointRegister");
 
@@ -16,9 +16,9 @@ public class Floating_Register {
         if (this.Value.length() != 16) {
             logging.severe("Floating Point Parser Initialize Error.Length!=16");
             System.out.println("Floating Point Parser Initialize Error.Length!=16");
-            return;
         }
-        Value = this.Value;
+        this.Value = Value;
+        fvalue=toFloatingPoint();
     }
 
     public void setBinary(String Binary){
@@ -30,14 +30,9 @@ public class Floating_Register {
         Value = Binary;
     }
 
-    public Floating_Register(int intValue) {
-        String StringValue = ToBinaryString(intValue);
-        if (StringValue.length() != 16) {
-            logging.severe("Floating Point Parser Initialize Error.Length!=16");
-            System.out.println("Floating Point Parser Initialize Error.Length!=16");
-            return;
-        }
-        Value = StringValue;
+    public Floating_Register(float fValue) {
+        this.fvalue=fValue;
+        setFloatingPoint(fValue);
     }
 
     public int getMantissaSignAsInt() {
@@ -86,21 +81,22 @@ public class Floating_Register {
         if (Sign.length() != 1) {
             logging.severe("Floating Point Sign Bit Length Error.");
             System.out.println("Floating Point Sign Bit Length Error.");
-            return;
         }
         if (Exponent.length() != 7) {
             logging.severe("Floating Point Exponent Bit Length Error.");
             System.out.println("Floating Point Exponent Bit Length Error.");
-            return;
+
         }
         if (Mantissa.length() != 8) {
             logging.severe("Floating Point Mantissa Bit Length Error.");
             System.out.println("Floating Point Mantissa Bit Length Error.");
-            return;
+
         }
         Value = Sign + Exponent + Mantissa;
-        return;
+
     }
+
+    //from string to float
 
     public float toFloatingPoint() {
         double result = 0;
@@ -122,6 +118,7 @@ public class Floating_Register {
 
     public void setFloatingPoint(float value) {
         // Get Sign Bit.
+        fvalue=value;
         String SignBit;
         if (value >= 0) {
             SignBit = "0";
@@ -178,11 +175,17 @@ public class Floating_Register {
         }
         return i - 1;
     }
+    public String getValue(){
+        return Value;
+    }
+    public float getfValue(){
+        return fvalue;
+    }
 
     public static void main(String[] args) {
         Floating_Register FL = new Floating_Register();
         FL.setFloatingPoint((float) 1.5);
-        System.out.println(FL.toFloatingPoint());
-        System.out.println(FL.Value);
+        System.out.println(FL.getValue());
+        System.out.println(FL.getfValue());
     }
 }
