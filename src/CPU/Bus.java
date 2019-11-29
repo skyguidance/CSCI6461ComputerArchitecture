@@ -105,25 +105,34 @@ public class Bus {
      */
 
     int pip_IR = 0;
-    int BubbleInPipeline = 1;
+    int pip_MBR = 3;
+    int BubbleInPipeline = 2;
 
     private void InsertBubbleInPipeline(){
         System.out.println("=====================================================================================");
         System.out.println("Pipeline=>Flushing(Bubble Insert)....................................................");
         System.out.println("=====================================================================================");
         pip_IR = 0;
-        BubbleInPipeline = 1;
+        pip_MBR = 3;
+        BubbleInPipeline = 2;
     }
 
     public void tik() {
         System.out.println("=====================================================================================");
-        System.out.println("Pipeline=>Stage_B(Parallel)..........................................................");
+        System.out.println("Pipeline=>Stage_C(Parallel)..........................................................");
         System.out.println("=====================================================================================");
         componets.getIR().setValue(pip_IR);
         // 4. CTRL-DECODE
         componets.getCU().decodeInstruction(componets.getIR().getValue());
         // 5. Execute Process
         executeInstruction(calculateEA());
+
+        System.out.println("=====================================================================================");
+        System.out.println("Pipeline=>Stage_B(Parallel)..........................................................");
+        System.out.println("=====================================================================================");
+        // 3. IR <- MBR
+        componets.getMBR().setValue(pip_MBR);
+        pip_IR = componets.getMBR().getValue();
 
         System.out.println("=====================================================================================");
         System.out.println("Pipeline=>Stage_A(Parallel)..........................................................");
@@ -139,9 +148,8 @@ public class Bus {
             componets.getPC().setValue(dataMemory.get(1));
             return;
         }
-        componets.getMBR().setValue(dataMemory.get(componets.getMAR().getValue()));
-        // 3. IR <- MBR
-        pip_IR = componets.getMBR().getValue();
+        pip_MBR = dataMemory.get(componets.getMAR().getValue());
+
 
         BubbleInPipeline-=1;
     }
@@ -386,7 +394,8 @@ public class Bus {
             case 14: {
                 //JSR. TODO unknown for R0
                 //When execute this part, the PC value is PC + 1.
-                componets.R3.setValue(componets.getPC().getValue());
+                //This is the trick when implementing pipeline! Minus is required because the PC is ahead of game.
+                componets.R3.setValue(componets.getPC().getValue()-1);
                 InsertBubbleInPipeline();
                 componets.getPC().setValue(ea);
 
