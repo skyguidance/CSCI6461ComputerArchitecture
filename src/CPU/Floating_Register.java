@@ -184,7 +184,7 @@ public class Floating_Register {
 
     public static void main(String[] args) {
         Floating_Register FL = new Floating_Register();
-        FL.setFloatingPoint((float) 1.5);
+        FL.setFloatingPoint((float) 0.9);
         System.out.println(FL.getValue());
         System.out.println(FL.getfValue());
     }

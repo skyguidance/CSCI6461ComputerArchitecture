@@ -629,6 +629,7 @@ public class Bus {
                 // FADD. Floating Point Add.
                 Floating_Register FloatingEA = new Floating_Register(dataMemory.get(ea));
                 float result = FloatingEA.toFloatingPoint() + componets.getFRRegister().toFloatingPoint();
+                System.out.println("FADD(cast):EA:"+FloatingEA.toFloatingPoint()+"+FR:"+componets.getFRRegister().toFloatingPoint()+"="+result);
                 componets.getFRRegister().setFloatingPoint(result);
                 break;
             }
@@ -636,6 +637,7 @@ public class Bus {
                 // FSUB. Floating Point SUB.
                 Floating_Register FloatingEA = new Floating_Register(dataMemory.get(ea));
                 float result = componets.getFRRegister().toFloatingPoint() - FloatingEA.toFloatingPoint();
+                System.out.println("FSUB(cast):FR:"+componets.getFRRegister().toFloatingPoint()+"-EA:"+FloatingEA.toFloatingPoint()+"="+result);
                 componets.getFRRegister().setFloatingPoint(result);
                 break;
             }
@@ -706,7 +708,7 @@ public class Bus {
             case 50: {
                 // LDFR. Load Floating Register From Memory.
                 componets.FR0.setBinary(dataMemory.ToBinaryString(dataMemory.get(ea)));
-                componets.FR1.setBinary(dataMemory.ToBinaryString(dataMemory.get(ea)));
+                componets.FR1.setBinary(dataMemory.ToBinaryString(dataMemory.get(ea+1)));
                 break;
             }
             case 51: {
