@@ -101,25 +101,37 @@ public class Bus {
 
 
     /**
-     * Execute one instruction.
+     * The above code is to: Execute one instruction.
      */
 
+    /**
+     * Pipeline Register Set.
+     */
     int pip_IR = 0;
     int pip_MBR = 3;
-    int BubbleInPipeline = 2;
+    int pip_MAR = 3;
+    int BubbleInPipeline = 3;
 
-    private void InsertBubbleInPipeline(){
+    /**
+     * Insert Bubble into the pipeline to flushing out pre-fetched instr.
+     */
+    private void InsertBubbleInPipeline() {
         System.out.println("=====================================================================================");
         System.out.println("Pipeline=>Flushing(Bubble Insert)....................................................");
         System.out.println("=====================================================================================");
         pip_IR = 0;
         pip_MBR = 3;
-        BubbleInPipeline = 2;
+        pip_MAR = 3;
+        BubbleInPipeline = 3;
     }
 
+    /**
+     * Simulate the pipeline to execute one instr.
+     * Notice the execution order is reversed to simulate the real pipeline.
+     */
     public void tik() {
         System.out.println("=====================================================================================");
-        System.out.println("Pipeline=>Stage_C(Parallel)..........................................................");
+        System.out.println("Pipeline=>Stage_D(Parallel)..........................................................");
         System.out.println("=====================================================================================");
         componets.getIR().setValue(pip_IR);
         // 4. CTRL-DECODE
@@ -127,19 +139,19 @@ public class Bus {
         // 5. Execute Process
         executeInstruction(calculateEA());
 
+
         System.out.println("=====================================================================================");
-        System.out.println("Pipeline=>Stage_B(Parallel)..........................................................");
+        System.out.println("Pipeline=>Stage_C(Parallel)..........................................................");
         System.out.println("=====================================================================================");
         // 3. IR <- MBR
         componets.getMBR().setValue(pip_MBR);
         pip_IR = componets.getMBR().getValue();
 
+
         System.out.println("=====================================================================================");
-        System.out.println("Pipeline=>Stage_A(Parallel)..........................................................");
+        System.out.println("Pipeline=>Stage_B(Parallel)..........................................................");
         System.out.println("=====================================================================================");
-        // 1. MAR <- PC,PC++;
-        componets.getMAR().setValue(componets.getPC().getValue());
-        componets.getPC().incrementOne();
+        componets.getMAR().setValue(pip_MAR);
         // 2. MBR <- MEM[MAR]
         if (componets.getMAR().getValue() >= 2048 && isMemoryExpanded == false) {
             //Machine Fault. User try to visit memory above 2K.
@@ -151,7 +163,14 @@ public class Bus {
         pip_MBR = dataMemory.get(componets.getMAR().getValue());
 
 
-        BubbleInPipeline-=1;
+        System.out.println("=====================================================================================");
+        System.out.println("Pipeline=>Stage_A(Parallel)..........................................................");
+        System.out.println("=====================================================================================");
+        // 1. MAR <- PC,PC++;
+        pip_MAR = componets.getPC().getValue();
+        componets.getPC().incrementOne();
+
+        BubbleInPipeline -= 1;
     }
 
     /**
@@ -273,7 +292,7 @@ public class Bus {
         //GET OPCODE to distinguish Instruction.
         switch (componets.getCU().getOpcode()) {
             case 0: {
-                if(BubbleInPipeline <= 0){
+                if (BubbleInPipeline <= 0) {
                     //HALT
                     isHalt = true;
                     componets.PC.setValue(6); // Reset PC
@@ -395,7 +414,7 @@ public class Bus {
                 //JSR. TODO unknown for R0
                 //When execute this part, the PC value is PC + 1.
                 //This is the trick when implementing pipeline! Minus is required because the PC is ahead of game.
-                componets.R3.setValue(componets.getPC().getValue()-1);
+                componets.R3.setValue(componets.getPC().getValue() - 2);
                 InsertBubbleInPipeline();
                 componets.getPC().setValue(ea);
 
@@ -626,9 +645,9 @@ public class Bus {
                 int Vector1BaseAdd = dataMemory.get(ea);
                 int Vector2BaseAdd = dataMemory.get(ea + 1);
                 for (int i = 0; i < VectorLength; i++) {
-                    int Vector1CurrentValue = dataMemory.get(Vector1BaseAdd+i);
-                    int Vector2CurrentValue = dataMemory.get(Vector2BaseAdd+i);
-                    dataMemory.set(Vector1BaseAdd+i,Vector1CurrentValue+Vector2CurrentValue);
+                    int Vector1CurrentValue = dataMemory.get(Vector1BaseAdd + i);
+                    int Vector2CurrentValue = dataMemory.get(Vector2BaseAdd + i);
+                    dataMemory.set(Vector1BaseAdd + i, Vector1CurrentValue + Vector2CurrentValue);
                 }
                 break;
             }
@@ -638,9 +657,9 @@ public class Bus {
                 int Vector1BaseAdd = dataMemory.get(ea);
                 int Vector2BaseAdd = dataMemory.get(ea + 1);
                 for (int i = 0; i < VectorLength; i++) {
-                    int Vector1CurrentValue = dataMemory.get(Vector1BaseAdd+i);
-                    int Vector2CurrentValue = dataMemory.get(Vector2BaseAdd+i);
-                    dataMemory.set(Vector1BaseAdd+i,Vector1CurrentValue-Vector2CurrentValue);
+                    int Vector1CurrentValue = dataMemory.get(Vector1BaseAdd + i);
+                    int Vector2CurrentValue = dataMemory.get(Vector2BaseAdd + i);
+                    dataMemory.set(Vector1BaseAdd + i, Vector1CurrentValue - Vector2CurrentValue);
                 }
                 break;
             }
