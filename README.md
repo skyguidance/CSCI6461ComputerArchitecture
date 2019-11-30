@@ -61,8 +61,6 @@ A program that reads a set of a paragraph of 6 sentences from a file into memory
 - For this stage, the Card Reader I/O Port is implemented as a file I/O in our simulator. So in that case if requested an IN instr at Card Reader (DevID = 2), the simulator will request an .txt file for this specific input.<br>
 - Testing Program 2 requires to read a set of paragraph of 6 sentences. The sample file is contained in the file **TestProgram2-Paragraph.txt**. <br>
 - For the main string compare logic, please refer to the C program contains in this project. The file is called **TestProgram2-Logic.c**. Reading this C file gives you a basic idea of what I'm trying to do in the assamble code. For a easy understanding, I also upload my hand-written translation notes **TestProgram2-HandWrittenLogic.pdf**. This includes some memory location identifier. And I've comments the main compare logic part in the assemable code, so it is much easier for you to read and understand.(the variable in the comment is the same as the C code and the hand-written logic).
-## :construction: Project Work In Progress for P4! We are almost there! Amazing Works! :construction:
-### Floating Point Convertion
-https://www.geeksforgeeks.org/floating-point-representation-digital-logic/
-### Pipelining
-![](https://static.careerengine.us/api/aov2/http%3A_%7C__%7C_mmbiz.qpic.cn_%7C_mmbiz_jpg_%7C_YdXCvBnr3mGGIvuJwwFozOBibdS9dyIxOttRTficTJKU1QAPybS8vVWqLIkGEtGA4ZOHTtEYo3RJVlnZp1360waA_%7C_0%3Fwx_fmt%3Djpeg)
+
+ **Testing Program 3 (P4)**<br>
+  This is the basic testcase for floating point operations, vector operations, add floating point convert.<br>
