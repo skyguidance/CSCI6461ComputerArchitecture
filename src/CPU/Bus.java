@@ -649,6 +649,7 @@ public class Bus {
                 for (int i = 0; i < VectorLength; i++) {
                     int Vector1CurrentValue = dataMemory.get(Vector1BaseAdd + i);
                     int Vector2CurrentValue = dataMemory.get(Vector2BaseAdd + i);
+                    System.out.printf("VADD:Length=%d,Current=%d,Vector1Base=%d,Vector1Value=%d,Vector2Base=%d,Vector2Value=%d\n",VectorLength,i,Vector1BaseAdd,Vector1CurrentValue,Vector2BaseAdd,Vector2CurrentValue);
                     dataMemory.set(Vector1BaseAdd + i, Vector1CurrentValue + Vector2CurrentValue);
                 }
                 break;
@@ -661,6 +662,7 @@ public class Bus {
                 for (int i = 0; i < VectorLength; i++) {
                     int Vector1CurrentValue = dataMemory.get(Vector1BaseAdd + i);
                     int Vector2CurrentValue = dataMemory.get(Vector2BaseAdd + i);
+                    System.out.printf("VSUB:Length=%d,Current=%d,Vector1Base=%d,Vector1Value=%d,Vector2Base=%d,Vector2Value=%d\n",VectorLength,i,Vector1BaseAdd,Vector1CurrentValue,Vector2BaseAdd,Vector2CurrentValue);
                     dataMemory.set(Vector1BaseAdd + i, Vector1CurrentValue - Vector2CurrentValue);
                 }
                 break;
