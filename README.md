@@ -64,3 +64,5 @@ A program that reads a set of a paragraph of 6 sentences from a file into memory
 
  **Testing Program 3 (P4)**<br>
   This is the basic testcase for floating point operations, vector operations, add floating point convert.<br>
+
+![](https://clipartstation.com/wp-content/uploads/2018/10/we-did-it-clipart-2.jpg)<br>
